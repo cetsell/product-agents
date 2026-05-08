@@ -1,0 +1,155 @@
+# Team OS
+
+Shared context repository for your product team. AI-agent optimized — every folder has a `CLAUDE.md` index that routes queries to the right file automatically.
+
+## What's Here
+
+| Folder | Contents |
+|--------|----------|
+| **`product/`** | Analytics definitions, roadmap, playbooks, specs index, reference material |
+| **`team/`** | Roster, weekly cadence, onboarding, decision log, retros, weekly updates |
+| **`gtm/`** | GTM campaign tracking and sync agendas |
+| **`engineering/`** | Codebase conventions and runtime context for your application repos |
+| **`templates/`** | Standardized formats for bets, decisions, call summaries, reviews, specs |
+| **`.claude/`** | 32 Claude Code skills, 4 agents, and commands |
+
+## How to Use
+
+**For AI agents (Claude Code):** Open this repo in Claude Code. Start with `CLAUDE.md` at the root — it has the full doc index and skill routing table. Every subfolder has its own `CLAUDE.md` that explains what's inside.
+
+**For humans:** Browse the folders above. Start with `team/roster.md` to see who's who, `team/cadence.md` for the weekly schedule, and `product/roadmap/current-bet.md` for what the team is focused on right now.
+
+## Data Source Hierarchy
+
+| Source | Use for |
+|--------|---------|
+| **Linear** (or your issue tracker) | What we're building, velocity, project health |
+| **BigQuery** (or your data warehouse) | Funnels, growth, attribution, device data |
+| **team-os/** (this repo) | Sprint context, bet pipeline, roster, templates, definitions |
+| **Google Docs / Notion** | Specs, wiki, collaborative docs |
+| **Your meeting tool** | Call notes, meeting transcripts |
+
+## Agents (4)
+
+Agents are multi-mode AI workflows in `.claude/agents/`. They route by intent — one agent handles many tasks.
+
+### team-os (Opus)
+
+The primary agent for all Team OS operations. Routes between four modes:
+
+- **Navigate** — Find and summarize context across the repo (read-only, safe for everyone)
+- **Contribute** — Format and route updates to the right file with correct structure
+- **Refresh** — Pull live data from Linear to update roadmap files (steward: PM, Friday)
+- **Audit** — Scan for stale content and flag drift (steward: PM, Monday)
+
+Loads skills on demand based on what the request needs.
+
+### roadmap-keeper (Opus)
+
+Refreshes product roadmap files from live Linear data at sprint boundaries. Maintains `current-bet.md`, `betting-table.md`, and `experiment-roadmap.md` with completion percentages, shipped items, and freshness dates. Runs weekly on Friday after sprint planning.
+
+### freshness-auditor (Sonnet)
+
+Scans Team OS for stale content and flags files past their freshness window (7–30 days depending on file type). Cross-references consistency across roster, metrics, and Linear initiatives. Generates structured reports with ownership. Runs weekly on Monday.
+
+### context-manager (Opus)
+
+Maintains coherent state across multi-agent workflows and long-running tasks. Extracts decisions and rationale from agent outputs, distributes minimal relevant context to each agent, and compresses context between sessions.
+
+## Skills (32)
+
+Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.md` with frameworks, data sources, and output conventions. Invoke with `/skill-name`. Load only the skill you need — not all at once.
+
+### PM & Strategy
+
+| Skill | What it does |
+|-------|-------------|
+| `/cadence` | Weekly/monthly PM rituals — Monday kickoff, Wednesday pulse, Friday demo, weekly email, monthly recap. Pulls from Linear + Granola + local artifacts. |
+| `/strategy` | OKR cascades, RICE/ICE prioritization, competitive analysis, discovery frameworks, bet briefs, PRDs, user stories, sprint planning, vision alignment. |
+| `/audit` | Operational and product health audits with 5-phase research process. Modes: operational intel, product intel, funnel analysis, requirements brief, post-mortem, process audit, KPI framework. |
+| `/sprint-health` | Pre-launch sprint health check — ticket quality, velocity signals, launch readiness gates, blocker scan. Switches to pre-launch mode 4 weeks before ship date. |
+
+### Analytics & Data
+
+| Skill | What it does |
+|-------|-------------|
+| `/data-analyst` | BigQuery-powered analytics against your data warehouse and dbt models. Conversion funnel audits, weekly growth trends, activation signals, monetization analysis, device breakdowns, acquisition ROI. |
+
+### Issue Creation & Specs
+
+| Skill | What it does |
+|-------|-------------|
+| `/pm-super-agent` | Master PM agent — refines raw ideas into PRDs, specs, and Linear tickets. Pipeline: context hunt, intake, refine, write PRD, diagram, decompose, retro. |
+| `/linear-issue-creator` | Translates product intent into well-structured Linear issues. Enforces hypothesis/kill trigger/confidence on every feature. Right-sized for 1–3 day tickets. |
+
+### Evaluation & Prompts
+
+| Skill | What it does |
+|-------|-------------|
+| `/eval-runner` | Automated prompt evaluation — runs test conversations against variants, scores with LLM-as-judge across 6 dimensions (phase progression, aha moment, cliffhanger, tone, flexibility, brevity). |
+| `/senior-prompt-engineer` | Production prompt engineering. Prompt audit, new prompt design, structured output engineering, evaluation, debug. |
+
+### Artifact Health
+
+| Skill | What it does |
+|-------|-------------|
+| `/check-artifacts` | Grades artifact health A–F based on freshness, quality, and alignment with your issue tracker. Checks roadmap, betting table, current bet, and initiative alignment. |
+| `/monthly-pm-self-eval` | Brutally honest monthly self-evaluation — scores Decision Quality, Hypothesis Discipline, Communication Clarity, Speed & Focus, CPO-Track Growth (each 1–5). |
+| `/project-campaign-review` | Campaign retrospective with cross-functional accountability. Tracks critical path, risk categories (P0/P1/P2), and generates weekly dashboards. |
+
+### Marketing & Growth
+
+| Skill | What it does |
+|-------|-------------|
+| `/copywriting` | Conversion copywriting for any page — homepage, landing, pricing, feature, about. Hero → Social Proof → Problem → Solution → How It Works → Testimonials → CTA. |
+| `/email-sequence` | Design drip campaigns and lifecycle automation. 12+ sequence templates: welcome, nurture, re-engagement, post-purchase, upgrade, win-back, dunning, NPS. |
+| `/email-systems` | Email infrastructure — SPF/DKIM/DMARC, deliverability, bounce handling, IP warm-up, SendGrid configuration, transactional vs marketing separation. |
+| `/marketing-strategy-pmm` | Product marketing — April Dunford positioning methodology, ICP definition, messaging hierarchy, launch playbooks, competitive battlecards, market entry. |
+| `/marketing-psychology` | 70+ mental models for marketing — first principles, JTBD, inversion, second-order thinking, Pareto, diminishing returns, barbell strategy, buyer decision frameworks. |
+| `/pricing-strategy` | SaaS pricing and packaging — value metrics (per-user, per-usage, per-feature), freemium vs trial, tier design, willingness-to-pay research, annual vs monthly. |
+| `/referral-program` | Viral growth mechanics — referral program design, affiliate programs, incentive structures, viral coefficient, self-reinforcing growth loops. |
+| `/programmatic-seo` | pSEO at scale — page templates, modifier strategy, unique value per page, proprietary data hierarchy, canonicalization, internal linking. |
+
+### Conversion Rate Optimization
+
+| Skill | What it does |
+|-------|-------------|
+| `/page-cro` | Optimize any marketing page for conversions — value proposition clarity, headline effectiveness, copy flow, CTA design, trust signals, friction reduction. |
+| `/signup-flow-cro` | Optimize registration and account creation — minimize required fields, progressive profiling, social login, conditional fields, B2C vs B2B patterns. |
+| `/onboarding-cro` | Post-signup activation — time-to-value optimization, aha moment identification, interactive onboarding, empty state design, progress motivation. |
+| `/paywall-upgrade-cro` | In-app paywalls and upgrade flows — feature locks, usage limits, trial expiration, value demonstration, comparison tables, save offers. |
+| `/ab-test-setup` | Experiment design — hypothesis framework, sample size calculation, statistical power, primary/secondary/guardrail metrics, avoiding peeking. |
+| `/churn-prevention` | Reduce churn — cancel flow design with save offers, failed payment recovery (dunning), proactive retention from usage signals, win-back sequences. |
+| `/popup-cro` | Popup and modal optimization — timing rules (scroll, time, exit intent, behavior), value-first copy, mobile experience, targeting strategy. |
+
+### Writing & Editorial
+
+| Skill | What it does |
+|-------|-------------|
+| `/writing-clearly-and-concisely` | Strunk & White for AI — omit needless words, active voice, definite language, positive form. Catches AI puffery (pivotal, crucial, groundbreaking). |
+| `/copy-editing` | The Seven Sweeps framework — Clarity, Concision, Flow, Tone, Specificity, Persuasion, Polish. Enhances without rewriting. Preserves voice. |
+
+### Specialized
+
+| Skill | What it does |
+|-------|-------------|
+| `/lenny` | Advice from 284 episodes of Lenny's Podcast — growth, retention, AI products, pricing, hiring, leadership. Searches transcripts from Duolingo, Figma, Airbnb, Linear, Notion, Spotify, +250 operators. |
+| `/graphify` | Transform any input (code, docs, papers, images) into a knowledge graph with community detection. Outputs clustered HTML visualization, GraphRAG-ready JSON, and plain-language audit report. |
+| `/remotion-best-practices` | Video creation in React with Remotion — 3D (Three.js), animations, captions, transitions, Tailwind integration, asset handling, composition patterns. |
+
+## Commands
+
+| Command | What it does |
+|---------|-------------|
+| `/create-prd` | Generate a Product Requirements Document from product context, feature docs, and JTBD. Uses PRD template, outputs to `product-development/current-feature/PRD.md`. |
+
+## What's NOT Here
+
+- Source code (lives in your application repos)
+- API keys or credentials (use environment variables)
+- Google Docs or Notion content (linked, not duplicated)
+- Meeting recordings or transcripts (in Gemini)
+
+## Contributing
+
+See `CONTRIBUTING.md` for how to add or update content. Three methods: GitHub web editor, CLI, or Claude Code agent.
