@@ -236,3 +236,11 @@ Watch for: Thin content warnings, Ranking drops, Manual actions, Crawl errors
 - **schema-markup**: For adding structured data
 - **site-architecture**: For page hierarchy, URL structure, and internal linking
 - **competitor-alternatives**: For comparison page frameworks
+
+---
+
+## TERMINATION
+
+Stop when the page template, the data model that fills it, and a sample of generated
+pages are delivered. Don't also run the post-launch SEO audit, add schema markup, or
+design the site architecture — name those as next steps and route to their skills.

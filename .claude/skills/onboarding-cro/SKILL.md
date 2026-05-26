@@ -218,3 +218,12 @@ When recommending experiments, consider tests for:
 - **email-sequence**: For onboarding email series
 - **paywall-upgrade-cro**: For converting to paid during/after onboarding
 - **ab-test-setup**: For testing onboarding changes
+
+---
+
+## TERMINATION
+
+Stop when the onboarding/activation recommendations are delivered as a prioritized
+list, each with expected impact and reasoning. Recommend — don't implement. One
+surface per invocation: signup, onboarding emails, and paid conversion belong to their
+own skills — name the hand-off rather than expanding scope.

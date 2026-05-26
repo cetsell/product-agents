@@ -1,0 +1,29 @@
+name: Skill Conformance
+
+on:
+  pull_request:
+    paths:
+      - ".claude/skills/**"
+      - "check-skills.mjs"
+  push:
+    branches: [main]
+    paths:
+      - ".claude/skills/**"
+      - "check-skills.mjs"
+  workflow_dispatch: # allow manual trigger
+
+jobs:
+  check-skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # Hard rules only (frontmatter, role line) fail the build. Producer-rule
+      # misses (output shape, TERMINATION) report as warnings until the backlog
+      # is closed; flip to `--strict` here to make them blocking.
+      - name: Lint skills against the quality bar
+        run: node check-skills.mjs

@@ -10,8 +10,9 @@ Shared context repository for your product team. AI-agent optimized — every fo
 | **`team/`** | Roster, weekly cadence, onboarding, decision log, retros, weekly updates |
 | **`gtm/`** | GTM campaign tracking and sync agendas |
 | **`engineering/`** | Codebase conventions and runtime context for your application repos |
-| **`templates/`** | Standardized formats for bets, decisions, call summaries, reviews, specs |
-| **`.claude/`** | 32 Claude Code skills, 4 agents, and commands |
+| **`templates/`** | Standardized formats for bets, decisions, call summaries, reviews, specs, eval-requirements docs |
+| **`proactive/`** | Scheduled + triggered proactive runs — the operating rhythm and reactive triggers, scheduler-agnostic |
+| **`.claude/`** | 35 Claude Code skills, 4 agents, and commands |
 
 ## How to Use
 
@@ -56,7 +57,26 @@ Scans Team OS for stale content and flags files past their freshness window (7�
 
 Maintains coherent state across multi-agent workflows and long-running tasks. Extracts decisions and rationale from agent outputs, distributes minimal relevant context to each agent, and compresses context between sessions.
 
-## Skills (32)
+## Operating-System Capabilities
+
+Beyond individual skills, Team OS now has cross-cutting layers that make the whole library move faster and stay trustworthy.
+
+### Evidence loops (decision integrity)
+
+Consequential outputs carry an **Evidence Loop** appendix — a claim-by-claim trail of what's supported by a dated source vs. assumed, the one assumption that would flip the decision, and where a human decides. This is the guardrail that lets the team act fast on AI output without shipping confident nonsense. Method: `product/playbooks/evidence-loop.md`. For AI features, the PRD itself becomes an **eval-requirements doc** (labeled dataset + pass metrics, not prose) — `templates/eval-requirements-doc.md`. Run on demand with `/evidence-loop`; pressure-test plans for failure modes with `/premortem`.
+
+### Proactive layer (`proactive/`)
+
+The shift from reactive (you ask) to proactive (it runs without being asked). `proactive/runs.yml` is a scheduler-agnostic manifest of **scheduled runs** (morning brief, sprint health, weekly status, monthly self-eval) and **reactive triggers** (a new high-stakes bet auto-fires `/premortem`; any stakeholder-facing artifact passes an `/evidence-loop` gate). Every run names a steward, a decision point, and a hard stop condition. Wire it to `/schedule`, GitHub Actions, or hooks when ready — see `proactive/CLAUDE.md`.
+
+### Skill evals (quality bar)
+
+Every skill is held to a checkable bar — a role line, a structured output shape, and an explicit **TERMINATION** condition (the rule that prevents an unattended run from expanding to fill its whole budget).
+
+- **Layer 1 — static:** `node check-skills.mjs` lints every `SKILL.md` against the bar and runs in CI (`.github/workflows/skill-check.yml`), so a skill that drops its role line or stop condition fails the build.
+- **Layer 2 — behavioral:** `/skill-eval` runs a skill against representative prompts and scores the *output* (stayed in role, wrote into the shape, terminated, evidence loop, triggered correctly), wrapping the `skill-creator` harness.
+
+## Skills (35)
 
 Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.md` with frameworks, data sources, and output conventions. Invoke with `/skill-name`. Load only the skill you need — not all at once.
 
@@ -88,6 +108,9 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 |-------|-------------|
 | `/eval-runner` | Automated prompt evaluation — runs test conversations against variants, scores with LLM-as-judge across 6 dimensions (phase progression, aha moment, cliffhanger, tone, flexibility, brevity). |
 | `/senior-prompt-engineer` | Production prompt engineering. Prompt audit, new prompt design, structured output engineering, evaluation, debug. |
+| `/evidence-loop` | Pressure-tests any output for unsupported claims — claim/source trail, the assumption that would flip the decision, and the human decision point. The "how do we know?" guardrail. |
+| `/premortem` | Prospective-hindsight failure analysis — assumes the plan already failed and works backward to find every reason why, then returns a revised plan + pre-launch checklist. |
+| `/skill-eval` | Behavioral eval for the skill library — runs a skill and scores its output against the quality bar (role, shape, termination, evidence loop, triggering). Static counterpart: `node check-skills.mjs`. |
 
 ### Artifact Health
 

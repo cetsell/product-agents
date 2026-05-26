@@ -180,3 +180,12 @@ When recommending experiments, consider tests for:
 - **popup-cro**: If considering popups as part of the strategy
 - **copywriting**: If the page needs a complete copy rewrite
 - **ab-test-setup**: To properly test recommended changes
+
+---
+
+## TERMINATION
+
+Stop when the page recommendations are delivered as a prioritized list, each with
+expected impact and reasoning. Recommend — don't implement. One page per invocation:
+if the real issue is the signup flow, a form, popups, or a full copy rewrite, name it
+and route to the related skill rather than expanding scope.

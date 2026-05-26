@@ -452,3 +452,12 @@ Ideas to A/B test with expected outcomes
 - **page-cro**: For the page context around popups
 - **email-sequence**: For what happens after popup conversion
 - **ab-test-setup**: For testing popup variations
+
+---
+
+## TERMINATION
+
+Stop when the popup recommendations are delivered as a prioritized list, each with its
+expected impact and the reasoning behind it. Recommend — don't implement. One surface
+per invocation: if the issue is really the form, the surrounding page, or the post-
+conversion email, name it and route to the related skill rather than expanding scope.

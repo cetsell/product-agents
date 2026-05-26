@@ -143,3 +143,13 @@ When producing recommendations, always:
 - **Context matters.** A 10% conversion rate means nothing without knowing the benchmark.
 - **Time comparisons.** Always show at least 2 time periods so trends are visible.
 - **Source your claims.** Every number should trace back to a specific query.
+
+---
+
+## TERMINATION
+
+Stop when the question asked is answered with sourced numbers across at least two
+time periods, and any data gaps are flagged. Answer the question that was asked — do
+**not** expand into a full funnel teardown when one metric was requested, and do not
+recommend product changes beyond noting the impact and the P0/P1/P2 priority. If
+every number traces to a query and the question is answered, you are finished.

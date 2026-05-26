@@ -436,3 +436,13 @@ Next week: [The bet with Jobs-to-be-Done, confident language]
 6. Next month priorities connect to roadmap/betting-table
 7. Forward items have confidence tags
 8. Scannable in under 3 minutes
+
+---
+
+## TERMINATION
+
+Stop when the **single requested cadence mode's** deliverable is complete and passes
+its quality gate. Run one mode per invocation — a Monday kickoff does not also
+produce the Friday demo report; a weekly update does not also produce the monthly
+recap. Any metric cited carries its source and date; never invent a number not in
+the source data. If the deliverable is written and the gate passes, you are finished.

@@ -264,3 +264,12 @@ Document every test with:
 - **page-cro**: For generating test ideas based on CRO principles
 - **analytics-tracking**: For setting up test measurement
 - **copywriting**: For creating variant copy
+
+---
+
+## TERMINATION
+
+Stop when the test is fully specified: hypothesis, variants, primary metric, minimum
+detectable effect, sample size, expected duration, and the decision rule. Designing
+the test and analyzing results are separate invocations — don't analyze before
+results exist. Don't write the variant copy here; route to `copywriting`.

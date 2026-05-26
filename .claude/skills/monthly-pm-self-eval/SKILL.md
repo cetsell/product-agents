@@ -138,3 +138,13 @@ Save to: `pm-workflows/analysis/monthly/pm-self-eval-[YYYY-MM].md`
 - If "Killed This Week" was empty on 3+ Fridays, Hypothesis Discipline is automatically 2 or below.
 - If you can't point to a specific thing you stopped doing this month, Speed & Focus is automatically 2 or below.
 - The "One Thing to Fix" must be a behavior change, not a tool or process change. Tools don't fix habits.
+
+---
+
+## TERMINATION
+
+Stop when every dimension has a score (after the -1 honesty adjustment) and the
+single "One Thing to Fix" behavior is named. One month per invocation. Do **not**
+build a development plan, draft OKRs, or propose process changes off the back of the
+eval — name the one behavior and stop. If every score is set and the one fix is a
+behavior change, you are finished.

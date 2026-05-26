@@ -357,3 +357,12 @@ Organized by:
 - **form-cro**: For non-signup forms (lead capture, contact)
 - **page-cro**: For the landing page leading to signup
 - **ab-test-setup**: For testing signup flow changes
+
+---
+
+## TERMINATION
+
+Stop when the signup-flow recommendations are delivered as a prioritized list, each
+with expected impact and reasoning. Recommend — don't implement. One surface per
+invocation: post-signup onboarding, non-signup forms, or the landing page belong to
+their own skills — name the hand-off rather than expanding scope.

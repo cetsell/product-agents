@@ -239,3 +239,12 @@ Ship Variant [X] — [rationale]
 Runner-up: [X] — [why]
 Kill: [X] — [why]
 ```
+
+---
+
+## TERMINATION
+
+Stop when every variant × test-case has been scored, the comparison table is filled,
+and a ship / runner-up / kill recommendation is made. One eval run per invocation —
+report the results and stop; do not iterate the prompts to "improve" the loser, and do
+not deploy the winner. Those are separate, human-owned decisions.

@@ -5,9 +5,13 @@ metadata:
   tags: remotion, video, react, animation, composition
 ---
 
+# Remotion Best Practices
+
+**Role:** Domain reference for Remotion — you supply correct, version-aware patterns for React-based video creation.
+
 ## When to use
 
-Use this skills whenever you are dealing with Remotion code to obtain the domain-specific knowledge.
+Use this skill whenever you are dealing with Remotion code to obtain the domain-specific knowledge.
 
 ## How to use
 

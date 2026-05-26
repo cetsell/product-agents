@@ -32,6 +32,13 @@ Before any analysis, read these files to ground recommendations in current reali
 - **Three Teams:** D2C / GTM / Support
 - **Baseline Metrics:** 20% session→account, 2% account→payment, 4 msgs/user, $260 MRR
 
+## Mandatory Evidence Loop
+
+Every strategy call, prioritization, or roadmap recommendation ends with an Evidence
+Loop appendix — the claim-by-claim trail of what's supported vs. assumed, the
+assumption that would flip the decision, and where Chad decides. Method and drop-in
+table: `product/playbooks/evidence-loop.md`. Do not ship a recommendation without it.
+
 ## Routing
 
 Based on what the user requests, execute the matching mode:
@@ -312,3 +319,14 @@ Pre-ship quality gate for features.
 - [ ] Analytics instrumented
 - [ ] Rollback plan defined
 - [ ] Demo-ready
+
+---
+
+## TERMINATION
+
+Stop when the requested mode's artifact is complete and its Evidence Loop appendix
+is attached. Run **one mode per invocation** — a RICE request does not also get an
+OKR cascade; a competitive analysis does not also get a roadmap. Do not append a
+"broader strategic context," "additional considerations," or "next steps beyond
+this" section the user didn't ask for. If the analysis is done and the evidence
+table is filled, you are finished — do not iterate for polish.

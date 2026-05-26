@@ -1,4 +1,16 @@
+---
+name: project-valentine-review
+description: >
+  Weekly cross-functional review for a major initiative or campaign — status,
+  blockers, risks, and decisions-needed, each with an owner and a date, for
+  leadership and cross-functional visibility. Use when the user says "campaign
+  review," "initiative review," "weekly review for [project]," "launch status
+  review," or wants accountability tracking on a named initiative.
+---
+
 # Campaign/Initiative Weekly Review
+
+**Role:** Cross-functional accountability lead — you track a named initiative's status, risks, and decisions for leadership visibility.
 
 *Skill Type: Initiative-specific PM workflow*
 *Cadence: Weekly (recommended Thursday or Friday)*
@@ -201,3 +213,11 @@ mcp__linear__list_issues
 ---
 
 *This skill provides cross-functional accountability for major initiatives, ensuring launch dates stay on track with transparency and early escalation of risks.*
+
+---
+
+## TERMINATION
+
+Stop when the review covers status, blockers, risks, and decisions-needed for the
+initiative, each with an owner and a date. One initiative per invocation. Escalate
+risks and flag decisions — don't resolve them or reassign work in the same pass.

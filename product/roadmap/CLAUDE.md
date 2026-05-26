@@ -19,6 +19,13 @@ Sprint bets, pipeline, experiment roadmap, and annual strategy. These are PM too
 - **Next gate:** [Next milestone or decision point]
 - **Post-[milestone]:** [What comes after]
 
+## Proactive Trigger
+
+When a new high-stakes bet enters `betting-table.md` (or a pricing change / launch
+plan is being committed), run `/premortem` on it and attach the report before the bet
+is committed. This is a reactive run defined in `proactive/runs.yml` (`premortem-high-stakes`).
+The PM signs off on the revised plan as the decision point.
+
 ## Update Cadence
 
 - `current-bet.md`: Updated Friday (next week) + Thursday (status check)

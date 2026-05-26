@@ -445,3 +445,27 @@ This iterative process ensures each edit doesn't create new problems while respe
 | Reviewing and improving existing copy | copy-editing (this skill) |
 | Editing copy you just wrote | copy-editing (this skill) |
 | Structural or strategic page changes | page-cro |
+
+---
+
+## Output Format
+
+```markdown
+# Copy Edit — [asset] | [date]
+
+## Edited copy
+[the revised copy, ready to paste]
+
+## Changes (what & why)
+| Original | Revised | Why |
+|----------|---------|-----|
+
+## Left as-is
+[anything you deliberately did not change, and why]
+```
+
+## TERMINATION
+
+Stop when the edited copy is delivered with its change notes. Edit what was given —
+don't rewrite from scratch (that's `copywriting`), don't restructure the page (that's
+`page-cro`), and don't keep polishing past the user's intent. One asset per invocation.

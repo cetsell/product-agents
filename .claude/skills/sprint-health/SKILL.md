@@ -286,3 +286,12 @@ Run this skill **in addition to** /monday-kickoff or /friday-demo, not instead o
 - Key baselines: 20% session→account, 2% account→payment, 4 msgs/user
 - Last sprint health report: `team/weekly-updates/2026/week-10-mar09/sprint-health-2026-03-12.md`
 - Linear initiative health source: `mcp__linear__list_initiatives(includeProjects=True)`
+
+---
+
+## TERMINATION
+
+Stop when the report is written to its output location and every flagged blocker,
+risk, or escalation has an owner or an explicit flag for the PM. Report and flag —
+do **not** start fixing tickets, reassigning work, or editing Linear issues in the
+same pass. One sprint sweep per invocation. If every flag has an owner, you are done.

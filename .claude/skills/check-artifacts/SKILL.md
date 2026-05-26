@@ -1,3 +1,13 @@
+---
+name: check-artifacts
+description: >
+  Artifact health check — grades your PM artifacts (roadmap visual, betting table,
+  metrics dashboard, Linear initiatives and milestones) A–F for freshness, quality,
+  and alignment, then lists prioritized fixes. Use when the user says "check
+  artifacts," "artifact health," "do I have it handled," "are my artifacts up to
+  date," "grade my roadmap," "CEO confidence check," or before a leadership review.
+---
+
 # Check Artifacts - "I Have It Handled" Health Check
 
 **Role:** AI chief-of-staff for Chad (Head of Product)
@@ -303,3 +313,12 @@ For a full sprint health analysis use: **/sprint-health** (runs all Linear queri
 - Current date: {{CURRENT_DATE}}
 - Read: `pm-workflows/weekly-workflow.md` for artifact philosophy
 - Read: `pm-workflows/pm-principles-guide.md` for PM principles
+
+---
+
+## TERMINATION
+
+Stop when every artifact in the checklist has a letter grade, the overall score is
+assigned, and the Recommended Actions list is ordered by priority. Do **not** fix the
+artifacts you graded in the same pass — grade and recommend, then stop; fixing each
+one is a separate, explicit task. One health check per invocation.

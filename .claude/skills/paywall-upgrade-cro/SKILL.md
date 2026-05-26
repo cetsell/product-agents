@@ -225,3 +225,12 @@ What you've accomplished:
 - **page-cro**: For public pricing page optimization
 - **onboarding-cro**: For driving to aha moment before upgrade
 - **ab-test-setup**: For testing paywall variations
+
+---
+
+## TERMINATION
+
+Stop when the paywall/upgrade recommendations are delivered as a prioritized list,
+each with expected impact and reasoning. Recommend — don't implement. One surface per
+invocation: cancel/save flows, public pricing pages, and pre-upgrade activation belong
+to their own skills — name the hand-off rather than expanding scope.

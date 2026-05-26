@@ -453,3 +453,12 @@ Maintain consistency throughout, but adjust intensity:
 - **email-sequence**: For email copywriting
 - **popup-cro**: For popup and modal copy
 - **ab-test-setup**: To test copy variations properly
+
+---
+
+## TERMINATION
+
+Stop when the copy for the requested page or section is delivered in the output
+format. One asset per invocation — don't also rewrite adjacent pages, design an A/B
+test, or polish endlessly. Hand variations to `ab-test-setup` and polish to
+`copy-editing` rather than doing their jobs here.

@@ -12,3 +12,4 @@ PM frameworks and methodology reference. These are tools Chad uses — available
 | `product-strategy.md` | Strategy frameworks, competitive analysis | Strategic planning, market positioning |
 | `business-analysis.md` | Business case frameworks, financial analysis | ROI analysis, business justification |
 | `prompt-engineering.md` | Prompt design, evaluation, structured output | Working on AI prompts |
+| `evidence-loop.md` | The "how do you know?" discipline — claim/source trail, flip-assumption, eval-requirements docs | Any consequential output: strategy call, PRD, audit finding, metric cited to a stakeholder |

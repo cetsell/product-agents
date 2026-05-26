@@ -24,6 +24,7 @@ Shared context for your product team. AI-agent optimized — every folder has a 
 | Past weekly "Hello All" emails | Archive | `team/weekly-updates/` |
 | How to contribute to this repo | Contributing guide | `CONTRIBUTING.md` |
 | Maintenance cadence, agent owners, freshness rules | Maintenance playbook | `MAINTENANCE.md` |
+| Scheduled + triggered proactive runs, operating rhythm | Proactive agents | `proactive/` |
 | fe-main Angular conventions, frozen files, key services | Engineering context | `engineering/` |
 
 ## Data Source Hierarchy
@@ -67,6 +68,9 @@ When working in this repo, load only the skill you need based on the request:
 | RICE scoring, OKRs, roadmap planning, competitive analysis | `/strategy` | Prioritization frameworks + discovery |
 | Operational or product health check | `/audit` | Cross-functional health assessment |
 | Prompt variant testing, A/B prompt comparison | `/eval-runner` | LLM-as-judge scoring |
+| Pressure-test claims, "how do we know," audit an output before it drives a decision | `/evidence-loop` | Claim/source trail, flip-assumption, human decision point |
+| "What could kill this," stress-test a plan/launch/hire/bet, find blind spots | `/premortem` | Prospective-hindsight failure analysis → revised plan + checklist |
+| Behaviorally eval a skill — did it stay in role / terminate / drift | `/skill-eval` | Runs a skill, scores output vs the quality bar (Layer 2). Static check: `node check-skills.mjs` |
 | Monday kickoff, Friday demo, weekly email, monthly recap | `/cadence` | PM cadence automation |
 | Grade artifact staleness (A-F) | `/check-artifacts` | Artifact health scoring |
 | Monthly PM self-evaluation | `/monthly-pm-self-eval` | Scored self-assessment against PM standards |

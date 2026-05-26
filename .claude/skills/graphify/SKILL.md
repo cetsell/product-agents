@@ -1212,3 +1212,11 @@ graphify claude uninstall  # remove the section
 - Always show token cost in the report.
 - Never hide cohesion scores behind symbols - show the raw number.
 - Never run HTML viz on a graph with more than 5,000 nodes without warning the user.
+
+---
+
+## TERMINATION
+
+Stop when the manifest is saved, the outputs (HTML + JSON + audit report) are written,
+the cost tracker is updated, and the cost report is shown. One corpus per invocation —
+do not re-cluster for polish or generate extra views the user didn't ask for.

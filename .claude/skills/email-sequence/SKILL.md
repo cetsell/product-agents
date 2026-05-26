@@ -923,3 +923,12 @@ If you need more context:
 - **copywriting**: For landing pages emails link to
 - **ab-test-setup**: For testing email elements
 - **popup-cro**: For email capture popups
+
+---
+
+## TERMINATION
+
+Stop when the full sequence is delivered — every email with its copy, timing, and
+trigger — in the output format. One sequence per invocation. Don't also build the
+landing pages the emails link to, the in-app onboarding, or the capture popup; route
+those to their own skills.

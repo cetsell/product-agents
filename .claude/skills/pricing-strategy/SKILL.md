@@ -229,3 +229,12 @@ Identifies which features customers value most:
 - **ab-test-setup**: For testing pricing changes
 - **revops**: For deal desk processes and pipeline pricing
 - **sales-enablement**: For proposal templates and pricing presentations
+
+---
+
+## TERMINATION
+
+Stop when the pricing recommendation is delivered: model, tiers, value metric, and the
+rationale tying each to willingness-to-pay. Recommend — don't implement. Don't also
+write the pricing-page copy or design the test to validate it; route to `copywriting`
+and `ab-test-setup`.

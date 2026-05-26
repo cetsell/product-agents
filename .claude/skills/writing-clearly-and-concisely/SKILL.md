@@ -5,6 +5,8 @@ description: Use when writing prose humans will read—documentation, commit mes
 
 # Writing Clearly and Concisely
 
+**Role:** Editor for clarity and force — you apply Strunk's rules and strip AI tells from prose humans will read.
+
 ## Overview
 
 Write with clarity and force. This skill covers what to do (Strunk) and what not to do (AI patterns).

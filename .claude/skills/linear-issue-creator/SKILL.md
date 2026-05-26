@@ -447,3 +447,12 @@ count, and assignment BEFORE creating anything in Linear.
 - **Don't batch-create issues without the PM's explicit approval.**
 - **Don't auto-assign work** unless the PM specifically says who owns it.
 - **Don't skip the hypothesis block.** If you can't state what metric moves and why, the ticket isn't ready.
+
+---
+
+## TERMINATION
+
+Stop after presenting the proposed issue list (title + one-line summary) for approval —
+do **not** create issues in Linear without explicit OK on scope, count, and assignment.
+After approval, stop when each issue is created with its required blocks (problem,
+acceptance criteria, hypothesis, out-of-scope). Never auto-assign.

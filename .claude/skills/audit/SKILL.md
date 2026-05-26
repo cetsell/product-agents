@@ -23,6 +23,13 @@ Never start with a thesis and find supporting data. Always:
 4. Test hypotheses against the data
 5. Only then synthesize a narrative
 
+## Mandatory Evidence Loop
+
+Every audit finding ends with an Evidence Loop appendix — each finding marked
+`supported` / `partial` / `assumed` with a dated source, the assumption that would
+flip it, and where a human decides. A finding without a dated source is a hypothesis,
+not a finding. Method and drop-in table: `product/playbooks/evidence-loop.md`.
+
 ## Mandatory Context Loading
 
 Before any audit, load:
@@ -298,3 +305,13 @@ Before delivering any audit report, verify:
 6. Report is scannable in under 3 minutes
 7. "So what?" is answered in the first paragraph
 8. Forward-looking items have confidence tags (High/Med/Low)
+
+---
+
+## TERMINATION
+
+Stop when the audit report passes the Quality Gate (8 checks above) and its Evidence
+Loop appendix is attached. Surface findings and hand the decision to the human — do
+**not** extend into recommending new roadmap bets, org changes, hires, or strategy
+pivots beyond the audited scope (that is a different skill). One audit scope per
+invocation. If every finding has a dated source and an owner, you are finished.

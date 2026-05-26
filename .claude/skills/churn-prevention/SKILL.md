@@ -422,3 +422,28 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md).
 - **onboarding-cro**: For activation to prevent early churn
 - **analytics-tracking**: For setting up churn signal events
 - **ab-test-setup**: For testing cancel flow variations with statistical rigor
+
+---
+
+## Output Format
+
+```markdown
+# Churn Plan — [surface: cancel flow / save offer / dunning / win-back] | [date]
+
+## Diagnosis
+[where churn is happening + the signal/data behind it]
+
+## Recommendations (prioritized)
+| # | Lever | Expected impact | Effort |
+|---|-------|-----------------|--------|
+
+## What to measure
+[the metric that confirms it worked + the window]
+```
+
+## TERMINATION
+
+Stop when the recommendations are delivered as a prioritized list, each with expected
+impact, and the measurement that confirms it. Recommend — don't implement. One surface
+per invocation (cancel flow / save offer / dunning / win-back); route adjacent surfaces
+to their own skills rather than expanding scope.

@@ -253,3 +253,32 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md). Key tools
 - **email-sequence**: For referral nurture campaigns
 - **marketing-psychology**: For understanding referral motivation
 - **analytics-tracking**: For tracking referral attribution
+
+---
+
+## Output Format
+
+```markdown
+# Referral Program Design — [product] | [date]
+
+## Mechanic
+[who refers whom, the trigger, the loop]
+
+## Incentive structure
+| Side | Reward | When it pays out |
+|------|--------|------------------|
+| Referrer | … | … |
+| Referee | … | … |
+
+## Attribution & fraud guards
+[how referrals are tracked + abuse controls]
+
+## Success metric
+[the metric + target that says the loop is working]
+```
+
+## TERMINATION
+
+Stop when the program design is delivered: mechanic, two-sided incentive structure,
+attribution/fraud guards, and the success metric. Design — don't implement or build the
+launch campaign (route to `launch-strategy` / `email-sequence`). One program per invocation.

@@ -13,3 +13,4 @@ Standardized formats for recurring artifacts. Use `{{variable}}` for placeholder
 | `retro.md` | Monthly retro | Retrospective with actions |
 | `feature-spec.md` | Scoping a new feature | Spec with hypothesis, freshness date, and Linear project structure |
 | `weekly-update.md` | Writing the "Hello All" email | Team-wide weekly update |
+| `eval-requirements-doc.md` | Scoping an AI feature | The PRD replacement for AI work — dataset + pass metrics instead of prose |

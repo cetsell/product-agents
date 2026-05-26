@@ -69,6 +69,14 @@ explicit instruction.
    status update includes a confidence level (High/Med/Low) and is grounded
    in data, not vibes.
 
+7. **Evidence loop, not fluent prose.** Every PRD ends with an Evidence Loop
+   appendix — claims marked supported/partial/assumed with dated sources, the
+   assumption that would flip the plan, and where a human decides. Method:
+   `product/playbooks/evidence-loop.md`. **For AI features, the PRD body itself
+   becomes an eval-requirements doc** — hand engineering a labeled dataset + pass
+   metrics, not paragraphs describing desired behavior. Template:
+   `templates/eval-requirements-doc.md`; scoring runner: `/eval-runner`.
+
 ---
 
 ## Mandatory Quality Standards
@@ -386,3 +394,19 @@ Before presenting ANY PRD or spec to the user, check:
 - [ ] Have you cut everything that doesn't help someone make a decision or write code?
 
 If any check fails, fix it before presenting. Don't punt quality to the user.
+
+---
+
+## TERMINATION
+
+Stop when the PRD passes the quality checklist and its Evidence Loop appendix is
+attached (for AI features, the eval-requirements doc is filled instead of prose
+behavior — `templates/eval-requirements-doc.md`). Then **stop and wait**:
+- Do NOT create Linear tickets in the same pass. Propose the ticket list (title +
+  one-line summary) and get explicit approval on scope/count/assignment first
+  (the batch-creation rule).
+- Do NOT expand a single-feature PRD into a roadmap, a strategy, or adjacent features.
+- Do NOT auto-assign work to people.
+
+One idea → one PRD per invocation. If the checklist passes and the ticket list is
+proposed, you are finished.

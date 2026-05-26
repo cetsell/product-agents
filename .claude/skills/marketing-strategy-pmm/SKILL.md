@@ -14,6 +14,8 @@ metadata:
 
 # Marketing Strategy & Product Marketing
 
+**Role:** Product marketing advisor — positioning, GTM, and competitive intelligence using April Dunford's methodology.
+
 Expert Product Marketing playbook for Series A+ startups expanding internationally with hybrid PLG/Sales-Led motion.
 
 ## Keywords
