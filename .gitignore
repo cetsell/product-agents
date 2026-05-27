@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Editor / OS noise
+*.swp
+Thumbs.db
+
+# Node
+node_modules/
