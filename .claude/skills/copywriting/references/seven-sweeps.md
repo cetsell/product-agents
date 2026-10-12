@@ -1,27 +1,13 @@
----
-name: copy-editing
-description: "When the user wants to edit, review, or improve existing marketing copy. Also use when the user mentions 'edit this copy,' 'review my copy,' 'copy feedback,' 'proofread,' 'polish this,' 'make this better,' 'copy sweep,' 'tighten this up,' 'this reads awkwardly,' 'clean up this text,' 'too wordy,' or 'sharpen the messaging.' Use this when the user already has copy and wants it improved rather than rewritten from scratch. For writing new copy, see copywriting."
-metadata:
-  version: 1.1.0
----
+# The Seven Sweeps (Edit mode)
 
-# Copy Editing
+Load when running Edit mode on existing copy. Run the sweeps in order; after each one, loop back through the earlier sweeps to check the new edits did not break them.
 
-You are an expert copy editor specializing in marketing and conversion copy. Your goal is to systematically improve existing copy through focused editing passes while preserving the core message.
+## Principles
 
-## Core Philosophy
-
-**Read `product/context.md` first** for the customer and positioning; match the voice of existing published copy.
-
-Good copy editing isn't about rewriting—it's about enhancing. Each pass focuses on one dimension, catching issues that get missed when you try to fix everything at once.
-
-**Key principles:**
 - Don't change the core message; focus on enhancing it
 - Multiple focused passes beat one unfocused review
 - Each edit should have a clear reason
 - Preserve the author's voice while improving clarity
-
----
 
 ## The Seven Sweeps Framework
 
@@ -93,9 +79,9 @@ Edit copy through seven sequential passes, each focusing on one dimension. After
 **The So What test:**
 For every statement, ask "Okay, so what?" If the copy doesn't answer that question with a deeper benefit, it needs work.
 
-❌ "Our platform uses AI-powered analytics"
+Weak: "Our platform uses AI-powered analytics"
 *So what?*
-✅ "Our AI-powered analytics surface insights you'd miss manually—so you can make better decisions in half the time"
+Better: "Our AI-powered analytics surface insights you'd miss manually—so you can make better decisions in half the time"
 
 **Common So What failures:**
 - Feature lists without benefit connections
@@ -255,52 +241,17 @@ For every statement, ask "Okay, so what?" If the copy doesn't answer that questi
 
 ---
 
-## Quick-Pass Editing Checks
+## Working with Copy Sweeps
 
-Use these for faster reviews when a full seven-sweep process isn't needed.
+When editing collaboratively:
 
-### Word-Level Checks
+1. **Run a sweep and present findings** - Show what you found, why it's an issue
+2. **Recommend specific edits** - Don't just identify problems; propose solutions
+3. **Request the updated copy** - Let the author make final decisions
+4. **Verify previous sweeps** - After each round of edits, re-check earlier sweeps
+5. **Repeat until clean** - Continue until a full sweep finds no new issues
 
-**Cut these words:**
-- Very, really, extremely, incredibly (weak intensifiers)
-- Just, actually, basically (filler)
-- In order to (use "to")
-- That (often unnecessary)
-- Things, stuff (vague)
-
-**Replace these:**
-
-| Weak | Strong |
-|------|--------|
-| Utilize | Use |
-| Implement | Set up |
-| Leverage | Use |
-| Facilitate | Help |
-| Innovative | New |
-| Robust | Strong |
-| Seamless | Smooth |
-| Cutting-edge | New/Modern |
-
-**Watch for:**
-- Adverbs (usually unnecessary)
-- Passive voice (switch to active)
-- Nominalizations (verb → noun: "make a decision" → "decide")
-
-### Sentence-Level Checks
-
-- One idea per sentence
-- Vary sentence length (mix short and long)
-- Front-load important information
-- Max 3 conjunctions per sentence
-- No more than 25 words (usually)
-
-### Paragraph-Level Checks
-
-- One topic per paragraph
-- Short paragraphs (2-4 sentences for web)
-- Strong opening sentences
-- Logical flow between paragraphs
-- White space for scannability
+This iterative process ensures each edit doesn't create new problems while respecting the author's ownership of the copy.
 
 ---
 
@@ -359,112 +310,3 @@ Use these for faster reviews when a full seven-sweep process isn't needed.
 - [ ] Consistent formatting
 - [ ] Links work (if applicable)
 - [ ] Core message preserved through all edits
-
----
-
-## Common Copy Problems & Fixes
-
-### Problem: Wall of Features
-**Symptom:** List of what the product does without why it matters
-**Fix:** Add "which means..." after each feature to bridge to benefits
-
-### Problem: Corporate Speak
-**Symptom:** "Leverage synergies to optimize outcomes"
-**Fix:** Ask "How would a human say this?" and use those words
-
-### Problem: Weak Opening
-**Symptom:** Starting with company history or vague statements
-**Fix:** Lead with the reader's problem or desired outcome
-
-### Problem: Buried CTA
-**Symptom:** The ask comes after too much buildup, or isn't clear
-**Fix:** Make the CTA obvious, early, and repeated
-
-### Problem: No Proof
-**Symptom:** "Customers love us" with no evidence
-**Fix:** Add specific testimonials, numbers, or case references
-
-### Problem: Generic Claims
-**Symptom:** "We help businesses grow"
-**Fix:** Specify who, how, and by how much
-
-### Problem: Mixed Audiences
-**Symptom:** Copy tries to speak to everyone, resonates with no one
-**Fix:** Pick one audience and write directly to them
-
-### Problem: Feature Overload
-**Symptom:** Listing every capability, overwhelming the reader
-**Fix:** Focus on 3-5 key benefits that matter most to the audience
-
----
-
-## Working with Copy Sweeps
-
-When editing collaboratively:
-
-1. **Run a sweep and present findings** - Show what you found, why it's an issue
-2. **Recommend specific edits** - Don't just identify problems; propose solutions
-3. **Request the updated copy** - Let the author make final decisions
-4. **Verify previous sweeps** - After each round of edits, re-check earlier sweeps
-5. **Repeat until clean** - Continue until a full sweep finds no new issues
-
-This iterative process ensures each edit doesn't create new problems while respecting the author's ownership of the copy.
-
----
-
-## References
-
-- [Plain English Alternatives](references/plain-english-alternatives.md): Replace complex words with simpler alternatives
-
----
-
-## Task-Specific Questions
-
-1. What's the goal of this copy? (Awareness, conversion, retention)
-2. What action should readers take?
-3. Are there specific concerns or known issues?
-4. What proof/evidence do you have available?
-
----
-
-## Related Skills
-
-- **copywriting**: For writing new copy from scratch (use this skill to edit after your first draft is complete)
-- **page-cro**: For broader page optimization beyond copy
-- **marketing-psychology**: For understanding why certain edits improve conversion
-- **ab-test-setup**: For testing copy variations
-
----
-
-## When to Use Each Skill
-
-| Task | Skill to Use |
-|------|--------------|
-| Writing new page copy from scratch | copywriting |
-| Reviewing and improving existing copy | copy-editing (this skill) |
-| Editing copy you just wrote | copy-editing (this skill) |
-| Structural or strategic page changes | page-cro |
-
----
-
-## Output Format
-
-```markdown
-# Copy Edit — [asset] | [date]
-
-## Edited copy
-[the revised copy, ready to paste]
-
-## Changes (what & why)
-| Original | Revised | Why |
-|----------|---------|-----|
-
-## Left as-is
-[anything you deliberately did not change, and why]
-```
-
-## TERMINATION
-
-Stop when the edited copy is delivered with its change notes. Edit what was given —
-don't rewrite from scratch (that's `copywriting`), don't restructure the page (that's
-`page-cro`), and don't keep polishing past the user's intent. One asset per invocation.

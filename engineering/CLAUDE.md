@@ -11,6 +11,6 @@ Context that helps agents working *outside* an application repo (here, in team-o
 ## When to read
 
 - A PRD, ticket, or premortem needs to know what is frozen, risky, or slow to change in the codebase.
-- Sizing work in `/pm-super-agent` or `/linear-issue-creator` and you need the real architecture, not a guess.
+- Sizing work in `/pm-super-agent` or `/issue-creator` and you need the real architecture, not a guess.
 
 Do not duplicate an app repo's own `CLAUDE.md` here. The canonical conventions live in that repo; this folder carries only the slice product work needs.

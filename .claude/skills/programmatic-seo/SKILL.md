@@ -1,245 +1,129 @@
 ---
 name: programmatic-seo
-description: When the user wants to create SEO-driven pages at scale using templates and data. Also use when the user mentions "programmatic SEO," "template pages," "pages at scale," "directory pages," "location pages," "[keyword] + [city] pages," "comparison pages," "integration pages," "building many pages for SEO," "pSEO," "generate 100 pages," "data-driven pages," or "templated landing pages." Use this whenever someone wants to create many similar pages targeting different keywords or locations. For auditing existing SEO issues, see seo-audit. For content strategy planning, see content-strategy.
+description: >
+  Designs SEO pages at scale from a template plus a data set: picks the playbook (templates,
+  comparisons, integrations, locations, personas, and more), defines the keyword pattern,
+  data model, page template, linking and indexation plan, and a sample of generated pages,
+  with the organic metric the pages should move and how a staged rollout proves it.
+when_to_use: >
+  Use for "programmatic SEO", "pSEO", "template pages", "pages at scale", "directory pages",
+  "location pages", "[keyword] + [city] pages", "comparison pages", "integration pages",
+  "generate 100 pages", "data-driven pages", "templated landing pages", or any plan to
+  build many similar pages targeting different keywords. Not for the copy on one page (use
+  /copywriting), conversion of a single page (use /page-cro), or positioning for
+  comparison pages (use /marketing-strategy-pmm).
+argument-hint: "[keyword pattern or page type]"
+allowed-tools: Read, Grep, Glob, Write, WebSearch, WebFetch
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Programmatic SEO
 
-You are an expert in programmatic SEO—building SEO-optimized pages at scale using templates and data. Your goal is to create pages that rank, provide value, and avoid thin content penalties.
+**Role:** Programmatic SEO strategist. One job: a page template and data model that earn rankings and signups at scale without thin-content penalties.
+**Outcome:** Acquisition & activation — non-brand organic sessions and the signups they produce (indexed pages x clicks per page x conversion rate). **Leaves behind:** a playbook choice, template, data model, sample pages, and rollout test plan in `gtm/pseo/`.
+**Output:** `gtm/pseo/<pattern>-<YYYY-MM-DD>.md`
 
-## Initial Assessment
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover or what is specific to this task.
 
-**Read `product/context.md` first** (customer, stage, North Star, baselines, tools). Ask only for what it does not cover or what is specific to this task.
+## Initial assessment
 
-Before designing a programmatic SEO strategy, understand:
+1. **Business context** — product, target audience, and the conversion goal for these pages (signup, trial, demo).
+2. **Opportunity** — which search patterns exist, how many potential pages, how search volume is distributed (head vs long tail).
+3. **Competitive landscape** — who ranks for these terms now, what their pages look like, and whether this site can realistically compete given its authority.
+4. **Data and stack** — what data the team has or can acquire, and what the site is built on.
 
-1. **Business Context**
-   - What's the product/service?
-   - Who is the target audience?
-   - What's the conversion goal for these pages?
+If authority is low and incumbents own the pattern, say so and recommend a narrower pattern before designing anything.
 
-2. **Opportunity Assessment**
-   - What search patterns exist?
-   - How many potential pages?
-   - What's the search volume distribution?
+## Core principles
 
-3. **Competitive Landscape**
-   - Who ranks for these terms now?
-   - What do their pages look like?
-   - Can you realistically compete?
+1. **Unique value per page.** Every page provides value specific to that page, not swapped variables in a template. The more differentiated, the better.
+2. **Proprietary data wins.** Defensibility, strongest to weakest: proprietary (you created it), product-derived (from your users), user-generated (your community), licensed (exclusive access), public (anyone can use).
+3. **Subfolders, not subdomains.** Subfolders consolidate domain authority; subdomains split it. Good: `yoursite.com/templates/resume/`. Bad: `templates.yoursite.com/resume/`.
+4. **Genuine search intent match.** Pages answer what people are actually searching for.
+5. **Quality over quantity.** 100 great pages beat 10,000 thin ones.
+6. **Avoid penalties.** No doorway pages, keyword stuffing, or duplicate content. Genuine utility for users.
 
----
+## Workflow
 
-## Core Principles
+### 1. Pick the playbook
 
-### 1. Unique Value Per Page
-- Every page must provide value specific to that page
-- Not just swapped variables in a template
-- Maximize unique content—the more differentiated, the better
+Twelve patterns: Templates, Curation, Conversions, Comparisons, Examples, Locations, Personas, Integrations, Glossary, Translations, Directory, Profiles. Match the pattern to what the team uniquely has (proprietary data points to Directories or Profiles; integrations to Integrations; a multi-segment audience to Personas). Playbooks can layer ("best coworking spaces in San Diego"). Full pattern table and the choosing matrix: `references/playbooks.md`.
 
-### 2. Proprietary Data Wins
-Hierarchy of data defensibility:
-1. Proprietary (you created it)
-2. Product-derived (from your users)
-3. User-generated (your community)
-4. Licensed (exclusive access)
-5. Public (anyone can use—weakest)
+### 2. Research the keyword pattern
 
-### 3. Clean URL Structure
-**Use subfolders, not subdomains** — subfolders consolidate domain authority while subdomains split it:
-- Good: `yoursite.com/templates/resume/`
-- Bad: `templates.yoursite.com/resume/`
+- Identify the repeating structure, the variables, and how many unique combinations exist.
+- Validate demand: aggregate search volume, head vs long-tail distribution, trend direction.
+- Drop combinations with no demand before they become pages.
 
-### 4. Genuine Search Intent Match
-Pages must actually answer what people are searching for.
+### 3. Define the data model
 
-### 5. Quality Over Quantity
-Better to have 100 great pages than 10,000 thin ones.
+- What data populates each page; whether it is first-party, scraped, licensed, or public; how it is updated.
+- One row per page, with the fields the template needs and the conditional fields that make pages differ.
 
-### 6. Avoid Google Penalties
-- No doorway pages
-- No keyword stuffing
-- No duplicate content
-- Genuine utility for users
+### 4. Design the template
 
----
+- Header with the target keyword; a unique intro (not variables swapped); data-driven sections; related pages and internal links; CTAs that fit the search intent.
+- Uniqueness: conditional content driven by the data, plus original insight or analysis per page.
+- Title and meta description templates; schema type to use.
 
-## The 12 Playbooks (Overview)
+### 5. Plan internal linking
 
-| Playbook | Pattern | Example |
-|----------|---------|---------|
-| Templates | "[Type] template" | "resume template" |
-| Curation | "best [category]" | "best website builders" |
-| Conversions | "[X] to [Y]" | "$10 USD to GBP" |
-| Comparisons | "[X] vs [Y]" | "webflow vs wordpress" |
-| Examples | "[type] examples" | "landing page examples" |
-| Locations | "[service] in [location]" | "dentists in austin" |
-| Personas | "[product] for [audience]" | "crm for real estate" |
-| Integrations | "[product A] [product B] integration" | "slack asana integration" |
-| Glossary | "what is [term]" | "what is pSEO" |
-| Translations | Content in multiple languages | Localized content |
-| Directory | "[category] tools" | "ai copywriting tools" |
-| Profiles | "[entity name]" | "stripe ceo" |
+- Hub and spoke: hub is the category page, spokes are the generated pages, with cross-links between related spokes.
+- No orphans: every page reachable from the main site, in the XML sitemap, with breadcrumbs carrying structured data.
 
-**For detailed playbook implementation**: See [references/playbooks.md](references/playbooks.md)
+### 6. Plan indexation
 
----
+- Prioritize high-volume patterns; noindex very thin variations; manage crawl budget; separate sitemaps by page type.
 
-## Choosing Your Playbook
+### 7. Generate samples and check quality
 
-| If you have... | Consider... |
-|----------------|-------------|
-| Proprietary data | Directories, Profiles |
-| Product with integrations | Integrations |
-| Design/creative product | Templates, Examples |
-| Multi-segment audience | Personas |
-| Local presence | Locations |
-| Tool or utility product | Conversions |
-| Content/expertise | Glossary, Curation |
-| Competitor landscape | Comparisons |
+Produce 3-5 sample pages from real rows, including one from the thinnest data you expect. Run the pre-launch checklist and common-mistakes scan in `references/quality-checklist.md` against them.
 
-You can layer multiple playbooks (e.g., "Best coworking spaces in San Diego").
+### 8. Plan the rollout test
 
----
+Launch one batch first, not the whole set. Compare the batch against a held-back group of eligible pages (or against the prior period for the same pattern) on indexation rate, organic clicks, and signups. Design the split and read-out with /ab-test-setup and log it in `product/roadmap/experiment-roadmap.md`. Scale only if the batch clears the target.
 
-## Implementation Framework
+## Output shape
 
-### 1. Keyword Pattern Research
+```markdown
+# pSEO plan — [pattern] | [date]
 
-**Identify the pattern:**
-- What's the repeating structure?
-- What are the variables?
-- How many unique combinations exist?
+**Metric these pages should move:** [non-brand organic sessions / signups from the pattern] — baseline [x or `assumed`], target [y by date]
+**Test that proves it:** [first batch vs held-back group, primary metric, guardrail] — design with /ab-test-setup
 
-**Validate demand:**
-- Aggregate search volume
-- Volume distribution (head vs. long tail)
-- Trend direction
+## Opportunity
+[pattern, combinations, demand, who ranks, can we compete]
 
-### 2. Data Requirements
+## Playbook and data model
+[playbook choice and why; data sources; field list per page]
 
-**Identify data sources:**
-- What data populates each page?
-- Is it first-party, scraped, licensed, public?
-- How is it updated?
+## Page template
+[URL structure, title/meta templates, content outline, schema type]
 
-### 3. Template Design
+## Linking and indexation
+[hub/spoke map, sitemap plan, noindex rules]
 
-**Page structure:**
-- Header with target keyword
-- Unique intro (not just variables swapped)
-- Data-driven sections
-- Related pages / internal links
-- CTAs appropriate to intent
+## Sample pages
+[3-5 generated samples, including the thinnest case]
 
-**Ensuring uniqueness:**
-- Each page needs unique value
-- Conditional content based on data
-- Original insights/analysis per page
+## Rollout and monitoring
+[first batch size, what to track: indexation rate, rankings, traffic, engagement, conversion; what triggers a stop]
+```
 
-### 4. Internal Linking Architecture
+## References (load on demand)
 
-**Hub and spoke model:**
-- Hub: Main category page
-- Spokes: Individual programmatic pages
-- Cross-links between related spokes
+- `references/playbooks.md` — the 12 playbooks with pattern and example, and the matrix for choosing one from what the team has. Read at step 1.
+- `references/quality-checklist.md` — pre-launch checklist (content, technical SEO, linking, indexation), post-launch monitoring signals, and common mistakes. Read at step 7 and when writing the monitoring plan.
 
-**Avoid orphan pages:**
-- Every page reachable from main site
-- XML sitemap for all pages
-- Breadcrumbs with structured data
+## Related skills
 
-### 5. Indexation Strategy
-
-- Prioritize high-volume patterns
-- Noindex very thin variations
-- Manage crawl budget thoughtfully
-- Separate sitemaps by page type
-
----
-
-## Quality Checks
-
-### Pre-Launch Checklist
-
-**Content quality:**
-- [ ] Each page provides unique value
-- [ ] Answers search intent
-- [ ] Readable and useful
-
-**Technical SEO:**
-- [ ] Unique titles and meta descriptions
-- [ ] Proper heading structure
-- [ ] Schema markup implemented
-- [ ] Page speed acceptable
-
-**Internal linking:**
-- [ ] Connected to site architecture
-- [ ] Related pages linked
-- [ ] No orphan pages
-
-**Indexation:**
-- [ ] In XML sitemap
-- [ ] Crawlable
-- [ ] No conflicting noindex
-
-### Post-Launch Monitoring
-
-Track: Indexation rate, Rankings, Traffic, Engagement, Conversion
-
-Watch for: Thin content warnings, Ranking drops, Manual actions, Crawl errors
-
----
-
-## Common Mistakes
-
-- **Thin content**: Just swapping city names in identical content
-- **Keyword cannibalization**: Multiple pages targeting same keyword
-- **Over-generation**: Creating pages with no search demand
-- **Poor data quality**: Outdated or incorrect information
-- **Ignoring UX**: Pages exist for Google, not users
-
----
-
-## Output Format
-
-### Strategy Document
-- Opportunity analysis
-- Implementation plan
-- Content guidelines
-
-### Page Template
-- URL structure
-- Title/meta templates
-- Content outline
-- Schema markup
-
----
-
-## Task-Specific Questions
-
-1. What keyword patterns are you targeting?
-2. What data do you have (or can acquire)?
-3. How many pages are you planning?
-4. What does your site authority look like?
-5. Who currently ranks for these terms?
-6. What's your technical stack?
-
----
-
-## Related Skills
-
-- **seo-audit**: For auditing programmatic pages after launch
-- **schema-markup**: For adding structured data
-- **site-architecture**: For page hierarchy, URL structure, and internal linking
-- **competitor-alternatives**: For comparison page frameworks
-
----
+- /copywriting — the template's headline, intro, and CTA copy
+- /page-cro — conversion of the template once traffic arrives
+- /ab-test-setup — the rollout split and read-out
+- /data-analyst — post-launch organic and conversion read-outs from the warehouse
+- /marketing-strategy-pmm — positioning for comparison and alternative pages
 
 ## TERMINATION
 
-Stop when the page template, the data model that fills it, and a sample of generated
-pages are delivered. Don't also run the post-launch SEO audit, add schema markup, or
-design the site architecture — name those as next steps and route to their skills.
+Stop when the plan is delivered in the output shape: playbook, data model, page template, sample pages, and the metric and rollout-test lines filled. One keyword pattern per invocation. Do not generate the full page set, publish pages, run a post-launch audit, or redesign the site architecture; name those as next steps.

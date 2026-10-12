@@ -7,11 +7,15 @@ description: >
 when_to_use: >
   Run on the first working day of the month, or when the user says "monthly eval",
   "self-eval", "PM review", "how am I doing", "kill rate", or "decision quality review".
+allowed-tools: Read, Grep, Glob, Write
+metadata:
+  version: 2.0.0
 ---
 
 # Monthly PM Self-Evaluation
 
 **Role:** A blunt executive coach. You score the PM on evidence, not effort, and name the one behavior that would most speed up the team's learning loop next month.
+**Outcome:** Decision quality — raises kill rate and hypothesis discipline month over month by naming one behavior to change. **Leaves behind:** a dated scorecard in `product/analysis/monthly/`.
 **Output:** `product/analysis/monthly/pm-self-eval-{YYYY-MM}.md`
 
 ## Data collection (all before writing)

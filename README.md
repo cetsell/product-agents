@@ -12,7 +12,7 @@ Shared context repository for your product team. AI-agent optimized — every fo
 | **`engineering/`** | Codebase conventions and runtime context for your application repos |
 | **`templates/`** | Standardized formats for bets, decisions, call summaries, reviews, specs, eval-requirements docs |
 | **`proactive/`** | Scheduled + triggered proactive runs — the operating rhythm and reactive triggers, scheduler-agnostic |
-| **`.claude/`** | 31 Claude Code skills, 4 agents, and commands |
+| **`.claude/`** | 28 Claude Code skills, 4 agents, and commands |
 
 ## How to Use
 
@@ -76,79 +76,67 @@ Every skill is held to a checkable bar — a role line, a structured output shap
 - **Layer 1 — static:** `node check-skills.mjs` lints every `SKILL.md` against the bar and runs in CI (`.github/workflows/skill-check.yml`), so a skill that drops its role line or stop condition fails the build.
 - **Layer 2 — behavioral:** `/skill-eval` runs a skill against representative prompts and scores the *output* (stayed in role, wrote into the shape, terminated, evidence loop, triggered correctly), wrapping the `skill-creator` harness.
 
-## Skills (31)
+## Skills (28), by the outcome they move
 
-Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.md` with frameworks, data sources, and output conventions. Invoke with `/skill-name`. Load only the skill you need — not all at once.
+Each skill opens with an **Outcome** line: the KPI, decision, or cycle time it moves, and the evidence it leaves behind. Invoke with `/skill-name`; Claude also loads a skill on its own when your request matches its description.
 
-### PM & Strategy
+### Acquisition & activation
 
-| Skill | What it does |
-|-------|-------------|
-| `/cadence` | Weekly/monthly PM rituals — Monday kickoff, Wednesday pulse, Friday demo, weekly email, monthly recap. Pulls from your issue tracker, meeting notes, and the roadmap files. |
-| `/strategy` | OKR cascades, RICE/ICE prioritization, competitive analysis, discovery frameworks, bet briefs, PRDs, user stories, sprint planning, vision alignment. |
-| `/audit` | Operational and product health audits with 5-phase research process. Modes: operational intel, product intel, funnel analysis, requirements brief, post-mortem, process audit, KPI framework. |
-| `/sprint-health` | Pre-launch sprint health check — ticket quality, velocity signals, launch readiness gates, blocker scan. Switches to pre-launch mode 4 weeks before ship date. |
+| Skill | Moves | Leaves behind |
+|-------|-------|---------------|
+| `/copywriting` | the page's primary conversion rate (visitor to signup, trial, demo, or purchase) | paste-ready copy, the metric it targets, and a test stub that proves it beat the old copy, in `gtm/copy/` |
+| `/email-sequence` | the activation, conversion, or reactivation rate of the audience entering the sequence (retention or recovery rate for dunning and win-back) | a ready-to-load sequence spec with full copy in `gtm/email/` |
+| `/marketing-strategy-pmm` | the win rate, landing-to-signup or demo conversion, or feature adoption that the positioning or launch is meant to move | one dated artifact in `product/analysis/strategy/` with a target metric, a baseline, and the test that would prove it |
+| `/onboarding-cro` | activation rate and time to activation, with Day 7 retention as the check that activation was real | a ranked change list in chat, with the top test ready for `/ab-test-setup` |
+| `/page-cro` | page conversion rate to the primary goal (signup, demo, purchase), with downstream activation or lead quality as the guardrail | a ranked change list in chat, with the top test ready for `/ab-test-setup` |
+| `/popup-cro` | popup submission rate (impressions to submissions), with bounce and close rate as guardrails | a ranked change list in chat, with the top test ready for `/ab-test-setup` |
+| `/programmatic-seo` | non-brand organic sessions and the signups they produce (indexed pages x clicks per page x conversion rate) | a playbook choice, template, data model, sample pages, and rollout test plan in `gtm/pseo/` |
+| `/referral-program` | share of new customers from referral and referral CAC vs. other channels, via referral rate and referred-user conversion | a program design in chat, with its first test logged to `product/roadmap/experiment-roadmap.md` via `/ab-test-setup` |
+| `/signup-flow-cro` | signup completion rate (form started to account created), with activation rate as the guardrail | a ranked change list in chat, with the top test ready for `/ab-test-setup` |
 
-### Analytics & Data
+### Retention
 
-| Skill | What it does |
-|-------|-------------|
-| `/data-analyst` | Warehouse analytics (BigQuery by default). Conversion funnel audits, weekly growth trends, activation signals, monetization analysis, device breakdowns, acquisition ROI. |
+| Skill | Moves | Leaves behind |
+|-------|-------|---------------|
+| `/churn-prevention` | monthly logo and revenue churn, via cancel-flow save rate, dunning recovery rate, or at-risk save rate | a prioritized churn plan in chat, with its tests logged to `product/roadmap/experiment-roadmap.md` via `/ab-test-setup` |
 
-### Issue Creation & Specs
+### Monetization
 
-| Skill | What it does |
-|-------|-------------|
-| `/pm-super-agent` | Master PM agent — refines raw ideas into PRDs, specs, and Linear tickets. Pipeline: context hunt, intake, refine, write PRD, diagram, decompose, retro. |
-| `/linear-issue-creator` | Translates product intent into well-structured Linear issues. Enforces hypothesis/kill trigger/confidence on every feature. Right-sized for 1–3 day tickets. |
+| Skill | Moves | Leaves behind |
+|-------|-------|---------------|
+| `/paywall-upgrade-cro` | free-to-paid or trial-to-paid conversion rate, with post-upgrade churn and free-user retention as guardrails | a paywall review and ranked change list in chat, with the top test ready for `/ab-test-setup` |
+| `/pricing-strategy` | ARPU and paid conversion (or expansion revenue), with signup volume and churn as guardrails | a pricing recommendation at `product/analysis/strategy/pricing-{topic}-{date}.md` |
 
-### Evaluation & Prompts
+### Velocity
 
-| Skill | What it does |
-|-------|-------------|
-| `/eval-runner` | Scores prompt variants for an AI feature against a labeled dataset and the pass bar in its eval-requirements doc, with an explicit, configurable judge model. |
-| `/senior-prompt-engineer` | Production prompt engineering. Prompt audit, new prompt design, structured output engineering, evaluation, debug. |
-| `/evidence-loop` | Pressure-tests any output for unsupported claims — claim/source trail, the assumption that would flip the decision, and the human decision point. The "how do we know?" guardrail. |
-| `/premortem` | Prospective-hindsight failure analysis — assumes the plan already failed and works backward to find every reason why, then returns a revised plan + pre-launch checklist. |
-| `/skill-eval` | Behavioral eval for the skill library — runs a skill and scores its output against the quality bar (role, shape, termination, evidence loop, triggering). Static counterpart: `node check-skills.mjs`. |
+| Skill | Moves | Leaves behind |
+|-------|-------|---------------|
+| `/audit` | shrinks the lag between shipped and measured, and the blockers that recur week after week | a dated report in `product/analysis/audit/` where every finding has two sources and an owner |
+| `/cadence` | holds the idea-to-measured loop to one week by forcing an iterate-or-swing call on the bet every Friday | dated notes in `team/weekly-updates/` that the next week builds on |
+| `/issue-creator` | tickets an engineer can start in ten minutes, each instrumented so the shipped work can be read against its hypothesis | drafted (and, on approval, created) tickets with problem, criteria, hypothesis, and analytics |
+| `/pm-super-agent` | idea to a buildable, measurable PRD in one session, scoped to the smallest version that proves the bet | a PRD in `product/specs/` with an evidence appendix and a proposed ticket list |
+| `/senior-prompt-engineer` | prompt changes ship as reviewed diffs with eval cases attached, so AI-feature iterations take hours instead of guesswork cycles | an audit, design, or debug document in `product/analysis/prompts/` plus the diff |
+| `/sprint-health` | stale tickets, blockers, and launch-gate gaps are caught while there is still time in the sprint to fix them | a dated sweep in `team/weekly-updates/` where every flag has an owner |
 
-### Artifact Health
+### Decision quality
 
-| Skill | What it does |
-|-------|-------------|
-| `/check-artifacts` | Grades artifact health A–F based on freshness, quality, and alignment with your issue tracker. Checks roadmap, betting table, current bet, and initiative alignment. |
-| `/monthly-pm-self-eval` | Evidence-based monthly self-evaluation — scores decision quality, hypothesis discipline, communication, speed, and leverage (each 1–5) and names one behavior to change. |
+| Skill | Moves | Leaves behind |
+|-------|-------|---------------|
+| `/ab-test-setup` | ship, kill, and iterate calls rest on a pre-registered hypothesis, metric, and sample size instead of opinion, and the idea-to-measured-result loop has a known end date | a test plan in chat and, if the user asks, a row in `product/roadmap/experiment-roadmap.md` |
+| `/check-artifacts` | keeps plans and baselines fresh enough to decide on (two weeks for plans, 30 days for baselines) | an A–F grade and an ordered fix list |
+| `/data-analyst` | every product call cites a sourced, dated number instead of a guess | an analysis in `product/analysis/data/` with the queries that produced each number |
+| `/eval-runner` | AI-feature variants ship or die on measured pass rate against a written bar, not on a demo | an eval report with judge model ID, agreement, and transcripts |
+| `/evidence-loop` | no assumption reaches a stakeholder dressed as a fact | an evidence table appended to the artifact (or `product/analysis/evidence/`) |
+| `/marketing-psychology` | fewer tests built on "it feels right"; every psychology-driven change ships as a hypothesis with a metric and a predicted direction | a mechanism card in chat, ready to hand to `/ab-test-setup` and log in `product/roadmap/experiment-roadmap.md` |
+| `/monthly-pm-self-eval` | raises kill rate and hypothesis discipline month over month by naming one behavior to change | a dated scorecard in `product/analysis/monthly/` |
+| `/premortem` | failure modes surface before money and weeks are committed, while the plan can still change | an HTML report and transcript in `product/analysis/premortem/` |
+| `/skill-eval` | the library's quality bar is measured and visible, so the team knows which skills to trust unattended | a dated scorecard in `product/analysis/skill-evals/` |
 
-### Marketing & Growth
+### Vision & strategy
 
-| Skill | What it does |
-|-------|-------------|
-| `/copywriting` | Conversion copywriting for any page — homepage, landing, pricing, feature, about. Hero → Social Proof → Problem → Solution → How It Works → Testimonials → CTA. |
-| `/email-sequence` | Design drip campaigns and lifecycle automation. 12+ sequence templates: welcome, nurture, re-engagement, post-purchase, upgrade, win-back, dunning, NPS. |
-| `/marketing-strategy-pmm` | Product marketing — April Dunford positioning methodology, ICP definition, messaging hierarchy, launch playbooks, competitive battlecards, market entry. |
-| `/marketing-psychology` | 70+ mental models for marketing — first principles, JTBD, inversion, second-order thinking, Pareto, diminishing returns, barbell strategy, buyer decision frameworks. |
-| `/pricing-strategy` | SaaS pricing and packaging — value metrics (per-user, per-usage, per-feature), freemium vs trial, tier design, willingness-to-pay research, annual vs monthly. |
-| `/referral-program` | Viral growth mechanics — referral program design, affiliate programs, incentive structures, viral coefficient, self-reinforcing growth loops. |
-| `/programmatic-seo` | pSEO at scale — page templates, modifier strategy, unique value per page, proprietary data hierarchy, canonicalization, internal linking. |
-
-### Conversion Rate Optimization
-
-| Skill | What it does |
-|-------|-------------|
-| `/page-cro` | Optimize any marketing page for conversions — value proposition clarity, headline effectiveness, copy flow, CTA design, trust signals, friction reduction. |
-| `/signup-flow-cro` | Optimize registration and account creation — minimize required fields, progressive profiling, social login, conditional fields, B2C vs B2B patterns. |
-| `/onboarding-cro` | Post-signup activation — time-to-value optimization, aha moment identification, interactive onboarding, empty state design, progress motivation. |
-| `/paywall-upgrade-cro` | In-app paywalls and upgrade flows — feature locks, usage limits, trial expiration, value demonstration, comparison tables, save offers. |
-| `/ab-test-setup` | Experiment design — hypothesis framework, sample size calculation, statistical power, primary/secondary/guardrail metrics, avoiding peeking. |
-| `/churn-prevention` | Reduce churn — cancel flow design with save offers, failed payment recovery (dunning), proactive retention from usage signals, win-back sequences. |
-| `/popup-cro` | Popup and modal optimization — timing rules (scroll, time, exit intent, behavior), value-first copy, mobile experience, targeting strategy. |
-
-### Writing & Editorial
-
-| Skill | What it does |
-|-------|-------------|
-| `/writing-clearly-and-concisely` | Strunk & White for AI — omit needless words, active voice, definite language, positive form. Catches AI puffery (pivotal, crucial, groundbreaking). |
-| `/copy-editing` | The Seven Sweeps framework — Clarity, Concision, Flow, Tone, Specificity, Persuasion, Polish. Enhances without rewriting. Preserves voice. |
+| Skill | Moves | Leaves behind |
+|-------|-------|---------------|
+| `/strategy` | sharpens which bet the team makes next and why, with the assumption that would flip it named up front | a ranked call in `product/analysis/strategy/` with an evidence appendix |
 
 ## Commands
 
@@ -162,7 +150,7 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 
 | Server | Env vars | Used by |
 |--------|----------|---------|
-| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, linear-issue-creator, team-os agent (Refresh) |
+| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, issue-creator, team-os agent (Refresh) |
 | `bigquery` (warehouse) | `BIGQUERY_PROJECT`, optional `BIGQUERY_WRITE_MODE` (defaults to `blocked`) | data-analyst |
 | `meeting-notes` | `MEETING_NOTES_MCP_URL` (your meeting-notes tool's MCP endpoint) | cadence, sprint-health, audit |
 

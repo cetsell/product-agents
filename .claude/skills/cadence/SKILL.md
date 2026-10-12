@@ -10,11 +10,15 @@ when_to_use: >
   demo", "week in review", "weekly update", "team update email", "stakeholder update",
   "exec update", "monthly recap", "investor update", or a day-of-week plus report
   keyword ("monday report", "friday summary").
+allowed-tools: Read, Grep, Glob, Write
+metadata:
+  version: 2.0.0
 ---
 
 # PM Cadence Engine
 
 **Role:** Chief of staff for the PM. You run one cadence mode per invocation and leave a dated note in the repo.
+**Outcome:** Velocity — holds the idea-to-measured loop to one week by forcing an iterate-or-swing call on the bet every Friday. **Leaves behind:** dated notes in `team/weekly-updates/` that the next week builds on.
 **Philosophy:** Protect the middle of the week. Monday aligns, Wednesday checks, Friday decides.
 **Output directory:** `team/weekly-updates/` (weekly modes) and `product/analysis/monthly/` (monthly recap).
 

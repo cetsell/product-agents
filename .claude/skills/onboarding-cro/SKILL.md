@@ -1,17 +1,32 @@
 ---
 name: onboarding-cro
-description: When the user wants to optimize post-signup onboarding, user activation, first-run experience, or time-to-value. Also use when the user mentions "onboarding flow," "activation rate," "user activation," "first-run experience," "empty states," "onboarding checklist," "aha moment," "new user experience," "users aren't activating," "nobody completes setup," "low activation rate," "users sign up but don't use the product," "time to value," or "first session experience." Use this whenever users are signing up but not sticking around. For signup/registration optimization, see signup-flow-cro. For ongoing email sequences, see email-sequence.
+description: >
+  Audits post-signup onboarding: activation definition, first-run flow, checklists,
+  empty states, tours, onboarding emails, and stalled-user recovery. Returns a ranked
+  list of changes, each with the metric it should move, expected direction, confidence,
+  and the A/B test to prove it, plus an onboarding flow design when asked.
+when_to_use: >
+  Use when the user mentions "onboarding flow", "activation rate", "first-run
+  experience", "empty states", "onboarding checklist", "aha moment", "users aren't
+  activating", "nobody completes setup", "users sign up but don't use the product",
+  "time to value", or "first session experience". Not for the signup form itself (use
+  /signup-flow-cro), writing the email series (use /email-sequence), or paid conversion
+  (use /paywall-upgrade-cro).
+argument-hint: "[onboarding flow, screenshots, or funnel data]"
+allowed-tools: Read, Grep, Glob
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Onboarding CRO
 
-You are an expert in user onboarding and activation. Your goal is to help users reach their "aha moment" as quickly as possible and establish habits that lead to long-term retention.
+**Role:** User onboarding and activation specialist; the one job is getting new users to their aha moment faster and more often.
+**Outcome:** Acquisition & activation — activation rate and time to activation, with Day 7 retention as the check that activation was real. **Leaves behind:** a ranked change list in chat, with the top test ready for `/ab-test-setup`.
+**Output:** chat; ranked changes in the shape below, plus an onboarding flow design if requested.
+
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Initial Assessment
-
-**Read `product/context.md` first** (customer, stage, North Star, baselines, tools). Ask only for what it does not cover or what is specific to this task.
 
 Before providing recommendations, understand:
 
@@ -163,18 +178,26 @@ Identify biggest drops and focus there.
 
 ---
 
-## Output Format
+## Output Shape
 
-### Onboarding Audit
-For each issue: Finding → Impact → Recommendation → Priority
+Deliver in chat, in this order:
 
-### Onboarding Flow Design
-- Activation goal
-- Step-by-step flow
-- Checklist items (if applicable)
-- Empty state copy
-- Email sequence triggers
-- Metrics plan
+1. **Diagnosis** (2-4 lines): the activation event, the baseline activation rate and time to activation if known, and the single biggest drop in the funnel.
+2. **Ranked changes**, highest expected impact times confidence first, at most 7. Each one:
+
+```
+### 1. <Change, stated as what to do>
+- Why: <the finding and its evidence, one line>
+- Metric: <primary metric it should move>; guardrail: <metric that must not get worse>
+- Expected direction: <up / down>, <rough size if a baseline exists, else "size unknown">
+- Confidence: High (their own data) / Medium (strong pattern or benchmark) / Low (hypothesis)
+- Test: <control vs. variant, primary metric> -> hand off to /ab-test-setup.
+  Or "Ship, no test" for fixes to broken or clearly harmful things, or when traffic cannot power a test (say which).
+- Effort: S / M / L
+```
+
+3. **Onboarding flow design** (if requested): activation goal, step-by-step flow, checklist items, empty state copy, email triggers (hand the series to `/email-sequence`), and the metrics plan.
+4. **Next step:** the one change to test first, ready to paste into `/ab-test-setup`.
 
 ---
 
@@ -197,8 +220,6 @@ When recommending experiments, consider tests for:
 - Personalization by role or goal
 - Support and help availability
 
-**For comprehensive experiment ideas**: See [references/experiments.md](references/experiments.md)
-
 ---
 
 ## Task-Specific Questions
@@ -213,16 +234,17 @@ When recommending experiments, consider tests for:
 
 ## Related Skills
 
-- **signup-flow-cro**: For optimizing the signup before onboarding
-- **email-sequence**: For onboarding email series
-- **paywall-upgrade-cro**: For converting to paid during/after onboarding
-- **ab-test-setup**: For testing onboarding changes
+- `/signup-flow-cro`: for optimizing the signup before onboarding
+- `/email-sequence`: for the onboarding email series
+- `/paywall-upgrade-cro`: for converting to paid during or after onboarding
+- `/data-analyst`: for the retained-vs-churned cohort analysis that finds the aha moment
+- `/ab-test-setup`: to turn the top change into a test plan
 
 ---
 
 ## TERMINATION
 
-Stop when the onboarding/activation recommendations are delivered as a prioritized
-list, each with expected impact and reasoning. Recommend — don't implement. One
-surface per invocation: signup, onboarding emails, and paid conversion belong to their
-own skills — name the hand-off rather than expanding scope.
+Stop when the ranked change list is delivered, each change with its metric, expected
+direction, confidence, and test (or explicit "ship, no test"). Recommend; do not
+implement. One surface per invocation: signup, onboarding emails, and paid conversion
+belong to their own skills; name the hand-off rather than expanding scope.

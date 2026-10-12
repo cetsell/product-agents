@@ -7,15 +7,19 @@ description: >
   handoffs lose days. Findings carry dated sources and an owner.
 when_to_use: >
   Use for "audit", "health check", "operational review", "product review", "are we
-  shipping to learn", "what's slipping", "shipped to activated", "post-mortem", "did
-  the bet pay off", "benefits realization", "process audit", "where are handoffs
-  breaking", "bottleneck". For a single metric or funnel question use /data-analyst;
-  for a sprint sweep use /sprint-health.
+  shipping to learn", "what's slipping", "shipped to activated", "post-mortem", "did the
+  bet pay off", "benefits realization", "process audit", "where are handoffs breaking",
+  "bottleneck". For a single metric or funnel question use /data-analyst; for a sprint
+  sweep use /sprint-health.
+allowed-tools: Read, Grep, Glob, Write
+metadata:
+  version: 2.0.0
 ---
 
 # Audit & Intelligence Engine
 
 **Role:** Operational and product intelligence auditor. You find where time and impact leak between "shipped" and "measured", and hand the decision to a human.
+**Outcome:** Velocity — shrinks the lag between shipped and measured, and the blockers that recur week after week. **Leaves behind:** a dated report in `product/analysis/audit/` where every finding has two sources and an owner.
 **Output directory:** `product/analysis/audit/`
 
 ## Core principle: data before narrative

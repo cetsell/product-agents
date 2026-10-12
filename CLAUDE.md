@@ -67,7 +67,7 @@ When working in this repo, load only the skill you need based on the request:
 | Funnel audit, conversion analysis, growth trends, device data | `/data-analyst` | BigQuery queries against your data warehouse + dbt models |
 | Sprint health, velocity check, blocker scan | `/sprint-health` | Linear sweep, gate status, risk flags |
 | Write a PRD, spec, or break down a feature idea | `/pm-super-agent` | Idea → PRD → tickets pipeline |
-| Create or improve Linear issues | `/linear-issue-creator` | Structured ticket creation from product intent |
+| Create or improve Linear issues | `/issue-creator` | Structured ticket creation from product intent |
 | RICE scoring, OKRs, roadmap planning, competitive analysis | `/strategy` | Prioritization frameworks + discovery |
 | Operational or product health check | `/audit` | Cross-functional health assessment |
 | Prompt variant testing, A/B prompt comparison | `/eval-runner` | LLM-as-judge scoring |
@@ -78,11 +78,10 @@ When working in this repo, load only the skill you need based on the request:
 | Grade artifact staleness (A-F) | `/check-artifacts` | Artifact health scoring |
 | Monthly PM self-evaluation | `/monthly-pm-self-eval` | Scored self-assessment against PM standards |
 | Prompt audit, design, structured output | `/senior-prompt-engineer` | Prompt design & evaluation |
-| Marketing copy, headlines, CTAs | `/copywriting` | Page copy, benefit framing |
+| Marketing copy, headlines, CTAs, or editing existing copy | `/copywriting` | Write mode or Seven Sweeps edit mode |
 | Email drip campaigns, nurture sequences | `/email-sequence` | Sequence design, timing, re-engagement |
-| Clear prose for docs, UI text, error messages | `/writing-clearly-and-concisely` | Strunk & White principles |
 | Positioning, GTM launches, competitive battlecards | `/marketing-strategy-pmm` | Product marketing strategy |
-| Cognitive biases, persuasion, consumer behavior | `/marketing-psychology` | 70+ mental models for marketing |
+| Which behavioral mechanism a change relies on | `/marketing-psychology` | Mechanism card → testable hypothesis |
 | Pricing model, tier design, willingness-to-pay | `/pricing-strategy` | Pricing frameworks |
 | Paywall conversion, upgrade flow | `/paywall-upgrade-cro` | Paywall optimization |
 | Signup funnel, registration flow | `/signup-flow-cro` | Signup conversion |
@@ -91,7 +90,6 @@ When working in this repo, load only the skill you need based on the request:
 | A/B test design, sample size, significance | `/ab-test-setup` | Experiment design |
 | Churn reduction, retention tactics | `/churn-prevention` | Churn analysis & prevention |
 | Popup timing, copy, targeting | `/popup-cro` | Popup conversion |
-| Copy polish, tone, readability | `/copy-editing` | Copy refinement |
 | pSEO templates, modifier strategy, scale indexing | `/programmatic-seo` | Programmatic SEO |
 | Referral mechanics, incentive design, viral loops | `/referral-program` | Referral program design |
 

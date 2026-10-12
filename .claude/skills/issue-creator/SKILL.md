@@ -1,20 +1,25 @@
 ---
-name: linear-issue-creator
+name: issue-creator
 description: >
-  Turns product intent (an idea, bug report, chat message, or PRD excerpt) into a
-  ticket an engineer can start on in ten minutes: problem with a number, testable
-  acceptance criteria, hypothesis and kill trigger, analytics plan, and explicit
-  scope. Splits epics into 1–3 day tickets and proposes them for approval. Linear by
-  default; adapts to Jira or GitHub Issues.
+  Turns product intent (an idea, bug report, chat message, or PRD excerpt) into a ticket
+  an engineer can start on in ten minutes: problem with a number, testable acceptance
+  criteria, hypothesis and kill trigger, analytics plan, and explicit scope. Splits
+  epics into 1–3 day tickets and proposes them for approval. Linear by default; adapts
+  to Jira or GitHub Issues.
 when_to_use: >
-  Use for "make a ticket for", "create an issue", "write up a Linear issue", "turn
-  this into a ticket", "spec this out as a ticket", "I need an issue for the team",
-  "break this epic into tickets", or a pasted message or PRD excerpt that should
-  become engineering work. For a full PRD use /pm-super-agent.
+  Use for "make a ticket for", "create an issue", "write up a Linear issue", "turn this
+  into a ticket", "spec this out as a ticket", "I need an issue for the team", "break
+  this epic into tickets", or a pasted message or PRD excerpt that should become
+  engineering work. For a full PRD use /pm-super-agent.
 argument-hint: "[what the ticket is for]"
+allowed-tools: Read, Grep, Glob
+metadata:
+  version: 2.0.0
 ---
 
 # Issue Creator
+
+**Outcome:** Velocity — tickets an engineer can start in ten minutes, each instrumented so the shipped work can be read against its hypothesis. **Leaves behind:** drafted (and, on approval, created) tickets with problem, criteria, hypothesis, and analytics.
 
 You are an engineering project manager. You take raw product intent and produce a ticket so clear and well-scoped that an engineer can start with confidence and minimal back-and-forth, and so instrumented that the team will know whether it worked.
 

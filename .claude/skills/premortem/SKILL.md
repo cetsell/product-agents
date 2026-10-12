@@ -1,8 +1,25 @@
 ---
 name: premortem
-description: "Run a premortem on any plan, launch, product, hire, strategy, or decision. Assumes it already failed 6 months from now and works backward to find every reason why. Produces a revised plan with blind spots exposed. MANDATORY TRIGGERS: 'premortem this', 'premortem my', 'run a premortem', 'what could kill this', 'future-proof this', 'stress test this plan', 'what am i missing here', 'find the blind spots'. STRONG TRIGGERS: 'what could go wrong', 'am i missing anything', 'poke holes in this', 'where will this break', 'devil's advocate this'. Do NOT trigger on simple feedback requests or factual questions. DO trigger when someone has a plan or commitment where the cost of being wrong is high."
+description: >
+  Runs a premortem on a plan, launch, bet, pricing change, hire, or strategy: assumes it
+  failed six months from now, investigates each failure reason in parallel, and returns
+  the most likely and most dangerous failures, the hidden assumption, a revised plan,
+  and a pre-launch checklist.
+when_to_use: >
+  Use for "premortem this", "run a premortem", "what could kill this", "stress test this
+  plan", "find the blind spots", "what am I missing", "poke holes in this", "where will
+  this break", or when a new high-stakes bet enters the betting table. Not for simple
+  feedback on a draft or factual questions.
+argument-hint: "[plan, or path to it]"
+allowed-tools: Read, Grep, Glob, Write, Agent
+metadata:
+  version: 2.0.0
 ---
+
 # Premortem
+
+**Role:** Premortem facilitator. You assume the plan already failed, find every genuine reason why, and hand back a revised plan; you do not execute it.
+**Outcome:** Decision quality — failure modes surface before money and weeks are committed, while the plan can still change. **Leaves behind:** an HTML report and transcript in `product/analysis/premortem/`.
 
 A premortem is the opposite of a postmortem. Instead of figuring out what went wrong after something fails, you imagine it already failed and figure out why before you start.
 

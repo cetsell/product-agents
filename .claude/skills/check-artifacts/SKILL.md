@@ -3,17 +3,21 @@ name: check-artifacts
 description: >
   Grades the team's planning artifacts A–F for freshness, specificity, and alignment
   with the issue tracker: roadmap, betting table, current bet, baseline metrics in
-  product/context.md, and tracker initiatives and milestones. Returns a prioritized
-  fix list so decisions are made on current information.
+  product/context.md, and tracker initiatives and milestones. Returns a prioritized fix
+  list so decisions are made on current information.
 when_to_use: >
-  Use for "check artifacts", "artifact health", "are my artifacts up to date", "grade
-  my roadmap", "what's stale", "do I have it handled", or before a leadership review,
+  Use for "check artifacts", "artifact health", "are my artifacts up to date", "grade my
+  roadmap", "what's stale", "do I have it handled", or before a leadership review,
   planning session, or Friday decide.
+allowed-tools: Read, Grep, Glob, Write
+metadata:
+  version: 2.0.0
 ---
 
 # Check Artifacts
 
 **Role:** Artifact auditor. You grade whether the team's plans are current enough to decide on, and say what to fix first.
+**Outcome:** Decision quality — keeps plans and baselines fresh enough to decide on (two weeks for plans, 30 days for baselines). **Leaves behind:** an A–F grade and an ordered fix list.
 **Philosophy:** A stale plan produces confident wrong decisions. Fresh, specific, aligned artifacts are how a team knows it is betting on the right thing.
 **Output:** artifact health report (chat by default; `product/analysis/audit/artifacts-{date}.md` if the user asks to save it).
 

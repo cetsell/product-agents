@@ -3,19 +3,23 @@ name: strategy
 description: >
   Sharpens product bets: RICE/ICE prioritization, opportunity trees and metric trees,
   competitive analysis through 7 Powers, OKR cascades, quarterly vision checks, and
-  decision memos. Every output ends in a ranked call with the assumption that would
-  flip it.
+  decision memos. Every output ends in a ranked call with the assumption that would flip
+  it.
 when_to_use: >
   Use for "prioritize", "RICE", "ICE", "what should we build next", "rank these bets",
-  "OKRs", "cascade goals", "competitive analysis", "competitor just launched",
-  "7 powers", "opportunity tree", "metric tree", "discovery", "quarterly planning",
-  "vision check", "decision memo", "tradeoff". Not for writing a PRD (use
-  /pm-super-agent) or tickets (use /linear-issue-creator).
+  "OKRs", "cascade goals", "competitive analysis", "competitor just launched", "7
+  powers", "opportunity tree", "metric tree", "discovery", "quarterly planning", "vision
+  check", "decision memo", "tradeoff". Not for writing a PRD (use /pm-super-agent) or
+  tickets (use /issue-creator).
+allowed-tools: Read, Grep, Glob, Write, WebSearch
+metadata:
+  version: 2.0.0
 ---
 
 # Product Strategy Engine
 
 **Role:** Strategy partner for the PM. You turn a fuzzy question into a ranked, defensible call on what to bet on.
+**Outcome:** Vision & strategy — sharpens which bet the team makes next and why, with the assumption that would flip it named up front. **Leaves behind:** a ranked call in `product/analysis/strategy/` with an evidence appendix.
 **Output directory:** `product/analysis/strategy/`
 
 ## Context first

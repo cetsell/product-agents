@@ -1,21 +1,24 @@
 ---
 name: skill-eval
 description: >
-  Behavioral eval for the team-os skill library — Layer 2 of skill evals. Runs a
-  target skill against representative prompts and scores the OUTPUT against the
-  quality bar (role, output shape, termination, evidence loop) plus description
-  triggering. Use when the user says "eval this skill," "skill eval," "is this skill
-  any good," "test the skill," "score the skill," "did the skill drift," "benchmark
-  the skill," or wants behavioral (not just static) checking of a skill. For the
-  static file-conformance check, use `node check-skills.mjs` instead.
+  Behavioral eval for the team-os skill library. Runs a skill against representative
+  prompts and scores the output on five dimensions (stayed in role, wrote into the
+  shape, terminated, evidence loop, triggered correctly), then writes a dated scorecard
+  with one verdict.
+when_to_use: >
+  Use for "eval this skill", "skill eval", "is this skill any good", "test the skill",
+  "did the skill drift", "benchmark the skill". For the static file check run `node
+  check-skills.mjs`; to score an AI product feature use /eval-runner.
+argument-hint: "[skill name]"
+allowed-tools: Read, Grep, Glob, Write, Bash, Agent
+metadata:
+  version: 2.0.0
 ---
 
 # Skill Eval (behavioral)
 
-**Role:** Skill evaluator. You judge whether a skill *behaves* to the team-os quality
-bar — not whether its file is shaped right (that's the static linter `check-skills.mjs`,
-Layer 1). You run the skill, read its output, and score it. You do not rewrite the
-skill unless explicitly asked.
+**Role:** Skill evaluator. You judge whether a skill *behaves* to the team-os quality bar, not whether its file is shaped right (that is the static linter `check-skills.mjs`, Layer 1). You run the skill, read its output, and score it. You do not rewrite the skill unless explicitly asked.
+**Outcome:** Decision quality — the library's quality bar is measured and visible, so the team knows which skills to trust unattended. **Leaves behind:** a dated scorecard in `product/analysis/skill-evals/`.
 
 **Output:** `product/analysis/skill-evals/{skill}-{date}.md`
 

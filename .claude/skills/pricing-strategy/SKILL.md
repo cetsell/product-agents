@@ -1,19 +1,32 @@
 ---
 name: pricing-strategy
-description: "When the user wants help with pricing decisions, packaging, or monetization strategy. Also use when the user mentions 'pricing,' 'pricing tiers,' 'freemium,' 'free trial,' 'packaging,' 'price increase,' 'value metric,' 'Van Westendorp,' 'willingness to pay,' 'monetization,' 'how much should I charge,' 'my pricing is wrong,' 'pricing page,' 'annual vs monthly,' 'per seat pricing,' or 'should I offer a free plan.' Use this whenever someone is figuring out what to charge or how to structure their plans. For in-app upgrade screens, see paywall-upgrade-cro."
+description: >
+  Designs and reviews pricing: value metric, tier structure and packaging, price points,
+  price increases, and the research or test that would validate them. Writes a pricing
+  recommendation that names the revenue metric it should move, its guardrail, and the
+  validation plan.
+when_to_use: >
+  Use when the user mentions "pricing", "pricing tiers", "freemium", "free trial",
+  "packaging", "price increase", "value metric", "Van Westendorp", "willingness to pay",
+  "monetization", "how much should I charge", "per seat pricing", "annual vs monthly",
+  or "should I offer a free plan". Not for in-app upgrade screens (use
+  /paywall-upgrade-cro), pricing page conversion (use /page-cro), or cancel flows (use
+  /churn-prevention).
+argument-hint: "[pricing question or topic]"
+allowed-tools: Read, Grep, Glob, Write, WebSearch, WebFetch
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Pricing Strategy
 
-You are an expert in SaaS pricing and monetization strategy. Your goal is to help design pricing that captures value, drives growth, and aligns with customer willingness to pay.
+**Role:** SaaS pricing and monetization strategist; the one job is pricing that captures the value delivered without stalling growth.
+**Outcome:** Monetization — ARPU and paid conversion (or expansion revenue), with signup volume and churn as guardrails. **Leaves behind:** a pricing recommendation at `product/analysis/strategy/pricing-{topic}-{date}.md`.
+**Output:** `product/analysis/strategy/pricing-{topic}-{date}.md` in the shape below, plus a 3-line chat summary.
 
-**Output:** a pricing recommendation: value metric, tier structure, price points with the evidence behind each, the research or test that would validate them, and the revenue metric it should move.
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Before Starting
-
-**Read `product/context.md` first** (customer, stage, North Star, baselines, tools). Ask only for what it does not cover or what is specific to this task.
 
 Gather this context (ask if not provided):
 
@@ -114,8 +127,6 @@ Ask: "As a customer uses more of [metric], do they get more value?"
 - **Support level** — Email → Priority → Dedicated
 - **Access** — API, SSO, custom branding
 
-**For detailed tier structures and persona-based packaging**: See [references/tier-structure.md](references/tier-structure.md)
-
 ---
 
 ## Pricing Research
@@ -136,8 +147,6 @@ Identifies which features customers value most:
 - Show sets of features
 - Ask: Most important? Least important?
 - Results inform tier packaging
-
-**For detailed research methods**: See [references/research-methods.md](references/research-methods.md)
 
 ---
 
@@ -168,45 +177,40 @@ Identifies which features customers value most:
 
 ---
 
-## Pricing Page Best Practices
+## Output Shape
 
-### Above the Fold
-- Clear tier comparison table
-- Recommended tier highlighted
-- Monthly/annual toggle
-- Primary CTA for each tier
+Write `product/analysis/strategy/pricing-{topic}-{date}.md` (topic in kebab-case, date as YYYY-MM-DD; create the folder if missing):
 
-### Common Elements
-- Feature comparison table
-- Who each tier is for
-- FAQ section
-- Annual discount callout (17-20%)
-- Money-back guarantee
-- Customer logos/trust signals
+```
+# Pricing: <topic> (<YYYY-MM-DD>)
 
-### Pricing Psychology
-- **Anchoring:** Show higher-priced option first
-- **Decoy effect:** Middle tier should be best value
-- **Charm pricing:** $49 vs. $50 (for value-focused)
-- **Round pricing:** $50 vs. $49 (for premium)
+**Decision:** <the one pricing call this recommends, one line>
+**Metric it should move:** <ARPU / paid conversion / expansion revenue>, expected direction and rough size; guardrail: <signup volume, conversion, or churn that must not fall>
+**Confidence:** High / Medium / Low — <basis: own data, research, competitor anchors, judgment>
 
----
+## Current state
+<current pricing, ARPU, conversion, churn, pricing feedback; mark gaps as gaps>
 
-## Pricing Checklist
+## Value metric
+<chosen metric, why it scales with customer value, alternatives rejected>
 
-### Before Setting Prices
-- [ ] Defined target customer personas
-- [ ] Researched competitor pricing
-- [ ] Identified your value metric
-- [ ] Conducted willingness-to-pay research
-- [ ] Mapped features to tiers
+## Tiers and packaging
+| Tier | For whom | Includes | Limits | Price (monthly / annual) | Evidence |
 
-### Pricing Structure
-- [ ] Chosen number of tiers
-- [ ] Differentiated tiers clearly
-- [ ] Set price points based on research
-- [ ] Created annual discount strategy
-- [ ] Planned enterprise/custom tier
+## Price points and evidence
+<each price between the next-best-alternative floor and the perceived-value ceiling, with the evidence for it>
+
+## Migration (if changing existing pricing)
+<grandfather / delayed / tied to value / restructure; who is affected and when>
+
+## Risks
+<top 3, each with the early signal that would show it>
+
+## Validation
+<research method (Van Westendorp, MaxDiff, customer interviews) or test: hypothesis, primary metric, guardrail -> hand off to /ab-test-setup>
+```
+
+Chat summary: the decision, the metric it should move, and the first validation step. Three lines.
 
 ---
 
@@ -221,21 +225,27 @@ Identifies which features customers value most:
 
 ---
 
+## References (load on demand)
+
+- `references/pricing-page-and-checklist.md` — pricing page layout and common elements, pricing psychology (anchoring, decoy, charm vs. round pricing), and the before-setting-prices and structure checklists. Read when the recommendation covers how prices are presented, or as a final completeness check.
+
 ## Related Skills
 
-- **churn-prevention**: For cancel flows, save offers, and reducing revenue churn
-- **page-cro**: For optimizing pricing page conversion
-- **copywriting**: For pricing page copy
-- **marketing-psychology**: For pricing psychology principles
-- **ab-test-setup**: For testing pricing changes
-- **revops**: For deal desk processes and pipeline pricing
-- **sales-enablement**: For proposal templates and pricing presentations
+- `/marketing-strategy-pmm`: for positioning and the competitive alternatives that set the price floor
+- `/paywall-upgrade-cro`: for in-app upgrade moments
+- `/page-cro`: for pricing page conversion
+- `/churn-prevention`: for cancel flows, save offers, and revenue churn
+- `/marketing-psychology`: for pricing psychology principles
+- `/data-analyst`: for ARPU, conversion, and churn baselines
+- `/ab-test-setup`: to turn the validation step into a test plan
 
 ---
 
 ## TERMINATION
 
-Stop when the pricing recommendation is delivered: model, tiers, value metric, and the
-rationale tying each to willingness-to-pay. Recommend — don't implement. Don't also
-write the pricing-page copy or design the test to validate it; route to `copywriting`
-and `ab-test-setup`.
+Stop when the pricing recommendation is saved to
+`product/analysis/strategy/pricing-{topic}-{date}.md` (decision, value metric, tiers,
+price points with evidence, the metric it should move, and the validation step) and the
+3-line chat summary is delivered. Recommend; do not implement or change live prices.
+Do not also write the pricing-page copy or the full test plan; route to `/copywriting`
+and `/ab-test-setup`.

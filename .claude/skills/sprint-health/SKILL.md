@@ -9,11 +9,15 @@ when_to_use: >
   readiness", "go/no-go", "are we ready to launch", or before a Monday kickoff or
   Thursday prep. Not for multi-week trend audits (use /audit).
 argument-hint: "[launch name and date, optional]"
+allowed-tools: Read, Grep, Glob, Write
+metadata:
+  version: 2.0.0
 ---
 
 # Sprint Health
 
 **Role:** Sprint auditor. You give the PM a data-grounded picture of what is moving, what is stuck, and what needs a decision before the next ship date.
+**Outcome:** Velocity — stale tickets, blockers, and launch-gate gaps are caught while there is still time in the sprint to fix them. **Leaves behind:** a dated sweep in `team/weekly-updates/` where every flag has an owner.
 **Philosophy:** Shipped regressions are worse than unshipped features. Health is quality of progress, not ticket volume.
 **Output:** `team/weekly-updates/{YYYY-MM-DD}-sprint-health.md`
 

@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 // Skill conformance linter — Layer 1 of skill evals.
 // Scores every .claude/skills/*/SKILL.md against the quality bar from
-// product-skills.md: frontmatter, role line, structured output shape, and (for
-// producer skills) an explicit TERMINATION condition.
+// docs/sources/product-skills.md: frontmatter, role line, outcome line, an
+// explicit TERMINATION condition, a size cap, and (for producer skills) a
+// structured output shape.
 //
 // Usage:
 //   node check-skills.mjs            # report; exit 1 only on hard failures
 //   node check-skills.mjs --strict   # exit 1 on any producer-rule miss too
 //   node check-skills.mjs --json     # machine-readable output
 //
-// Producer vs reference: reference/knowledge skills (answer from a body of
-// knowledge, no fixed artifact) are exempt from the output-shape and TERMINATION
-// rules. Maintain that set below as skills are added.
+// Producer vs reference: reference skills are exempt only from the output-shape
+// rule. Maintain that set below as skills are added.
 
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -20,17 +20,14 @@ import { fileURLToPath } from "node:url";
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SKILLS_DIR = join(ROOT, ".claude", "skills");
 
-// Reference/knowledge skills: role line required, but output-shape and
-// TERMINATION are not — they answer from knowledge rather than produce an artifact.
-const REFERENCE_SKILLS = new Set([
-  "marketing-psychology",
-  "lenny",
-  "writing-clearly-and-concisely",
-  "remotion-best-practices",
-  "marketing-strategy-pmm",
-  "senior-prompt-engineer",
-  "email-systems",
-]);
+// Reference/knowledge skills: role line and TERMINATION required, but not a
+// fixed output shape — they answer from a body of knowledge rather than produce
+// an artifact. Every other skill is a producer.
+const REFERENCE_SKILLS = new Set(["marketing-psychology"]);
+
+// Progressive disclosure: SKILL.md loads in full on every invocation. Long
+// reference material belongs in references/*.md inside the skill folder.
+const MAX_LINES = 300;
 
 const strict = process.argv.includes("--strict");
 const asJson = process.argv.includes("--json");
@@ -102,13 +99,14 @@ for (const name of dirs) {
   }
   if (!hasRoleLine(body)) errors.push("no role line");
 
-  // Producer-only rules
-  if (!isRef) {
-    const shapeMiss = !hasOutputShape(body);
-    const termMiss = !hasTermination(body);
-    if (shapeMiss) (strict ? errors : warns).push("no structured output shape");
-    if (termMiss) (strict ? errors : warns).push("no TERMINATION condition");
-  }
+  // Every skill: outcome line, TERMINATION, size cap
+  if (!/^\*\*Outcome:\*\*/m.test(body)) (strict ? errors : warns).push("no **Outcome:** line");
+  if (!hasTermination(body)) (strict ? errors : warns).push("no TERMINATION condition");
+  const lines = text.split("\n").length;
+  if (lines > MAX_LINES) (strict ? errors : warns).push(`${lines} lines (max ${MAX_LINES}; move detail to references/)`);
+
+  // Producer-only rule
+  if (!isRef && !hasOutputShape(body)) (strict ? errors : warns).push("no structured output shape");
 
   results.push({ name, tier: isRef ? "reference" : "producer", errors, warns });
 }

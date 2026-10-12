@@ -1,17 +1,31 @@
 ---
 name: popup-cro
-description: When the user wants to create or optimize popups, modals, overlays, slide-ins, or banners for conversion purposes. Also use when the user mentions "exit intent," "popup conversions," "modal optimization," "lead capture popup," "email popup," "announcement banner," "overlay," "collect emails with a popup," "exit popup," "scroll trigger," "sticky bar," or "notification bar." Use this for any overlay or interrupt-style conversion element. For forms outside of popups, see form-cro. For general page conversion optimization, see page-cro.
+description: >
+  Audits and designs popups, modals, slide-ins, exit-intent overlays, and announcement
+  banners. Returns a ranked list of changes (trigger, targeting, offer, copy, frequency),
+  each with the metric it should move, expected direction, confidence, and the A/B test
+  to prove it, plus a popup spec when designing a new one.
+when_to_use: >
+  Use when the user mentions "popup", "exit intent", "modal", "lead capture popup",
+  "email popup", "announcement banner", "overlay", "slide-in", "scroll trigger",
+  "sticky bar", or "collect emails with a popup". Not for the page around the popup
+  (use /page-cro), signup forms (use /signup-flow-cro), or in-app upgrade modals (use
+  /paywall-upgrade-cro).
+argument-hint: "[popup URL, screenshot, or goal]"
+allowed-tools: Read, Grep, Glob, WebFetch
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Popup CRO
 
-You are an expert in popup and modal optimization. Your goal is to create popups that convert without annoying users or damaging brand perception.
+**Role:** Popup and modal conversion specialist; the one job is popups that convert without annoying users or damaging the brand.
+**Outcome:** Acquisition & activation — popup submission rate (impressions to submissions), with bounce and close rate as guardrails. **Leaves behind:** a ranked change list in chat, with the top test ready for `/ab-test-setup`.
+**Output:** chat; ranked changes in the shape below, plus a popup spec when designing a new one.
+
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Initial Assessment
-
-**Read `product/context.md` first** (customer, stage, North Star, baselines, tools). Ask only for what it does not cover or what is specific to this task.
 
 Before providing recommendations, understand:
 
@@ -96,137 +110,6 @@ Before providing recommendations, understand:
 
 ---
 
-## Popup Types
-
-### Email Capture Popup
-**Goal**: Newsletter/list subscription
-
-**Best practices:**
-- Clear value prop (not just "Subscribe")
-- Specific benefit of subscribing
-- Single field (email only)
-- Consider incentive (discount, content)
-
-**Copy structure:**
-- Headline: Benefit or curiosity hook
-- Subhead: What they get, how often
-- CTA: Specific action ("Get Weekly Tips")
-
-### Lead Magnet Popup
-**Goal**: Exchange content for email
-
-**Best practices:**
-- Show what they get (cover image, preview)
-- Specific, tangible promise
-- Minimal fields (email, maybe name)
-- Instant delivery expectation
-
-### Discount/Promotion Popup
-**Goal**: First purchase or conversion
-
-**Best practices:**
-- Clear discount (10%, $20, free shipping)
-- Deadline creates urgency
-- Single use per visitor
-- Easy to apply code
-
-### Exit Intent Popup
-**Goal**: Last-chance conversion
-
-**Best practices:**
-- Acknowledge they're leaving
-- Different offer than entry popup
-- Address common objections
-- Final compelling reason to stay
-
-**Formats:**
-- "Wait! Before you go..."
-- "Forget something?"
-- "Get 10% off your first order"
-- "Questions? Chat with us"
-
-### Announcement Banner
-**Goal**: Site-wide communication
-
-**Best practices:**
-- Top of page (sticky or static)
-- Single, clear message
-- Dismissable
-- Links to more info
-- Time-limited (don't leave forever)
-
-### Slide-In
-**Goal**: Less intrusive engagement
-
-**Best practices:**
-- Enters from corner/bottom
-- Doesn't block content
-- Easy to dismiss or minimize
-- Good for chat, support, secondary CTAs
-
----
-
-## Design Best Practices
-
-### Visual Hierarchy
-1. Headline (largest, first seen)
-2. Value prop/offer (clear benefit)
-3. Form/CTA (obvious action)
-4. Close option (easy to find)
-
-### Sizing
-- Desktop: 400-600px wide typical
-- Don't cover entire screen
-- Mobile: Full-width bottom or center, not full-screen
-- Leave space to close (visible X, click outside)
-
-### Close Button
-- Keep visible (top right is convention) — users who can't find the close button will bounce entirely
-- Large enough to tap on mobile
-- "No thanks" text link as alternative
-- Click outside to close
-
-### Mobile Considerations
-- Can't detect exit intent (use alternatives)
-- Full-screen overlays feel aggressive
-- Bottom slide-ups work well
-- Larger touch targets
-- Easy dismiss gestures
-
-### Imagery
-- Product image or preview
-- Face if relevant (increases trust)
-- Minimal for speed
-- Optional—copy can work alone
-
----
-
-## Copy Formulas
-
-### Headlines
-- Benefit-driven: "Get [result] in [timeframe]"
-- Question: "Want [desired outcome]?"
-- Command: "Don't miss [thing]"
-- Social proof: "Join [X] people who..."
-- Curiosity: "The one thing [audience] always get wrong about [topic]"
-
-### Subheadlines
-- Expand on the promise
-- Address objection ("No spam, ever")
-- Set expectations ("Weekly tips in 5 min")
-
-### CTA Buttons
-- First person works: "Get My Discount" vs "Get Your Discount"
-- Specific over generic: "Send Me the Guide" vs "Submit"
-- Value-focused: "Claim My 10% Off" vs "Subscribe"
-
-### Decline Options
-- Polite, not guilt-trippy
-- "No thanks" / "Maybe later" / "I'm not interested"
-- Avoid manipulative: "No, I don't want to save money"
-
----
-
 ## Frequency and Rules
 
 ### Frequency Capping
@@ -249,29 +132,6 @@ Before providing recommendations, understand:
 
 ---
 
-## Compliance and Accessibility
-
-### GDPR/Privacy
-- Clear consent language
-- Link to privacy policy
-- Don't pre-check opt-ins
-- Honor unsubscribe/preferences
-
-### Accessibility
-- Keyboard navigable (Tab, Enter, Esc)
-- Focus trap while open
-- Screen reader compatible
-- Sufficient color contrast
-- Don't rely on color alone
-
-### Google Guidelines
-- Intrusive interstitials hurt SEO
-- Mobile especially sensitive
-- Allow: Cookie notices, age verification, reasonable banners
-- Avoid: Full-screen before content on mobile
-
----
-
 ## Measurement
 
 ### Key Metrics
@@ -290,146 +150,30 @@ Before providing recommendations, understand:
 - Outside clicks
 - Escape key
 
-### Benchmarks
-- Email popup: 2-5% conversion typical
-- Exit intent: 3-10% conversion
-- Click-triggered: Higher (10%+, self-selected)
+Benchmarks (email popup 2-5%, exit intent 3-10%, click-triggered 10%+) are in `references/popup-types-and-design.md`.
 
 ---
 
-## Output Format
+## Output Shape
 
-### Popup Design
-- **Type**: Email capture, lead magnet, etc.
-- **Trigger**: When it appears
-- **Targeting**: Who sees it
-- **Frequency**: How often shown
-- **Copy**: Headline, subhead, CTA, decline
-- **Design notes**: Layout, imagery, mobile
+Deliver in chat, in this order:
 
-### Multiple Popup Strategy
-If recommending multiple popups:
-- Popup 1: [Purpose, trigger, audience]
-- Popup 2: [Purpose, trigger, audience]
-- Conflict rules: How they don't overlap
+1. **Diagnosis** (2-4 lines): the popup, its conversion event, the baseline if known, and the single biggest leak.
+2. **Ranked changes**, highest expected impact times confidence first, at most 7. Each one:
 
-### Test Hypotheses
-Ideas to A/B test with expected outcomes
+```
+### 1. <Change, stated as what to do>
+- Why: <the finding and its evidence, one line>
+- Metric: <primary metric it should move>; guardrail: <metric that must not get worse>
+- Expected direction: <up / down>, <rough size if a baseline exists, else "size unknown">
+- Confidence: High (their own data) / Medium (strong pattern or benchmark) / Low (hypothesis)
+- Test: <control vs. variant, primary metric> -> hand off to /ab-test-setup.
+  Or "Ship, no test" for fixes to broken or clearly harmful things, or when traffic cannot power a test (say which).
+- Effort: S / M / L
+```
 
----
-
-## Common Popup Strategies
-
-### E-commerce
-1. Entry/scroll: First-purchase discount
-2. Exit intent: Bigger discount or reminder
-3. Cart abandonment: Complete your order
-
-### B2B SaaS
-1. Click-triggered: Demo request, lead magnets
-2. Scroll: Newsletter/blog subscription
-3. Exit intent: Trial reminder or content offer
-
-### Content/Media
-1. Scroll-based: Newsletter after engagement
-2. Page count: Subscribe after multiple visits
-3. Exit intent: Don't miss future content
-
-### Lead Generation
-1. Time-delayed: General list building
-2. Click-triggered: Specific lead magnets
-3. Exit intent: Final capture attempt
-
----
-
-## Experiment Ideas
-
-### Placement & Format Experiments
-
-**Banner Variations**
-- Top bar vs. banner below header
-- Sticky banner vs. static banner
-- Full-width vs. contained banner
-- Banner with countdown timer vs. without
-
-**Popup Formats**
-- Center modal vs. slide-in from corner
-- Full-screen overlay vs. smaller modal
-- Bottom bar vs. corner popup
-- Top announcements vs. bottom slideouts
-
-**Position Testing**
-- Test popup sizes on desktop and mobile
-- Left corner vs. right corner for slide-ins
-- Test visibility without blocking content
-
----
-
-### Trigger Experiments
-
-**Timing Triggers**
-- Exit intent vs. 30-second delay vs. 50% scroll depth
-- Test optimal time delay (10s vs. 30s vs. 60s)
-- Test scroll depth percentage (25% vs. 50% vs. 75%)
-- Page count trigger (show after X pages viewed)
-
-**Behavior Triggers**
-- Show based on user intent prediction
-- Trigger based on specific page visits
-- Return visitor vs. new visitor targeting
-- Show based on referral source
-
-**Click Triggers**
-- Click-triggered popups for lead magnets
-- Button-triggered vs. link-triggered modals
-- Test in-content triggers vs. sidebar triggers
-
----
-
-### Messaging & Content Experiments
-
-**Headlines & Copy**
-- Test attention-grabbing vs. informational headlines
-- "Limited-time offer" vs. "New feature alert" messaging
-- Urgency-focused copy vs. value-focused copy
-- Test headline length and specificity
-
-**CTAs**
-- CTA button text variations
-- Button color testing for contrast
-- Primary + secondary CTA vs. single CTA
-- Test decline text (friendly vs. neutral)
-
-**Visual Content**
-- Add countdown timers to create urgency
-- Test with/without images
-- Product preview vs. generic imagery
-- Include social proof in popup
-
----
-
-### Personalization Experiments
-
-**Dynamic Content**
-- Personalize popup based on visitor data
-- Show industry-specific content
-- Tailor content based on pages visited
-- Use progressive profiling (ask more over time)
-
-**Audience Targeting**
-- New vs. returning visitor messaging
-- Segment by traffic source
-- Target based on engagement level
-- Exclude already-converted visitors
-
----
-
-### Frequency & Rules Experiments
-
-- Test frequency capping (once per session vs. once per week)
-- Cool-down period after dismissal
-- Test different dismiss behaviors
-- Show escalating offers over multiple visits
+3. **Popup spec** (when designing a new popup): type, trigger, targeting, frequency, copy (headline, subhead, CTA, decline), design notes including mobile. If recommending several popups, list each with purpose, trigger, and audience, plus the conflict rules that stop them overlapping.
+4. **Next step:** the one change to test first, ready to paste into `/ab-test-setup`.
 
 ---
 
@@ -444,19 +188,25 @@ Ideas to A/B test with expected outcomes
 
 ---
 
+## References (load on demand)
+
+- `references/popup-types-and-design.md` — best practices per popup type (email capture, lead magnet, discount, exit intent, banner, slide-in), visual hierarchy, sizing, close button, mobile, copy formulas, decline options, GDPR and accessibility rules, intrusive-interstitial guidance, benchmarks. Read when designing or critiquing a specific popup.
+- `references/experiments.md` — common popup mixes by business type (e-commerce, B2B SaaS, content, lead gen) and the full experiment catalog (placement, triggers, messaging, personalization, frequency). Read when building a test backlog or choosing a multi-popup strategy.
+
 ## Related Skills
 
-- **lead-magnets**: For planning lead magnets to promote via popups
-- **form-cro**: For optimizing the form inside the popup
-- **page-cro**: For the page context around popups
-- **email-sequence**: For what happens after popup conversion
-- **ab-test-setup**: For testing popup variations
+- `/page-cro`: for the page context around the popup
+- `/copywriting`: for full headline and offer copy
+- `/email-sequence`: for what happens after popup conversion
+- `/marketing-psychology`: for urgency and reciprocity principles behind offers
+- `/ab-test-setup`: to turn the top change into a test plan
 
 ---
 
 ## TERMINATION
 
-Stop when the popup recommendations are delivered as a prioritized list, each with its
-expected impact and the reasoning behind it. Recommend — don't implement. One surface
-per invocation: if the issue is really the form, the surrounding page, or the post-
-conversion email, name it and route to the related skill rather than expanding scope.
+Stop when the ranked change list is delivered, each change with its metric, expected
+direction, confidence, and test (or explicit "ship, no test"). Recommend; do not
+implement. One surface per invocation: if the issue is really the page, a signup form,
+or the post-conversion email, name it and route to the related skill rather than
+expanding scope.

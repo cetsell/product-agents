@@ -140,7 +140,7 @@ If the task requires domain expertise beyond what's in team-os files, load the a
 | BigQuery data pull | `/data-analyst` |
 | Sprint velocity from Linear | `/sprint-health` |
 | Write a PRD or spec | `/pm-super-agent` |
-| Create Linear tickets | `/linear-issue-creator` |
+| Create Linear tickets | `/issue-creator` |
 | Prioritization framework | `/strategy` |
 | Health audit with recommendations | `/audit` |
 

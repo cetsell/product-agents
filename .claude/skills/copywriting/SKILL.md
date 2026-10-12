@@ -1,464 +1,136 @@
 ---
 name: copywriting
-description: When the user wants to write, rewrite, or improve marketing copy for any page — including homepage, landing pages, pricing pages, feature pages, about pages, or product pages. Also use when the user says "write copy for," "improve this copy," "rewrite this page," "marketing copy," "headline help," or "CTA copy." For email copy, see email-sequence. For popup copy, see popup-cro.
+description: >
+  Writes new conversion copy for marketing pages (homepage, landing, pricing, feature,
+  about) and edits existing copy with the Seven Sweeps pass. Returns paste-ready copy by
+  section, headline and CTA alternatives with rationale, the conversion metric the page
+  should move, and the A/B test that would prove the new copy beats the old.
+when_to_use: >
+  Write mode: "write copy for", "rewrite this page", "marketing copy", "headline help",
+  "CTA copy". Edit mode (copy already exists): "edit this copy", "review my copy", "copy
+  feedback", "proofread", "polish this", "make this better", "copy sweep", "tighten this
+  up", "reads awkwardly", "too wordy", "sharpen the messaging". Not for page structure or
+  layout (use /page-cro), email copy (use /email-sequence), popup copy (use /popup-cro),
+  or test design (use /ab-test-setup).
+argument-hint: "[write|edit] [page type, URL, or pasted copy]"
+allowed-tools: Read, Grep, Glob, Write, WebFetch
+metadata:
+  version: 2.0.0
 ---
 
 # Copywriting
 
-You are an expert conversion copywriter. Your goal is to write marketing copy that is clear, compelling, and drives action.
+**Role:** Conversion copywriter and copy editor. One job: words on a page that move its primary conversion, written new or edited from what exists.
+**Outcome:** Acquisition & activation — the page's primary conversion rate (visitor to signup, trial, demo, or purchase). **Leaves behind:** paste-ready copy, the metric it targets, and a test stub that proves it beat the old copy, in `gtm/copy/`.
+**Output:** `gtm/copy/<page>-<YYYY-MM-DD>.md` (or in chat for a single headline or CTA)
 
-## Before Writing
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover. Match the voice of existing published copy.
 
-Gather this context (ask if not provided):
+## Pick the mode
 
-### 1. Page Purpose
-- What type of page is this? (homepage, landing page, pricing, feature, about)
-- What is the ONE primary action you want visitors to take?
-- What's the secondary action (if any)?
+| Situation | Mode | What you do |
+|-----------|------|-------------|
+| No copy yet, or the user wants a rewrite from scratch | **Write** | Draft page copy section by section, then run a quick-pass edit on your own draft |
+| Copy exists and the core message should survive | **Edit** | Run the Seven Sweeps; change only what has a clear reason |
+| Copy exists but the page structure or offer is the problem | Neither | Route to /page-cro; copy cannot fix a broken argument |
 
-### 2. Audience
-- Who is the ideal customer for this page?
-- What problem are they trying to solve?
-- What have they already tried?
-- What objections or hesitations do they have?
-- What language do they use to describe their problem?
+If the user does not say, infer from input: pasted copy or a URL with "improve/polish/tighten" is Edit; a page type with "write/draft" is Write. A request to "make this better" on weak copy can start as Edit and switch to Write if more than half the copy would change; say so when you switch.
 
-### 3. Product/Offer
-- What are you selling or offering?
-- What makes it different from alternatives?
-- What's the key transformation or outcome?
-- Any proof points (numbers, testimonials, case studies)?
+## Before you start (both modes)
 
-### 4. Context
-- Where is traffic coming from? (ads, organic, email)
-- What do visitors already know before arriving?
-- What messaging are they seeing before this page?
+Gather only what `product/context.md` does not answer:
 
----
+1. **Page purpose** — page type; the ONE primary action; the secondary action, if any.
+2. **Audience** — who the page is for; the problem they are solving; what they already tried; objections; the words they use for the problem.
+3. **Offer** — what is sold; how it differs from alternatives; the key outcome; proof points (numbers, testimonials, case studies).
+4. **Traffic context** — source (ads, organic, email); what visitors know on arrival; the message they saw just before.
+5. **Baseline** — the page's current conversion rate and traffic, if known. Without it, mark the metric target `assumed`.
+6. **Edit mode only** — known problems, and which proof is available to back claims.
 
-## Copywriting Principles
+## Principles (both modes)
 
-### Clarity Over Cleverness
-- If you have to choose between clear and creative, choose clear
-- Every sentence should have one job
-- Remove words that don't add meaning
+- **Clarity over cleverness.** If you must choose between clear and creative, choose clear. Every sentence has one job.
+- **Benefits over features.** Connect what it does to what that means for the customer.
+- **Specificity over vagueness.** "Cut your weekly reporting from 4 hours to 15 minutes," not "save time on your workflow."
+- **Customer language over company language.** Mirror voice-of-customer from reviews, interviews, and support tickets.
+- **One idea per section.** Each section advances one argument down the page.
 
-### Benefits Over Features
-- Features: What it does
-- Benefits: What that means for the customer
-- Always connect features to outcomes
+Style rules: simple words over complex ("use," not "utilize"); specific over buzzwords ("streamline," "optimize," "innovative" mean nothing); active over passive; confident over hedged (cut "almost," "very," "really"); show the outcome instead of adverbs like "instantly"; never fabricate statistics, claims, or testimonials. No exclamation points.
 
-### Specificity Over Vagueness
-- Vague: "Save time on your workflow"
-- Specific: "Cut your weekly reporting from 4 hours to 15 minutes"
+**Voice and tone:** set formality (casual, professional-friendly, enterprise) and personality (playful or serious, bold or understated, technical or accessible) before writing. Keep it consistent; headlines can be bolder, body copy clearer, CTAs action-oriented.
 
-### Customer Language Over Company Language
-- Use words your customers use
-- Avoid jargon unless your audience uses it
-- Mirror voice-of-customer from reviews, interviews, support tickets
+## Write mode
 
-### One Idea Per Section
-- Don't try to say everything everywhere
-- Each section should advance one argument
-- Build a logical flow down the page
+1. **Name the metric and the job.** State the conversion event this page must move and its baseline before writing a word.
+2. **Pick the sections.** Hero (headline, subheadline, primary CTA, supporting visual), then a varied mix: social proof, problem, how it works, 3-5 benefits (not 10), testimonial, use cases, comparison, FAQ, final CTA with risk reversal. Avoid the hero-plus-feature-stack page. Section library and page-type guidance (homepage, landing, pricing, feature, about) are in `references/page-structure.md`.
+3. **Draft the hero first.** Headline carries the single most important message; subheadline adds specificity in 1-2 sentences; CTA says what they get, not what they do ("Start Free Trial" over "Sign Up"). Formula: [Action Verb] + [What They Get] + [Qualifier if needed]. Headline formulas and the CTA list are in `references/headlines-and-ctas.md`.
+4. **Draft the body** section by section, one argument each, matching the headline to the traffic source on landing pages.
+5. **Quick-pass edit your own draft** (word, sentence, paragraph checks in `references/editing-checks.md`). Scan for jargon, sentences with more than 3 conjunctions, passive voice, exclamation points, and buzzwords.
+6. **Write 2-3 alternatives** for the headline and primary CTA, each with a one-line rationale. The strongest pair becomes the test challenger.
 
----
+## Edit mode
 
-## Writing Style Rules
+Run seven passes in order, one dimension each. After each sweep, loop back through the earlier ones to check new edits did not break them. Full checks, examples, and the checklist are in `references/seven-sweeps.md`.
 
-Follow these core principles. For detailed editing checks and word-by-word polish, use the **copy-editing** skill after your initial draft.
+| # | Sweep | The question |
+|---|-------|--------------|
+| 1 | Clarity | Can the reader understand it on first read? |
+| 2 | Voice and tone | Does it sound like one consistent brand throughout? |
+| 3 | So what | Does every claim answer "why should I care?" |
+| 4 | Prove it | Is every claim backed by evidence, or softened? |
+| 5 | Specificity | Are vague words replaced with numbers, timeframes, examples? |
+| 6 | Heightened emotion | Does it make the reader feel the pain and the relief, honestly? |
+| 7 | Zero risk | Is every barrier near the CTA removed? |
 
-### Core Style Principles
+Rules for Edit mode:
+- Preserve the core message and the author's voice. Every change has a stated reason.
+- For a fast pass (short asset, low stakes), use the quick-pass checks in `references/editing-checks.md` instead of all seven sweeps, and say which you ran.
+- Present findings with proposed edits; the author makes final calls. Stop when a full sweep finds nothing new.
+- Flag claims you cannot verify instead of inventing proof.
 
-1. **Simple over complex** — Use everyday words. "Use" instead of "utilize," "help" instead of "facilitate."
+## Output shape
 
-2. **Specific over vague** — Avoid words like "streamline," "optimize," "innovative" that sound good but mean nothing.
+Write to `gtm/copy/<page>-<YYYY-MM-DD>.md`:
 
-3. **Active over passive** — "We generate reports" not "Reports are generated."
+```markdown
+# Copy — [page] | [Write|Edit] | [date]
 
-4. **Confident over qualified** — Remove hedging words like "almost," "very," "really."
+**Metric this copy should move:** [conversion event] — baseline [x% or `assumed`], target [y%]
+**Test that proves it:** [old vs new, primary metric, guardrail] — design with /ab-test-setup; log in product/roadmap/experiment-roadmap.md
 
-5. **Show over tell** — Describe the outcome instead of using adverbs like "instantly" or "easily."
+## Copy (paste-ready)
+[Write: by section — headline, subheadline, CTA, section headers, body, secondary CTAs]
+[Edit: the revised copy]
 
-6. **Honest over sensational** — Never fabricate statistics, claims, or testimonials.
-
-### Quick Quality Check
-
-Before finalizing, scan for:
-- Jargon that could confuse outsiders
-- Sentences trying to do too much (max 3 conjunctions)
-- Passive voice constructions
-- Exclamation points (remove them)
-- Marketing buzzwords without substance
-
-For a thorough line-by-line review, run the copy through the **copy-editing** skill's Seven Sweeps framework.
-
----
-
-## Best Practices
-
-### Be Direct
-Get to the point. Don't bury the value in qualifications.
-
-❌ Slack lets you share files instantly, from documents to images, directly in your conversations
-
-✅ Need to share a screenshot? Send as many documents, images, and audio files as your heart desires.
-
-### Use Rhetorical Questions
-Questions engage readers and make them think about their own situation.
-
-✅ Hate returning stuff to Amazon?
-
-✅ Need to share a screenshot?
-
-✅ Tired of chasing approvals?
-
-### Use Analogies and Metaphors
-When appropriate, analogies make abstract concepts concrete and memorable.
-
-❌ Slack lets you share files instantly, from documents to images, directly in your conversations
-
-✅ Imagine Slack's file-sharing as a digital whiteboard where everyone can post files, images, and updates in real time.
-
-### Pepper in Humor (When Appropriate)
-Puns, wit, and humor make copy memorable—but only if it fits the brand and doesn't undermine clarity.
-
----
-
-## Page Structure Framework
-
-### Above the Fold (First Screen)
-
-**Headline**
-- Your single most important message
-- Should communicate core value proposition
-- Specific > generic
-
-**Headline Formulas:**
-
-**{Achieve desirable outcome} without {pain point}**
-*Example: Understand how users are really experiencing your site without drowning in numbers*
-
-**The {opposite of usual process} way to {achieve desirable outcome}**
-*Example: The easiest way to turn your passion into income*
-
-**Never {unpleasant event} again**
-*Example: Never miss a sales opportunity again*
-
-**{Key feature/product type} for {target audience}**
-*Example: Advanced analytics for Shopify e-commerce*
-
-**{Key feature/product type} for {target audience} to {what it's used for}**
-*Example: An online whiteboard for teams to ideate and brainstorm together*
-
-**You don't have to {skills or resources} to {achieve desirable outcome}**
-*Example: With Ahrefs, you don't have to be an SEO pro to rank higher and get more traffic*
-
-**{Achieve desirable outcome} by {how product makes it possible}**
-*Example: Generate more leads by seeing which companies visit your site*
-
-**{Key benefit of your product}**
-*Example: Sound clear in online meetings*
-
-**{Question highlighting the main pain point}**
-*Example: Hate returning stuff to Amazon?*
-
-**Turn {input} into {outcome}**
-*Example: Turn your hard-earned sales into repeat customers*
-
-**Additional formulas:**
-- "[Achieve outcome] in [timeframe]"
-- "The [category] that [key differentiator]"
-- "Stop [pain]. Start [pleasure]."
-- "[Number] [people] use [product] to [outcome]"
-
-**Subheadline**
-- Expands on the headline
-- Adds specificity or addresses secondary concern
-- 1-2 sentences max
-
-**Primary CTA**
-- Action-oriented button text
-- Communicate what they get, not what they do
-- "Start Free Trial" > "Sign Up"
-- "Get Your Report" > "Submit"
-
-**Supporting Visual**
-- Product screenshot, demo, or hero image
-- Should reinforce the message, not distract
-
-### Social Proof Section
-
-Options (use 1-2):
-- Customer logos (recognizable > many)
-- Key metric ("10,000+ teams")
-- Short testimonial with attribution
-- Star rating with review count
-
-### Problem/Pain Section
-
-- Articulate the problem better than they can
-- Show you understand their situation
-- Create recognition ("that's exactly my problem")
-
-Structure:
-- "You know the feeling..." or "If you're like most [role]..."
-- Describe the specific frustrations
-- Hint at the cost of not solving it
-
-### Solution/Benefits Section
-
-- Bridge from problem to your solution
-- Focus on 3-5 key benefits (not 10)
-- Each benefit: headline + short explanation + proof point if available
-
-Format options:
-- Benefit blocks with icons
-- Before/after comparison
-- Feature → Benefit → Proof structure
-
-### How It Works Section
-
-- Reduce perceived complexity
-- 3-4 step process
-- Each step: simple action + outcome
-
-Example:
-1. "Connect your tools (2 minutes)"
-2. "Set your preferences"
-3. "Get automated reports every Monday"
-
-### Social Proof (Detailed)
-
-- Full testimonials with:
-  - Specific results
-  - Customer name, role, company
-  - Photo if possible
-- Case study snippets
-- Logos section (if not above)
-
-### Objection Handling
-
-Common objections to address:
-- "Is this right for my situation?"
-- "What if it doesn't work?"
-- "Is it hard to set up?"
-- "How is this different from X?"
-
-Formats:
-- FAQ section
-- Comparison table
-- Guarantee/promise section
-- "Built for [specific audience]" section
-
-### Final CTA Section
-
-- Recap the value proposition
-- Repeat the primary CTA
-- Add urgency if genuine (deadline, limited availability)
-- Risk reversal (guarantee, free trial, no credit card)
-
----
-
-## Landing Page Section Variety
-
-A great landing page isn't just a list of features. Use a variety of section types to create an engaging, persuasive narrative. Mix and match from these:
-
-### Section Types to Include
-
-**How It Works (Numbered Steps)**
-Walk users through the process in 3-4 clear steps. Reduces perceived complexity and shows the path to value.
-
-**Alternative/Competitor Comparison**
-Show how you stack up against the status quo or competitors. Tables, side-by-side comparisons, or "Unlike X, we..." sections.
-
-**Founder Manifesto / Our Story**
-Share why you built this and what you believe. Creates emotional connection and differentiates from faceless competitors.
-
-**Testimonials**
-Customer quotes with names, photos, and specific results. Multiple formats: quote cards, video testimonials, tweet embeds.
-
-**Case Studies**
-Deeper stories of customer success. Problem → Solution → Results format with specific metrics.
-
-**Use Cases**
-Show different ways the product is used. Helps visitors self-identify: "This is for people like me."
-
-**Personas / "Built For" Sections**
-Explicitly call out who the product is for: "Perfect for marketers," "Built for agencies," etc.
-
-**Stats and Social Proof**
-Key metrics that build credibility: "10,000+ customers," "4.9/5 rating," "$2M saved for customers."
-
-**Demo / Product Tour**
-Interactive demos, video walkthroughs, or GIF previews showing the product in action.
-
-**FAQ Section**
-Address common objections and questions. Good for SEO and reducing support burden.
-
-**Integrations / Partners**
-Show what tools you connect with. Logos build credibility and answer "Will this work with my stack?"
-
-**Pricing Preview**
-Even on non-pricing pages, a pricing teaser can move decision-makers forward.
-
-**Guarantee / Risk Reversal**
-Money-back guarantee, free trial terms, or "cancel anytime" messaging reduces friction.
-
-### Recommended Section Mix
-
-For a landing page, aim for variety. Don't just stack features:
-
-**Typical Feature-Heavy Page (Weak):**
-1. Hero
-2. Feature 1
-3. Feature 2
-4. Feature 3
-5. Feature 4
-6. CTA
-
-**Varied, Engaging Page (Strong):**
-1. Hero with clear value prop
-2. Social proof bar (logos or stats)
-3. Problem/pain section
-4. How it works (3 steps)
-5. Key benefits (2-3, not 10)
-6. Testimonial
-7. Use cases or personas
-8. Comparison to alternatives
-9. Case study snippet
-10. FAQ
-11. Final CTA with guarantee
-
----
-
-## CTA Copy Guidelines
-
-**Weak CTAs (avoid):**
-- Submit
-- Sign Up
-- Learn More
-- Click Here
-- Get Started
-
-**Strong CTAs (use):**
-- Start Free Trial
-- Get [Specific Thing]
-- See [Product] in Action
-- Create Your First [Thing]
-- Book My Demo
-- Download the Guide
-- Try It Free
-
-**CTA formula:**
-[Action Verb] + [What They Get] + [Qualifier if needed]
-
-Examples:
-- "Start My Free Trial"
-- "Get the Complete Checklist"
-- "See Pricing for My Team"
-
----
-
-## Output Format
-
-When writing copy, provide:
-
-### Page Copy
-Organized by section with clear labels:
-- Headline
-- Subheadline
-- CTA
-- Section headers
-- Body copy
-- Secondary CTAs
-
-### Annotations
-For key elements, explain:
-- Why you made this choice
-- What principle it applies
-- Alternatives considered
-
-### Alternatives
-For headlines and CTAs, provide 2-3 options:
+## Alternatives (headline and primary CTA)
 - Option A: [copy] — [rationale]
 - Option B: [copy] — [rationale]
-- Option C: [copy] — [rationale]
 
-### Meta Content (if relevant)
-- Page title (for SEO)
-- Meta description
+## Notes
+[Write: annotations for key choices — principle applied, alternatives considered]
+[Edit: | Original | Revised | Why (sweep) | table, plus "Left as-is" with reasons]
 
----
+## Meta (if relevant)
+- Page title / meta description
+```
 
-## Page-Specific Guidance
+Keep the metric and test lines to one line each. If the user wants no file, return the same shape in chat.
 
-### Homepage Copy
-- Serve multiple audiences without being generic
-- Lead with broadest value proposition
-- Provide clear paths for different visitor intents
-- Balance "ready to buy" and "still researching"
+## References (load on demand)
 
-### Landing Page Copy
-- Single message, single CTA
-- Match headline to ad/traffic source
-- Complete argument on one page
-- Remove distractions (often no nav)
+- `references/seven-sweeps.md` — Edit mode: all seven sweeps with checks, examples, process, the collaborative sweep loop, and the full checklist.
+- `references/editing-checks.md` — word-, sentence-, and paragraph-level checks (weak-word swaps) and common copy problems with fixes. Use for quick-pass edits and the Write-mode self-edit.
+- `references/page-structure.md` — Write mode: above-the-fold anatomy, every section type, strong vs weak section mixes, and page-type guidance.
+- `references/headlines-and-ctas.md` — headline formulas with examples, weak vs strong CTAs, and style techniques (directness, rhetorical questions, analogies, humor).
 
-### Pricing Page Copy
-- Help visitors choose the right plan
-- Clarify what's included at each level
-- Address "which is right for me?" anxiety
-- Make recommended plan obvious
+## Related skills
 
-### Feature Page Copy
-- Connect feature to benefit to outcome
-- Show use cases and examples
-- Differentiate from competitors' versions
-- Clear path to try or buy
-
-### About Page Copy
-- Tell the story of why you exist
-- Connect company mission to customer benefit
-- Build trust through transparency
-- Still include a CTA (it's still a marketing page)
-
----
-
-## Voice and Tone Considerations
-
-Before writing, establish:
-
-**Formality level:**
-- Casual/conversational
-- Professional but friendly
-- Formal/enterprise
-
-**Brand personality:**
-- Playful or serious?
-- Bold or understated?
-- Technical or accessible?
-
-Maintain consistency throughout, but adjust intensity:
-- Headlines can be bolder
-- Body copy should be clearer
-- CTAs should be action-oriented
-
----
-
-## Related Skills
-
-- **copy-editing**: For polishing and improving existing copy (use after writing your first draft)
-- **page-cro**: If the page structure/strategy needs work, not just copy
-- **email-sequence**: For email copywriting
-- **popup-cro**: For popup and modal copy
-- **ab-test-setup**: To test copy variations properly
-
----
+- /page-cro — page structure, offer, or layout is the problem, not the words
+- /marketing-psychology — why a given edit should change behavior
+- /marketing-strategy-pmm — positioning or messaging hierarchy is unsettled
+- /email-sequence — email copy; /popup-cro — popup and modal copy
+- /ab-test-setup — design the test that proves the new copy wins
 
 ## TERMINATION
 
-Stop when the copy for the requested page or section is delivered in the output
-format. One asset per invocation — don't also rewrite adjacent pages, design an A/B
-test, or polish endlessly. Hand variations to `ab-test-setup` and polish to
-`copy-editing` rather than doing their jobs here.
+Stop when one asset's copy is delivered in the output shape with the metric line and the test line filled. One page or section per invocation, one mode. Do not rewrite adjacent pages, restructure the page (route to /page-cro), design the full experiment (route to /ab-test-setup), publish or ship the copy, or keep polishing past the user's intent.

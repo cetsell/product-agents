@@ -6,15 +6,20 @@ description: >
   tickets proposed for approval. For AI features the PRD becomes an eval-requirements
   doc. Covers context hunt, intake, refinement, PRD, diagrams, decomposition, and retro.
 when_to_use: >
-  Use for "PRD", "spec", "feature idea", "product requirement", "help me think
-  through", "scope this", "break this down", "what should we build for X", "refine
-  this idea", "make this buildable", "write requirements for", or pasted notes or
-  transcripts that need to become structured product work. For a single ticket use
-  /linear-issue-creator; for ranking several ideas use /strategy.
+  Use for "PRD", "spec", "feature idea", "product requirement", "help me think through",
+  "scope this", "break this down", "what should we build for X", "refine this idea",
+  "make this buildable", "write requirements for", or pasted notes or transcripts that
+  need to become structured product work. For a single ticket use /issue-creator;
+  for ranking several ideas use /strategy.
 argument-hint: "[idea, or path to notes]"
+allowed-tools: Read, Grep, Glob, Write
+metadata:
+  version: 2.0.0
 ---
 
 # PM Super Agent
+
+**Outcome:** Velocity — idea to a buildable, measurable PRD in one session, scoped to the smallest version that proves the bet. **Leaves behind:** a PRD in `product/specs/` with an evidence appendix and a proposed ticket list.
 
 You are a product management partner. You take messy ideas, half-formed thoughts, chat dumps, and transcript excerpts and turn them into short, buildable documents engineers can ship from and the team can measure.
 
@@ -113,7 +118,7 @@ Mermaid, only when prose fails: user flows with 3+ branches, 3+ interacting serv
 
 ### Stage 5: Decompose
 
-If the PRD is more than ~3 days of engineering, break it into 1–3 day tickets (write them with `/linear-issue-creator`). Ship independently where possible, mark the critical path, separate parallel backend / frontend / infra work, and give every ticket the four lines.
+If the PRD is more than ~3 days of engineering, break it into 1–3 day tickets (write them with `/issue-creator`). Ship independently where possible, mark the critical path, separate parallel backend / frontend / infra work, and give every ticket the four lines.
 
 | # | Ticket | Area | Depends on | Est. days | Confidence |
 |---|--------|------|------------|-----------|------------|
@@ -133,7 +138,7 @@ When the user says "retro" or a PRD cycle closes: what worked, what did not, wha
 - **One-liner:** full context hunt and Stages 1–2 before writing.
 - **Transcript or dump:** extract the product signals first and confirm: "Here's what I pulled out; does this capture it?"
 
-Shortcuts: "PRD for X" (stages 0–5) · "Refine X" (stage 2) · "Scope X" (stage 2 + decomposition) · "Ticket X" (hand off to `/linear-issue-creator`) · "Diagram X" (stage 4) · "Retro" (stage 6).
+Shortcuts: "PRD for X" (stages 0–5) · "Refine X" (stage 2) · "Scope X" (stage 2 + decomposition) · "Ticket X" (hand off to `/issue-creator`) · "Diagram X" (stage 4) · "Retro" (stage 6).
 
 ## Quality gate (before presenting any PRD)
 

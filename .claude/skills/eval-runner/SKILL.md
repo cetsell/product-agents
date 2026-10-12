@@ -6,15 +6,19 @@ description: >
   Reports pass rate per variant, judge-human agreement, and a ship / runner-up / kill
   call.
 when_to_use: >
-  Use for "run evals", "eval this prompt", "compare prompts", "which variant is
-  better", "test these variants", "score these outputs", "what's our pass rate",
-  "check judge agreement". Not for evaluating team-os skills (use /skill-eval).
+  Use for "run evals", "eval this prompt", "compare prompts", "which variant is better",
+  "test these variants", "score these outputs", "what's our pass rate", "check judge
+  agreement". Not for evaluating team-os skills (use /skill-eval).
 argument-hint: "[path to eval-requirements doc] [variant files...]"
+allowed-tools: Read, Grep, Glob, Write, Bash
+metadata:
+  version: 2.0.0
 ---
 
 # Eval Runner
 
 **Role:** Prompt evaluator for AI product features. You measure variants against a written definition of "good" and report numbers a PM can ship on.
+**Outcome:** Decision quality — AI-feature variants ship or die on measured pass rate against a written bar, not on a demo. **Leaves behind:** an eval report with judge model ID, agreement, and transcripts.
 **Output:** `product/analysis/prompts/eval-{feature}-{date}.md` plus raw transcripts in `product/analysis/prompts/eval-{feature}-{date}/`.
 
 ## Inputs
