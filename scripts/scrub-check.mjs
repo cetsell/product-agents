@@ -19,6 +19,8 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SELF = "scripts/scrub-check.mjs";
+// Historical records that name the removed terms on purpose.
+const SKIP_FILES = new Set(["UPGRADE-PLAN-2026-10.md"]);
 
 const DENY = [
   { re: /pm-workflows\//, why: "old install's output folder; use product/, team/, gtm/" },
@@ -36,6 +38,7 @@ const DENY = [
 // Exact substrings allowed in specific files (author / maintainer metadata).
 const ALLOW = [
   { file: "README.md", text: "Chad Etsell" },
+  { file: "LICENSE", text: "Chad Etsell" },
   { file: ".claude-plugin/plugin.json", text: "Chad Etsell" },
   { file: ".claude-plugin/marketplace.json", text: "Chad Etsell" },
   { file: "package.json", text: "Chad Etsell" },
@@ -58,7 +61,7 @@ try {
 
 const hits = [];
 for (const file of files) {
-  if (file === SELF) continue;
+  if (file === SELF || SKIP_FILES.has(file)) continue;
   if (/ \d+\.[A-Za-z0-9]+$/.test(file)) {
     hits.push({ file, line: 0, match: file, why: "sync-conflict duplicate (e.g. 'name 2.md'); delete it" });
     continue;

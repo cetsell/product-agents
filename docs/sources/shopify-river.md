@@ -1,28 +1,16 @@
-Years ago I wrote about my apprenticeship in Germany. I dropped out of school at 16 and went to work at a Siemens subsidiary, where the most interesting people sat in the basement and used Delphi instead of the corporate-mandated Rosie SQL (both pretty much lost to time and progress). I learned to be a programmer by watching them. By making them coffee. By hanging around long enough that their judgment seeped into mine.
-I have been thinking about that experience a lot in the last year, because we built something at Shopify that runs on the same principle.
-She's called River. River is an AI agent that lives in our company's Slack. You talk to her the same way you would talk to a teammate: by mentioning River in a Slack channel. She can read code, run tests, write code, open pull requests, query our data warehouse, look at production traces, and a lot more. We use this constantly.
-In the last 30 days, 5,938 Shopify employees worked with River across 4,450 different Slack channels. It opened 1,870 pull requests in the last week alone in our main monorepo. About one in eight pull requests merged into our codebase last week was authored by River, reviewed by us. 
-There are a lot of coding agents in the world right now. What makes River special is a constraint: She only works in the open.
-A constraint that became a feature
+# Source: "Learning on the Shop floor" (Tobi Lütke, May 2026)
 
-When we started building River, the obvious thing to do was let people use her in private. That is how many other AI assistants work. ChatGPT is a private window. Claude is a private window. Cursor is between you and the IDE.
-We made the opposite decision. River lives in slack, our company chat. River does not respond to direct messages. She politely declines and suggests to create a public channel for you and her to start working in. I myself work with river in #tobi_river channel and many followed this pattern.  Every conversation is therefore searchable.  Anyone at Shopify  can jump in. In my own channel, there are over 100 people who, react to threads, add color and add context, pick up the torch, help with the reviews, remind me how rusty I am, and importantly, learn from watching.
-This was odd at first. People are used to private workspaces with their tools. Asking for help feels different when the whole company can see the question. But something happened that we hoped for but did not fully predict the impact of:
-People started learning from each other.
-A support engineer in #help_checkout would watch a backend engineer in another channel get River to find the right log query, and the next day she would do the same thing. A new hire would scroll back through #river to see how senior people scope a request before they ever sent their first one.
-As so often with German, there is a word for the kind of environment: Lehrwerkstatt. Literally: A teaching workshop. The whole shop floor is the classroom. You learn by being near the work. Being a constant learner is one of the core values of the firm. 
-Shopify wants to be a Lehrwerkstatt at scale and River has now gotten us closer to this ideal than ever. It’s osmosis learning, because it does not require a curriculum, a training plan, or a manager. It just requires everyone's work to be visible to the maximum extent possible. Everyone learns from each other. 
-I'm genuinely excited by this- somewhat accidental- discovery and thought I'd share. 
-Why this matters more, not less, with AI
+Original post: https://x.com/tobi/article/2053121182044451016
+Shopify Engineering companion piece: https://shopify.engineering/under-the-river
 
-A common worry about AI is that it will make people stop thinking. Why would a junior developer learn to debug if the agent does it for them? Why would they read the codebase if they can just ask?
-I think the worry is real but the framing is wrong. The risk is not that AI does the work. The risk is that AI does the work and we never learn from it. If every interaction with an agent happens in a private window, the only person who learns anything is the person at the keyboard. Everyone else is locked out of the apprenticeship.
-When people work together with their agents in public, the opposite happens. The best prompt patterns spread, knowledge spreads. The clever way one developer investigated a Slack permissions bug becomes the template for how everyone else investigates. The skill someone wrote to teach River about the company's checkout data warehouse gets reused by twelve other teams. River herself learns: every channel can pre-load the zones, skills, and instructions its team needs, written by the people closest to the work. River also has a memory that is constantly learning and un-learning critical information about the company and the best way to do work.
-The agent does not replace the apprentice, nor does it replace the mentor. The agent makes the whole company an apprentice because everyone is constantly watching the most experienced people work alongside it.
-This is also why the merge rate keeps climbing. We did not retrain a model. We did not switch models. An improvement from 36% to 77% over two months came from people watching River work, noticing where it got stuck, and writing down what it should have known and helping make River itself a better teammate. Every team's accumulated taste flows into the agent. The agent gets better at being Shopify.
-The company moves at the speed of its slowest secret
+Not reproduced here. Read the original; this is the one-paragraph summary of what Team OS borrowed from it.
 
-When I think about why this matters, it comes back to something I have believed for a long time: the speed of an organization is determined by the speed of its lowest-bandwidth communication channel and rhythm. Meetings are slow. Email is slow. Private DMs are slow. Maybe not for the individuals involved in them, but for the organization. The information and decisions that come from them never fully diffuse into the rest of the organization without huge additional communication effort.
-A public conversation between humans or with a competent agent is none of those things. It is fast, it is searchable, it is teachable, and it compounds. The next person who has the same question does not have to ask it.
-I do not think the future of work is humans being replaced by agents. I wrote a piece in 2018 called The Future Role of Human Excellence, about how chess got more popular, not less, after computers learned to play. The same lesson applies here. The right model is not human or machine. It is the apprentice and the master, both watching each other learn, both getting better on the shop floor.
-That is what River is. This is our Lehrwerkstatt.
+## What it says
+
+River is an AI agent that lives in Shopify's Slack and is addressed like a teammate. It can read code, run tests, open pull requests, query the data warehouse, and inspect production traces. The constraint that matters: it works only in public channels and declines direct messages, so every exchange becomes a searchable transcript anyone at the company can read, join, or learn from. Lütke frames this as a Lehrwerkstatt, a teaching workshop where apprentices learn by watching experienced people work in the open. He reports thousands of employees using it across thousands of channels, with roughly one in eight merged pull requests authored by the agent and reviewed by humans.
+
+## What Team OS took from it
+
+- **The River principle:** agent output is shared and searchable by default, never private. `proactive/runs.yml` sets `open: true` on every run for this reason, and every skill writes to a repo path rather than a chat window.
+- **Watching is onboarding:** the weekly cadence artifacts exist so that anyone on the team can see how decisions were made, not just what was decided.
+- **Human review stays in the loop:** the agent proposes, a person decides. That is the "human decision point" line in every producer skill.
