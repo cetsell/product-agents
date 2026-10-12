@@ -20,6 +20,8 @@ a PM's idea, a feature request, a bug report, a Slack message, a half-formed tho
 and produce a Linear issue so clear and well-scoped that an engineer can start working
 on it with confidence and minimal back-and-forth.
 
+**Output:** a drafted issue (or an epic plus proposed sub-issues) in the format under Step 4, shown in chat for approval before anything is created in the tracker.
+
 ---
 
 ## Team Context Rules
@@ -81,7 +83,7 @@ MUST still include a confidence level on the diagnosis.
 ### Lead with the Number
 
 Every problem statement starts with a number. Not "users are dropping off"
-but "30.2% of users drop between OB-1 and OB-2."
+but "31% of new signups never reach step 2 of onboarding."
 
 ### Before Any Ticket Ships to Prod
 
@@ -89,9 +91,9 @@ These 4 lines get added as a comment on the Linear ticket before merging:
 
 ```
 Hypothesis: We expect [metric] to [move how] because [reason]
-Measure: Check [metric] in Mixpanel at [24h / 72h]
+Measure: Check [metric] in [analytics tool] at [24h / 72h]
 Kill trigger: If [metric] doesn't improve by [date], revert
-Who checks: [name]
+Who checks: [role]
 ```
 
 ---
@@ -200,7 +202,7 @@ Bad: "Refactor search module to use ElasticSearch adapter pattern"
 ```markdown
 ## Problem Statement
 
-[One sentence with a number. "30.2% of users drop between OB-1 and OB-2."
+[One sentence with a number. "31% of new signups never reach step 2 of onboarding."
 Lead with the data, not the narrative.]
 
 ## Task Summary
@@ -217,7 +219,7 @@ feature area.
 Include inline references where they add clarity:
 - Link to relevant PRDs, designs, Slack threads, or related issues
 - Quote specific user feedback or data points that motivated this work
-  (e.g., "23% of creators abandon at the payment step — Mixpanel, Feb 2026")
+  (e.g., "23% of trial users abandon at the payment step — product analytics, 2026-09-14")
 - Reference specific metrics or thresholds from analytics
 - Cite prior art or competitor behavior if relevant
 
@@ -306,9 +308,9 @@ where it's relevant — don't dump it in a separate section.
 
 Example:
 ```
-> "I can't figure out which plan includes messaging" — creator support ticket #4821
+> "I can't figure out which plan includes SSO" — support ticket #4821
 
-**23% of creators** abandon at the pricing page (Mixpanel, Feb 2026).
+**23% of trial admins** abandon at the pricing page (product analytics, 2026-09-14).
 This suggests the current plan/package distinction is confusing.
 
 Related: blocked by [PROJ-3892: Add plan comparison API endpoint](link).
@@ -344,7 +346,7 @@ Wrap diagrams in triple-backtick `mermaid` code blocks.
 ## Writing Style
 
 - **Clear, concise, functional.** Every sentence earns its place.
-- **Concrete over abstract.** "40% of creators" not "many creators." "Under 200ms" not "fast."
+- **Concrete over abstract.** "40% of admins" not "many admins." "Under 200ms" not "fast."
 - **Scannable.** An engineer gets the gist in 30 seconds, details in 2 minutes.
 - **No filler.** No "in order to" when "to" works. No "utilize" when "use" works.
 - **Lead with the number.** Every problem statement starts with data.

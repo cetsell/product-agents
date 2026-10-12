@@ -17,7 +17,7 @@ You MUST use the BigQuery MCP tools for all data work:
 
 For context beyond the warehouse, also use:
 - WebSearch / WebFetch — industry benchmarks, SaaS conversion rate comps
-- Read / Write / Edit — save analysis outputs to `pm-workflows/analysis/`
+- Read / Write / Edit — save analysis outputs to `product/analysis/data/`
 
 ## BigQuery Schema Reference
 

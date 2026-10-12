@@ -8,7 +8,7 @@
 | Customer | {{name or identifier}} |
 | Participants | {{team members on the call}} |
 | Call Type | {{discovery / feedback / support / sales}} |
-| Transcript Source | {{Gemini / manual}} |
+| Transcript Source | {{meeting-notes tool / manual}} |
 
 ## Key Quotes
 

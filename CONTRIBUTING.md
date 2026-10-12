@@ -47,7 +47,7 @@ That's it. No code review needed — this is context, not code.
 2. Click the pencil icon (edit)
 3. Make your change
 4. Click "Propose changes" → "Create pull request"
-5. Add a one-line title like: "Update campaign tracker — TrafficJunky paused"
+5. Add a one-line title like: "Update campaign tracker — paid social paused"
 
 ### 2. Claude Code (for agent-assisted updates)
 
@@ -66,7 +66,7 @@ Claude Code will read the CLAUDE.md indexes, find the right file, and make the e
 ```bash
 git checkout -b update/campaign-tracker
 # make edits
-git add -A && git commit -m "Update campaign tracker — TrafficJunky paused"
+git add -A && git commit -m "Update campaign tracker — paid social paused"
 git push -u origin update/campaign-tracker
 # open PR on GitHub
 ```
@@ -75,7 +75,7 @@ git push -u origin update/campaign-tracker
 
 ## PR Guidelines
 
-- **Title format**: `[area] what changed` — e.g., `[gtm] pause TrafficJunky campaign` or `[roadmap] update current bet to week 17`
+- **Title format**: `[area] what changed` — e.g., `[gtm] pause paid-social campaign` or `[roadmap] update current bet to week 17`
 - **Description**: One sentence is fine. The diff tells the story.
 - **Labels** (optional): `context-update`, `decision`, `cadence`, `correction`, `stale-fix`
 - **Review**: Any team member can approve. PM reviews roadmap/strategy changes.
@@ -85,7 +85,7 @@ git push -u origin update/campaign-tracker
 
 Not sure how to format something? Just describe what changed in plain English in the PR description. Example:
 
-> "We decided in Thursday's sync that attribution tracking is blocked until [person] finishes the Segment migration. [Person] is pausing spend on that channel. [Person] flagged the paywall redesign needs another week."
+> "We decided in Thursday's sync that attribution tracking is blocked until [person] finishes the event-tracking migration. [Person] is pausing spend on that channel. [Person] flagged the paywall redesign needs another week."
 
 A reviewer (or Claude Code agent) can help structure this into the right files.
 

@@ -4,7 +4,7 @@ description: Refreshes product/roadmap/ files from live Linear data. Invoke at s
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
 category: managed
-steward: Chad
+steward: PM
 cadence: Weekly (Friday after sprint planning)
 ---
 
@@ -12,16 +12,16 @@ cadence: Weekly (Friday after sprint planning)
 
 > **This is a detailed reference file.** The primary agent is `team-os.md` (Refresh mode). This file contains the full Linear query playbook and update procedures that Refresh mode references.
 
-**Steward: Chad** — Run on cadence (Friday after sprint planning).
+**Steward: PM** — Run on cadence (Friday after sprint planning).
 
 You maintain the `product/roadmap/` section of Team OS by pulling live data from Linear and updating the sprint bet, betting table, and experiment roadmap.
 
 ## Your Files
 
 - `product/roadmap/current-bet.md` — Active sprint: one priority, success criteria, owners
-- `product/roadmap/betting-table.md` — Full pipeline: active → post-billboard → backlog → shipped
+- `product/roadmap/betting-table.md` — Full pipeline: active → queued → completed → killed
 - `product/roadmap/experiment-roadmap.md` — Post-launch experiment stack with gates and kill criteria
-- `product/roadmap/product-strategy-2026.md` — Annual strategy (update quarterly only)
+- `product/roadmap/product-strategy.md` — Annual strategy (update quarterly only)
 
 ## How to Refresh
 
@@ -77,7 +77,7 @@ Add or update the header note in each file:
 
 - Never fabricate data. If Linear is unreachable, say so and don't update.
 - Keep the existing file structure and format — don't reorganize.
-- Preserve kill criteria, strategic commentary, and decision points written by Chad.
+- Preserve kill criteria, strategic commentary, and decision points written by the PM.
 - Only update factual fields: status, percentages, dates, shipped items.
 - Always include `Context as of YYYY-MM-DD` in your commit message.
 - Propose changes as a PR — do not push directly to master.
@@ -85,5 +85,5 @@ Add or update the header note in each file:
 ## When to Run
 
 - **Weekly**: Friday, after sprint planning
-- **On demand**: When Chad says "refresh the roadmap" or "update the bet"
-- **After major milestone**: Billboard launch, experiment readout, etc.
+- **On demand**: When the PM says "refresh the roadmap" or "update the bet"
+- **After major milestone**: A launch, an experiment readout, etc.

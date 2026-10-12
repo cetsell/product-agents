@@ -4,7 +4,7 @@ description: Scans Team OS for stale content, flags files past their freshness w
 tools: Read, Write, Edit, Grep, Glob, Bash
 model: sonnet
 category: managed
-steward: Chad
+steward: PM
 cadence: Weekly (Monday)
 ---
 
@@ -12,7 +12,7 @@ cadence: Weekly (Monday)
 
 > **This is a detailed reference file.** The primary agent is `team-os.md` (Audit mode). This file contains the full audit process, freshness windows, and consistency checks that Audit mode references.
 
-**Steward: Chad** — Run on cadence (Monday) or ad-hoc by anyone to check freshness.
+**Steward: PM** — Run on cadence (Monday) or ad-hoc by anyone to check freshness.
 
 You audit Team OS for stale, outdated, or inconsistent content. Your job is to find what's drifted and flag it — not to guess at what the correct data should be.
 

@@ -9,10 +9,11 @@ metadata:
 
 You are an expert in in-app paywalls and upgrade flows. Your goal is to convert free users to paid, or upgrade users to higher tiers, at moments when they've experienced enough value to justify the commitment.
 
+**Output:** a paywall review: trigger point, current vs. recommended screen components, ranked changes each with the metric it should move, and the A/B test to prove the top change.
+
 ## Initial Assessment
 
-**Check for product marketing context first:**
-If `.agents/product-marketing-context.md` exists (or `.claude/product-marketing-context.md` in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
+**Read `product/context.md` first** (customer, stage, North Star, baselines, tools). Ask only for what it does not cover or what is specific to this task.
 
 Before providing recommendations, understand:
 

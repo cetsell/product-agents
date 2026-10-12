@@ -1,15 +1,11 @@
 # Playbooks
 
-PM frameworks and methodology reference. These are tools Chad uses — available for anyone who finds them useful.
+PM methods the skills cite. Tools for the PM, not team-mandated process.
 
 ## Files
 
 | File | What it covers | When to read |
 |------|---------------|--------------|
-| `linear-guidelines.md` | Issue + project templates, freshness rules, quality checklist, sizing | Creating or reviewing any Linear issue or project |
-| `pm-toolkit.md` | RICE scoring, bet briefs, PRDs, discovery frameworks, quality bars | Writing a bet brief, PRD, or prioritizing features |
-| `product-leadership.md` | Leadership frameworks, stakeholder management | Exec communication, team leadership |
-| `product-strategy.md` | Strategy frameworks, competitive analysis | Strategic planning, market positioning |
-| `business-analysis.md` | Business case frameworks, financial analysis | ROI analysis, business justification |
-| `prompt-engineering.md` | Prompt design, evaluation, structured output | Working on AI prompts |
-| `evidence-loop.md` | The "how do you know?" discipline — claim/source trail, flip-assumption, eval-requirements docs | Any consequential output: strategy call, PRD, audit finding, metric cited to a stakeholder |
+| `pm-toolkit.md` | Hypothesis/kill-trigger lines, ICE vs. RICE, iterate vs. swing, rolling roadmap, portfolio balance, pre-ship bar | Writing a bet, grading artifacts, Friday decide |
+| `evidence-loop.md` | The "how do you know?" discipline: claim/source trail, flip-assumption, eval-requirements docs | Any consequential output: strategy call, PRD, audit finding, metric cited to a stakeholder |
+| `linear-guidelines.md` | Issue and project templates, sizing, quality checklist (Linear by default; adapts to Jira or GitHub Issues) | Creating or reviewing tickets |

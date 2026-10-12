@@ -29,7 +29,7 @@ Actual weekly schedule for Engineering and GTM teams.
 
 | Cadence | What | Owner |
 |---------|------|-------|
-| Weekly | 'Weekly Product Update' email | Chad |
-| Weekly | 'Weekly GTM Update' email | Erin |
+| Weekly | 'Weekly Product Update' email | PM |
+| Weekly | 'Weekly GTM Update' email | GTM Lead |
 | As needed | Google Doc specs | Whoever owns the feature |
 | As needed | Notion wiki updates | Whoever owns the topic |

@@ -6,13 +6,15 @@ Shared context for your product team. AI-agent optimized — every folder has a 
 
 | Query type | Read this | Path |
 |------------|-----------|------|
+| North Star, pillars, baselines, teams, which tool answers what | Product context (read first) | `product/context.md` |
 | Metric definition, KPI formula, data source | Metrics dictionary | `product/analytics/metrics-dictionary.md` |
 | BigQuery table, SQL query, data issue | BQ reference | `product/analytics/bigquery-reference.md` |
 | Funnel stage, conversion event, drop-off | Funnel definitions | `product/analytics/funnel-definitions.md` |
 | Known data bug, workaround | Data quality log | `product/analytics/data-quality-log.md` |
 | Current sprint priority, bet status | Active bet | `product/roadmap/current-bet.md` |
 | Full bet pipeline, what's next | Betting table | `product/roadmap/betting-table.md` |
-| Annual product strategy | Strategy | `product/roadmap/product-strategy-2026.md` |
+| Rolling roadmap (Now / Next / Later) | Roadmap | `product/roadmap/roadmap.md` |
+| Annual product strategy | Strategy | `product/roadmap/product-strategy.md` |
 | Linear issue/project template, quality bar | Linear guidelines | `product/playbooks/linear-guidelines.md` |
 | PM framework (RICE, bets, PRDs, discovery) | Playbooks | `product/playbooks/` |
 | Decision history, what we decided | Decision log | `team/decisions/decisions.md` |
@@ -21,11 +23,12 @@ Shared context for your product team. AI-agent optimized — every folder has a 
 | New team member setup | Onboarding | `team/onboarding/` |
 | GTM campaigns, analytics sync | GTM folder | `gtm/` |
 | Template for any artifact | Templates | `templates/` |
-| Past weekly "Hello All" emails | Archive | `team/weekly-updates/` |
+| Weekly cadence notes and team update emails | Archive | `team/weekly-updates/` |
+| Skill outputs (strategy, audits, premortems, evals) | Analysis | `product/analysis/` |
 | How to contribute to this repo | Contributing guide | `CONTRIBUTING.md` |
 | Maintenance cadence, agent owners, freshness rules | Maintenance playbook | `MAINTENANCE.md` |
 | Scheduled + triggered proactive runs, operating rhythm | Proactive agents | `proactive/` |
-| fe-main Angular conventions, frozen files, key services | Engineering context | `engineering/` |
+| App-repo context for product work (risky areas, how changes get measured) | Engineering context | `engineering/` |
 
 ## Data Source Hierarchy
 
@@ -74,11 +77,9 @@ When working in this repo, load only the skill you need based on the request:
 | Monday kickoff, Friday demo, weekly email, monthly recap | `/cadence` | PM cadence automation |
 | Grade artifact staleness (A-F) | `/check-artifacts` | Artifact health scoring |
 | Monthly PM self-evaluation | `/monthly-pm-self-eval` | Scored self-assessment against PM standards |
-| Campaign retrospective | `/project-campaign-review` | Campaign retro with learnings |
 | Prompt audit, design, structured output | `/senior-prompt-engineer` | Prompt design & evaluation |
 | Marketing copy, headlines, CTAs | `/copywriting` | Page copy, benefit framing |
 | Email drip campaigns, nurture sequences | `/email-sequence` | Sequence design, timing, re-engagement |
-| Email deliverability, SPF/DKIM, infrastructure | `/email-systems` | SendGrid config, bounce handling |
 | Clear prose for docs, UI text, error messages | `/writing-clearly-and-concisely` | Strunk & White principles |
 | Positioning, GTM launches, competitive battlecards | `/marketing-strategy-pmm` | Product marketing strategy |
 | Cognitive biases, persuasion, consumer behavior | `/marketing-psychology` | 70+ mental models for marketing |
@@ -93,8 +94,6 @@ When working in this repo, load only the skill you need based on the request:
 | Copy polish, tone, readability | `/copy-editing` | Copy refinement |
 | pSEO templates, modifier strategy, scale indexing | `/programmatic-seo` | Programmatic SEO |
 | Referral mechanics, incentive design, viral loops | `/referral-program` | Referral program design |
-| Remotion video animation framework | `/remotion-best-practices` | Video animation patterns |
-| Input → knowledge graph → clustered HTML + JSON | `/graphify` | Knowledge graph generation |
 
 **Do not load all skills for every request.** Read the doc index first, load the skill only if the task requires it.
 

@@ -23,6 +23,8 @@ You are NOT a generic PRD template filler. You are a thinking partner who
 pressure-tests ideas, finds gaps, proposes structure, and writes with the
 precision of someone who's shipped product.
 
+**Output:** the PRD at `product/specs/{feature}-prd-{YYYY-MM-DD}.md` (add a row to `product/specs/CLAUDE.md`), plus a proposed ticket list in chat for approval.
+
 ---
 
 ## Team Context Rules
@@ -103,7 +105,7 @@ Confidence: [High / Med / Low] — [one sentence on what we know vs assume]
 
 ```
 # Problem Statement
-[One sentence with a number. "30.2% of users drop between OB-1 and OB-2."]
+[One sentence with a number. "31% of new signups never reach step 2 of onboarding."]
 
 # Acceptance Criteria
 [Specific, testable conditions.]
@@ -120,8 +122,8 @@ If [condition] by [date], stop/revert
 
 ### Lead with the Number
 
-Wrong: "We shipped burst messaging this week."
-Right: "OB-1->OB-2 drop was 30.2% last week. We shipped burst messaging to reduce it. We'll know by Thursday if it moved."
+Wrong: "We shipped the new onboarding checklist this week."
+Right: "31% of signups dropped before step 2 last week. We shipped an onboarding checklist to cut that. We'll know by Thursday if it moved."
 
 ---
 
@@ -181,7 +183,7 @@ Don't wait for the user to provide links — go find what's relevant.
 ### Stage 1: INTAKE — Understand What You're Working With
 
 Read whatever comes in. It might be:
-- A one-line idea ("we need a creator revenue estimator")
+- A one-line idea ("we need a usage-based pricing calculator")
 - A Slack dump or transcript excerpt
 - A half-written spec
 - A feature request from a user or investor
@@ -189,7 +191,7 @@ Read whatever comes in. It might be:
 
 **Extract these signals:**
 - **Core outcome**: What's different when this ships?
-- **User/actor**: Who benefits? Be specific — "creators" not "users"
+- **User/actor**: Who benefits? Be specific — "workspace admins on the free plan" not "users"
 - **Job Story**: "When [situation], I want [motivation], so I can [outcome]"
 - **Motivation**: Why now? What's the business driver?
 - **Constraints**: Timeline, team, tech debt, dependencies
@@ -274,7 +276,7 @@ Separate each section with `---` horizontal rules. Use bullet points within sect
 
 **Writing rules:**
 - No filler. No "in order to" when "to" works. No "utilize" when "use" works.
-- Concrete over abstract. "40% of creators" not "many creators."
+- Concrete over abstract. "40% of admins" not "many admins."
   "Under 200ms" not "fast."
 - Scannable. An engineer gets the gist in 30 seconds, details in 2 minutes.
 - Acceptance criteria use checkbox format: `- [ ] ...`

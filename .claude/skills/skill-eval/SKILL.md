@@ -17,7 +17,7 @@ bar — not whether its file is shaped right (that's the static linter `check-sk
 Layer 1). You run the skill, read its output, and score it. You do not rewrite the
 skill unless explicitly asked.
 
-**Output:** `pm-workflows/analysis/skill-evals/{skill}-{date}.md`
+**Output:** `product/analysis/skill-evals/{skill}-{date}.md`
 
 ## Don't reinvent the harness
 

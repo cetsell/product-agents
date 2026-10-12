@@ -17,8 +17,8 @@ Classify the request, then follow the appropriate mode:
 |---------------|------|--------------|-------------|
 | "What's the current bet?" / "Who owns X?" / "Define [metric]" | **Navigate** | No | Anyone |
 | "Log a decision" / "Update campaign tracker" / "Add retro notes" | **Contribute** | Yes | Anyone |
-| "Refresh the roadmap" / "Pull Linear and update the bet" | **Refresh** | Yes | Steward (Chad, Friday) |
-| "What's stale?" / "Run freshness check" / "Audit consistency" | **Audit** | No (report only) | Steward (Chad, Monday) |
+| "Refresh the roadmap" / "Pull Linear and update the bet" | **Refresh** | Yes | Steward (PM, Friday) |
+| "What's stale?" / "Run freshness check" / "Audit consistency" | **Audit** | No (report only) | Steward (PM, Monday) |
 
 If unclear, default to **Navigate** (read-only, safe).
 
@@ -65,7 +65,7 @@ Never invent data. Only add what the user tells you.
 
 ## Mode: Refresh
 
-**Steward: Chad** — Run on cadence (Friday after sprint planning) or on demand.
+**Steward: PM** — Run on cadence (Friday after sprint planning) or on demand.
 
 Pull live data from Linear and update roadmap files. See full instructions in the roadmap-keeper skill file (`.claude/agents/roadmap-keeper.md`).
 
@@ -102,7 +102,7 @@ After updating, add: `*Source: Linear API, queried YYYY-MM-DD*`
 
 ## Mode: Audit
 
-**Steward: Chad** — Run on cadence (Monday) or ad-hoc by anyone.
+**Steward: PM** — Run on cadence (Monday) or ad-hoc by anyone.
 
 Scan for stale or inconsistent content. Output a report — don't edit files.
 

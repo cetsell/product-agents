@@ -1,25 +1,16 @@
 # Engineering Context
 
-Codebase conventions and runtime context for your repositories. Read the file matching the repo you're working with.
+Context that helps agents working *outside* an application repo (here, in team-os) understand how that repo works. Read `README.md` for what belongs here.
 
 ## Repos Covered
 
-| Repo | Conventions | Runtime Context | What it is |
-|------|------------|-----------------|------------|
-| **[your-repo]** | `fe-main-conventions.md` | `fe-main-runtime-context.md` | [Description — e.g., Angular production app] |
+| Repo | Conventions file | What it is |
+|------|------------------|------------|
+| <!-- your-app-repo --> | `<!-- your-app-repo -->-conventions.md` (copy `conventions.template.md`) | <!-- one line --> |
 
-## When to Use
+## When to read
 
-- **Before touching frontend code** — read both files to understand conventions and frozen files
-- **When reviewing PRs** — check changes against coding standards
-- **When onboarding** — understand the production app architecture before making changes
-- **Cross-repo work** — if an agent in team-os or another repo needs to understand how the app works
+- A PRD, ticket, or premortem needs to know what is frozen, risky, or slow to change in the codebase.
+- Sizing work in `/pm-super-agent` or `/linear-issue-creator` and you need the real architecture, not a guess.
 
-## What Lives Elsewhere
-
-| Repo | Where its CLAUDE.md lives | Notes |
-|------|--------------------------|-------|
-| **[your-app-repo]** | In the repo itself | Conventions live in the repo — don't duplicate here |
-| **team-os** | This repo's root `CLAUDE.md` | You're already here |
-
-Don't duplicate repo-level CLAUDE.md files here. Only add context that helps agents *outside* that repo understand the codebase.
+Do not duplicate an app repo's own `CLAUDE.md` here. The canonical conventions live in that repo; this folder carries only the slice product work needs.

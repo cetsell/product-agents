@@ -1,6 +1,6 @@
 ## What changed
 
-<!-- One sentence. Example: "Updated campaign tracker — paused TrafficJunky spend" -->
+<!-- One sentence. Example: "Updated campaign tracker — paused paid-social spend" -->
 
 
 ## Why

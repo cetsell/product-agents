@@ -1,195 +1,80 @@
-# Product Manager Toolkit — Playbook & Integration Guide
+# PM Toolkit
 
-*Added: 2026-03-12*
-*Skill file: `.claude/skills/product-manager-toolkit.md`*
-
----
-
-## What This Skill Does
-
-The `/product-manager-toolkit` provides the **craft layer** of PM work — the fill-in-the-blank templates, scoring tools, and document formats that translate strategic decisions into executable artifacts. While the `pm-principles-guide.md` defines the *why* and *what* of PM frameworks, this toolkit provides the *how to write it*.
-
-It fills specific gaps that are referenced but not fully defined in the principles guide:
-- Press Release from the Future (referenced in pm-principles-guide Section XI)
-- Pre-Mortem template (referenced in pm-principles-guide Section XI)
-- Metric Tree decomposition (referenced in pm-principles-guide Section XI)
-- Saying No template (referenced in pm-principles-guide Section XI)
-
-**Output location:** `pm-workflows/analysis/pm-toolkit/[type]-[topic]-[date].md`
+The principles the skills grade against. `/check-artifacts`, `/cadence`, `/strategy`, and `/monthly-pm-self-eval` cite this file; change a rule here and every skill that cites it changes with it.
 
 ---
 
-## The 7 Tools at a Glance
-
-| Tool | When to Use | Time to Run |
-|------|-------------|-------------|
-| **1. RICE Scoring** | Comparing features within or between bets | 10–15 min |
-| **2. Customer Discovery** | User/creator interviews, Supernormal synthesis | 20–30 min |
-| **3. Bet Brief** | Any bet moving from Drafting → Ready | 20–30 min |
-| **4. Full PRD** | Cross-quarter features, design-heavy work | 45–60 min |
-| **5. Discovery Frameworks** | Hypothesis, OST, Press Release, Pre-Mortem, Metric Tree | 15–20 min each |
-| **6. Stakeholder Comms** | Saying no, alignment emails, scope decisions | 5–10 min |
-| **7. Quality Bar Checklist** | Before marking any bet Done | 10 min |
-
----
-
-## RICE vs ICE — When to Use Which
-
-The system uses both scoring frameworks for different decisions:
-
-| Framework | Level | When |
-|-----------|-------|------|
-| **ICE** (from pm-principles-guide) | Bet-level | Choosing between bets for the betting table; Thursday Iterate vs. Swing |
-| **RICE** (from this toolkit) | Feature-level | Comparing individual features within a bet; backlog grooming inside a sprint |
-
-**Rule:** Never use ICE for feature-level decisions — the reach dimension matters for features in ways that don't show up in bet-level ICE. Never use RICE for Iterate vs. Swing — that decision needs strategic context, not just reach/impact.
-
----
-
-## Bet Brief vs Full PRD — Which to Use
-
-| Size | Document | Signal |
-|------|----------|--------|
-| 1 sprint (≤5 days) | **Bet Brief** (Tool 3) | Standard weekly bet |
-| 2–3 sprints | **Bet Brief + technical appendix** | Larger sprint, still tactical |
-| 4+ sprints / cross-quarter | **Full PRD** (Tool 4) | Requires design review cycle |
-| Strategic / multi-team | **Full PRD + product-strategist GTM** | Major initiative |
-
-For most day-to-day work, Bet Briefs are the right format. Full PRDs are reserved for larger features — things with significant design, data schema, and cross-team coordination needs.
-
----
-
-## Discovery: Supernormal as Passive Research
-
-You don't always need formal user interviews. Meeting transcripts are a rich source of passive qualitative data. Use Tool 2's "Synthesizing Meetings as Interview Data" pattern weekly:
+## Every bet carries four lines
 
 ```
-After each week's meeting summaries:
-→ Extract JTBD signals (what are users complaining about or requesting?)
-→ Log pain points with severity
-→ Flag Linear gaps (decisions made in calls not reflected in tickets)
+Hypothesis: We expect [metric] to [move how] because [reason]
+Measure:    Check [metric] in [tool] at [24h / 72h / 7d]
+Kill trigger: If [metric] doesn't improve by [date], revert or stop
+Confidence: High / Med / Low — what we know vs. what we assume
 ```
 
-This turns every meeting into a low-cost discovery session without scheduling additional user calls.
+High = we have data or prior evidence. Med = reasonable, untested. Low = educated guess; run a smaller test first.
 
----
+## ICE vs. RICE
 
-## The Pre-Mortem Gate
+| Framework | Level | Use for |
+|-----------|-------|---------|
+| ICE (Impact, Confidence, Ease) | Bet | Choosing the week's bet; Thursday iterate-vs-swing |
+| RICE (Reach × Impact × Confidence / Effort) | Feature | Comparing features inside a bet; backlog grooming |
 
-A pre-mortem should be run **before finalizing the ICE Confidence score** on any bet that scores Confidence ≥ 7/10. The reason: high-confidence bets are where overconfidence is most dangerous. If pre-mortem reveals a real risk, lower Confidence to reflect it.
+Do not use ICE for features (reach matters there) or RICE for iterate-vs-swing (that call needs strategic context, not reach).
 
-Trigger: Run pre-mortem whenever you hear yourself saying "this is obvious" or "we've done this before."
+## Iterate vs. swing (Friday)
 
----
+- **Iterate** if one or two more days close the gap on the success criteria.
+- **Swing** if the bet is achieved, invalidated, or the kill trigger fired. Pick the next bet by ICE from the betting table.
+- Run `/premortem` before locking a Confidence score of 7/10 or higher. High confidence is where overconfidence costs the most.
 
-## The Press Release Test
+## Bet brief vs. PRD
 
-Before committing to build anything significant, write the press release first (Tool 5). This test reveals:
-- If the user quote sounds authentic → value prop is real
-- If the user quote sounds like marketing → rethink the value prop
-- If you can't write the headline → the feature isn't well-defined enough
+| Size | Document |
+|------|----------|
+| ≤ 1 sprint | Bet brief (`templates/bet-brief.md`) |
+| 2–3 sprints | Bet brief + technical appendix |
+| Cross-quarter or multi-team | Full PRD via `/pm-super-agent` |
+| AI feature, any size | Eval-requirements doc (`templates/eval-requirements-doc.md`) |
 
-It takes 10 minutes and saves sprint capacity on features that shouldn't ship.
+## Rolling roadmap
 
----
+Now (6 weeks, concrete) / Next (6 months, flexible) / Later (directional), plus a "Not doing" list. Every Now item names the metric it moves. Template: `product/roadmap/roadmap.md`.
 
-## Quality Bar: The "CPO Standard" Connection
+## Balance the portfolio
 
-Tool 7 maps directly to the CPO Output Standards in pm-principles-guide Section XI. Specifically:
+- **Performance gap:** keeping the existing product healthy (reliability, retention, core funnel).
+- **Opportunity gap:** new value that expands what the product does.
+- A healthy betting table carries both, and spreads bets across more than one leg of the opportunity tree.
+- **Strategic work vs. snacking:** high-effort, high-impact work beats a queue of low-effort, low-impact tickets that feel productive.
 
-> "An artifact is still at PM standard if it lists tickets instead of synthesizing insight, flags risk without making a call, or uses placeholder language."
+## "I have it handled"
 
-Tool 7 is the pre-ship checklist that prevents CPO-standard violations before they happen. Run it before marking any bet Done — especially the "One Insight" test (not a bullet list, a paragraph).
+Fresh (≤ 7 days), specific, aligned artifacts signal control; stale (> 14 days) signals drift. Two or more ready bets in the pipeline means the team always knows what is next. `/check-artifacts` grades this.
 
----
+## Discovery without scheduling interviews
 
-## Opportunity Solution Tree — How to Use It
+Meeting notes and support threads are passive interview data. Weekly: extract job-to-be-done signals, log pain points with severity in `product/customer-insights/`, and flag decisions made in meetings that have no ticket.
 
-The OST in Tool 5 maps your North Star metric to specific opportunity areas and solution candidates. Use it during:
+## When the North Star will not move
 
-- **Monday Kickoff:** Confirm this week's bet addresses the right opportunity leg
-- **Betting Table Review:** Ensure the pipeline covers all opportunity legs, not just one
-- **Quarterly Review (product-strategist Mode 5):** Check which legs are under-invested
+Build the metric tree before picking the next bet: decompose the North Star into input metrics and find which input broke. Run it when a headline metric stalls for two weeks or a bet ships without moving its metric.
 
-A healthy betting table should have bets spread across multiple OST legs, not all stacked in one.
+## The press-release test
 
----
+Write the launch announcement before building anything significant. If the customer quote sounds like marketing, the value proposition is not real yet. If you cannot write the headline, the feature is not defined.
 
-## The Metric Tree — First Response to "The North Star Isn't Moving"
+## Saying no
 
-When a metric isn't moving, the instinct is to "work harder on the same thing." The Metric Tree forces you to diagnose *which leg* is broken before choosing the next bet. It's the difference between guessing and knowing.
+"Not now, because [current bet] moves [metric] and this does not. Revisit when [condition]." Log it in the roadmap's "Not doing" list.
 
-Run it:
-1. When MRR/subscriber growth stalls for 2+ weeks
-2. When a bet shipped but the primary metric didn't move
-3. Before the quarterly strategy review (product-strategist Mode 5)
+## Pre-ship quality bar
 
-The diagnosis output directly informs the next bet selection on the betting table.
-
----
-
-## Integration with the Weekly Cycle
-
-```
-MONDAY
-  → Tool 3 or 5: Confirm bet brief is complete for this week's bet
-  → Tool 6: Alignment email drafted for stakeholders if needed
-
-TUESDAY (deep work)
-  → Tool 1: RICE scoring for features within this sprint
-  → Tool 5: Pre-mortem on the bet before team commits
-
-THURSDAY
-  → Tool 7: Quality bar check on anything staging for demo
-  → Tool 3: Bet brief for next bet must be in "Ready" status
-
-FRIDAY
-  → Tool 7: Pre-ship checklist before marking Done
-  → Tool 5: "One Insight" paragraph for the post-mortem
-
-ANYTIME
-  → Tool 2: Synthesize Supernormal transcripts for passive discovery
-  → Tool 5: Press Release test for any new feature proposal
-  → Tool 6: Saying No response when stakeholder pushes back
-```
-
----
-
-## Example Invocations
-
-```bash
-# RICE scoring
-"Read .claude/skills/product-manager-toolkit.md and run RICE scoring
-on these [N] feature candidates for the Proactivity bet."
-
-# Discovery synthesis
-"Synthesize this week's Supernormal meetings using the PM toolkit
-customer discovery format — extract JTBD signals and Linear gaps."
-
-# Bet brief
-"The Creative Tools bet is drafting. Use the PM toolkit to write a
-bet brief for it."
-
-# Pre-mortem
-"We're about to finalize ICE confidence at 8/10 for the Acquisition
-Loops bet. Run a PM toolkit pre-mortem first."
-
-# Press release
-"We're proposing a Proactive Character Messaging feature. Run the
-PM toolkit press release test before we spec it."
-
-# Metric tree
-"MRR has been flat for 3 weeks. Run the PM toolkit metric tree
-decomposition to diagnose which leg is the constraint."
-
-# Quality check
-"Before I mark the Latency bet Done, run the PM toolkit quality
-bar checklist."
-```
-
----
-
-*For the skill definition, see: `.claude/skills/product-manager-toolkit.md`*
-*For PM principles and frameworks, see: `pm-principles-guide.md`*
-*For bet requirements depth, see: `strategy/business-analyst-playbook.md`*
-*For strategic framing, see: `strategy/product-strategist-playbook.md`*
+- [ ] Success criteria met (from the bet brief)
+- [ ] Edge and error states handled
+- [ ] Analytics instrumented so the hypothesis can be read
+- [ ] Rollback plan defined
+- [ ] Demo-ready
+- [ ] One-paragraph insight written: what we learned, not a list of tickets

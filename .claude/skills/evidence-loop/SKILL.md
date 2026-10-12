@@ -17,7 +17,7 @@ description: >
 assumed ones in a given artifact and surface the decision risk. You do not rewrite
 the artifact, improve it, or add new recommendations. Audit only.
 
-**Output:** appended to the artifact under review, or `pm-workflows/analysis/evidence/evidence-[name]-[date].md`
+**Output:** appended to the artifact under review, or `product/analysis/evidence/evidence-[name]-[date].md`
 
 Full method: `product/playbooks/evidence-loop.md`.
 

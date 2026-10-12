@@ -12,7 +12,7 @@ The core insight: when you ask people "what could go wrong?" they give cautious,
 
 Why it matters for AI-assisted decisions: Claude defaults to agreeable, optimistic responses. Ask "is this a good plan?" and it finds reasons to say yes. The premortem forces the frame into "this is dead, explain how it died." This is the failure-mode twin of `/evidence-loop` — evidence-loop checks *what's actually supported*, premortem checks *how it dies*. Both exist to beat sycophancy. Method reference: `product/playbooks/evidence-loop.md`.
 
-**Output directory:** `pm-workflows/analysis/premortem/`
+**Output directory:** `product/analysis/premortem/`
 
 ---
 ## when to run a premortem
@@ -77,17 +77,17 @@ Read every deep-dive and produce:
 5. **The Pre-Launch Checklist** — 3-5 specific things to verify/test/put in place before executing, each preventing or detecting one failure mode.
 
 ### step 5: generate the report
-Single self-contained HTML file with inline CSS, saved to `pm-workflows/analysis/premortem/premortem-report-[timestamp].html`. Dark background, clean scannable typography. Synthesis prominently at top. One visual card per failure reason (header + story + assumption + warning signs), distinct accent colors, a severity/likelihood indicator. Footer with timestamp and what was premortemed. Open the file after generating.
+Single self-contained HTML file with inline CSS, saved to `product/analysis/premortem/premortem-report-[timestamp].html`. Dark background, clean scannable typography. Synthesis prominently at top. One visual card per failure reason (header + story + assumption + warning signs), distinct accent colors, a severity/likelihood indicator. Footer with timestamp and what was premortemed. Open the file after generating.
 
 ### step 6: save the transcript
-Save the full transcript as `pm-workflows/analysis/premortem/premortem-transcript-[timestamp].md`: context gathered, raw failure reasons, all deep-dives, full synthesis.
+Save the full transcript as `product/analysis/premortem/premortem-transcript-[timestamp].md`: context gathered, raw failure reasons, all deep-dives, full synthesis.
 
 ---
 ## output format
 Two files per session:
 ```
-pm-workflows/analysis/premortem/premortem-report-[timestamp].html    # visual report
-pm-workflows/analysis/premortem/premortem-transcript-[timestamp].md  # full transcript
+product/analysis/premortem/premortem-report-[timestamp].html    # visual report
+product/analysis/premortem/premortem-transcript-[timestamp].md  # full transcript
 ```
 Also give a concise chat summary: most likely failure, hidden assumption, single most important revision. Three sentences max.
 

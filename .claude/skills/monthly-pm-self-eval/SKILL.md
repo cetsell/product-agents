@@ -1,150 +1,68 @@
 ---
 name: monthly-pm-self-eval
-description: Monthly PM performance self-evaluation. Run on the 1st of each month to assess decision quality, hypothesis discipline, kill rate, and CPO-track progress. Reads decisions.md, recent Friday reports, and Linear data. Use when the user says "monthly eval," "self-eval," "PM review," "how am I doing," or "CPO progress."
+description: >
+  Monthly, evidence-based PM self-evaluation. Scores decision quality, hypothesis
+  discipline, kill rate, communication, and speed from the decision log, Friday notes,
+  and issue-tracker data, then names one behavior to change next month.
+when_to_use: >
+  Run on the first working day of the month, or when the user says "monthly eval",
+  "self-eval", "PM review", "how am I doing", "kill rate", or "decision quality review".
 ---
 
 # Monthly PM Self-Evaluation
 
-You are a brutally honest executive coach evaluating a Head of Product's monthly performance. Your job is to tell them what they need to hear, not what they want to hear. You've coached PMs from IC to CPO and you know the difference between activity and impact.
+**Role:** A blunt executive coach. You score the PM on evidence, not effort, and name the one behavior that would most speed up the team's learning loop next month.
+**Output:** `product/analysis/monthly/pm-self-eval-{YYYY-MM}.md`
 
-## Data Collection (do all of these before writing anything)
+## Data collection (all before writing)
 
-### 1. Decision Log
-Read `pm-workflows/active/decisions.md`. Count:
-- Total decisions logged this month
-- Decisions confirmed (Result column filled, hypothesis right)
-- Decisions invalidated (hypothesis wrong — these are the most valuable)
-- Decisions still open past their Check By date (these are the red flag)
-- Things killed / stopped
+1. **Decision log** — `team/decisions/decisions.md`. Count for the month: decisions logged; confirmed; invalidated (the most valuable); open past their check-by date (the red flag); things killed or stopped.
+2. **Friday notes** — the last four `team/weekly-updates/*-friday.md`. Per week: did the note lead with a number; hypothesis verdicts; the iterate/swing call and whether it held up; what was killed.
+3. **Issue tracker** — completed this month, created-to-completed ratio, items in progress 2+ weeks, projects that moved vs. stalled. MCP server if connected; otherwise ask for an export or the counts, or score Speed & Focus on the notes alone and say so.
+4. **Standards** — `product/reference/lindy-pm-standard.md` (build the right thing, build it right, build it fast) and `product/playbooks/pm-toolkit.md`.
+5. **Last month's self-eval** in `product/analysis/monthly/` for trend arrows.
 
-### 2. Friday Reports
-Read the last 4 Friday Demo & Decide reports from `team/weekly-updates/2026/`. For each week, extract:
-- The Number (hit or miss?)
-- Hypothesis verdicts (CONFIRMED / INVALIDATED / INCONCLUSIVE)
-- The ITERATE/SWING call and whether it was the right one in hindsight
-- What was killed
+## Scoring (1–5; 3 is adequate, 5 is rare)
 
-### 3. Linear Data
-Query Linear MCP for:
-- Issues completed this month (D2C team)
-- Issues created vs. completed ratio
-- Any issues that sat in "In Progress" for 2+ weeks (stale work)
-- Projects that moved vs. projects that stalled
+| Dimension | Evidence that moves the score |
+|-----------|-------------------------------|
+| **Decision quality** | Decisions logged with check-by dates; share invalidated early vs. late; decisions avoided |
+| **Hypothesis discipline** | Shipped work with a hypothesis; checked on time; reverts on failure; kill count |
+| **Communication clarity** | Notes lead with the number; readable in 2 minutes; "killed" and "not doing" sections populated |
+| **Speed and focus** | Concurrent bets (1 is ideal, 3+ is too many); decision-to-production cycle time; scope creep caught |
+| **Leverage** | Systems that run without the PM; feedback captured and fed back; team members' working styles known |
 
-### 4. Reference Standards
-Use these frameworks to evaluate (all in `pm-workflows/reference/`):
+### Automatic caps
 
-**Lindy PM Standard** — three responsibilities:
-- Build the Right Thing: Do you have a point of view? Are you exposed to users? Do you understand the domain deeply?
-- Build it Right: Do you have taste? Are you holding high standards? Do you iterate quickly?
-- Build it Fast: Are you hitting milestones? Are you focused? Do you create urgency?
+- Fewer than 5 logged decisions this month → Decision quality ≤ 2.
+- "Killed" empty on 3 or more Fridays → Hypothesis discipline ≤ 2.
+- No specific thing stopped this month → Speed and focus ≤ 2.
+- After scoring, subtract 1 from every dimension (floor 1). Self-assessment runs generous.
 
-**Secrets of the Best PMs** — five principles:
-- Make good decisions (fast, with incomplete info, avoid blunders)
-- Extreme ownership (no gaps, no excuses)
-- Understand people (team dynamics, working styles, trust)
-- Ruthless prioritization (fixed team + time, flexible scope)
-- Ecosystem control (understand every constituent)
-
-**PM Challenges self-assessment** (`pm-workflows/active/pm-challenges.md`):
-- Lead with the metric, not the work
-- Kill things faster and louder
-- Run smaller experiments instead of shipping features
-
-## Evaluation Framework
-
-Score each dimension 1-5 (1 = not doing it, 5 = consistently excellent). Be harsh — 3 is "adequate," 5 is rare.
-
-### Dimension 1: Decision Quality
-- How many decisions were logged? (0 = score 1 automatically)
-- What % were confirmed vs. invalidated?
-- Were invalidated decisions caught early or late?
-- Did any decisions have no "Check By" date? (accountability gap)
-- Were any decisions avoided or delayed that should have been made?
-
-### Dimension 2: Hypothesis Discipline
-- Did every shipped feature have a hypothesis on the ticket?
-- Were hypotheses checked at the promised time?
-- How many were CONFIRMED / INVALIDATED / INCONCLUSIVE?
-- Was anything reverted based on hypothesis failure?
-- Kill rate: how many things were stopped this month?
-
-### Dimension 3: Communication Clarity
-- Do Friday reports lead with the number or with activity?
-- Can someone read a weekly update in under 2 minutes?
-- Are "Killed This Week" sections populated or empty?
-- Do stakeholder updates include learning, not just shipping?
-- Is the "Not Doing" list visible and maintained?
-
-### Dimension 4: Speed & Focus
-- How many active bets ran simultaneously? (1 = great, 3+ = too many)
-- Were experiments scoped to minimum viable? Or over-engineered?
-- What was the average cycle time from decision to production?
-- Were there any features that should have been a 1-line change but became a project?
-- Did scope creep happen? Was it caught?
-
-### Dimension 5: CPO-Track Growth
-- Systems thinking: Are you building systems that work without you?
-- Feedback loops: Are corrections captured and fed back?
-- People understanding: Do you know how each team member works best?
-- Strategic clarity: Can you articulate the company's position in one sentence?
-- Ecosystem control: Do you understand every constituent (users, creators, investors, team)?
-
-## Output Format
+## Output
 
 ```markdown
-# PM Self-Eval — [Month Year]
+# PM Self-Eval — {Month YYYY}
 
-## Scores
+| Dimension | Score | Trend | Evidence (source, date) |
+|-----------|-------|-------|-------------------------|
+| Decision quality | | ↑ ↓ → | |
+| Hypothesis discipline | | | |
+| Communication clarity | | | |
+| Speed and focus | | | |
+| Leverage | | | |
+| **Overall** | **x.x** | | |
 
-| Dimension | Score (1-5) | Trend (vs last month) |
-|-----------|-------------|----------------------|
-| Decision Quality | X | ↑ ↓ → |
-| Hypothesis Discipline | X | ↑ ↓ → |
-| Communication Clarity | X | ↑ ↓ → |
-| Speed & Focus | X | ↑ ↓ → |
-| CPO-Track Growth | X | ↑ ↓ → |
-| **Overall** | **X.X** | |
+## Decision log
+Logged: X · Confirmed: X · Invalidated: X · Open past due: X · Killed: X
 
-## What Went Well (max 3)
-[Specific examples with evidence]
+## Went well (max 3, with evidence)
+## Did not (max 3, with evidence)
 
-## What Didn't (max 3)
-[Specific examples with evidence — be brutally honest]
-
-## The One Thing to Fix Next Month
-[Single most impactful change. Not three things. One.]
-
-## Decision Log Review
-- Decisions logged: X
-- Confirmed: X | Invalidated: X | Open past due: X
-- Things killed: X
-- [Commentary on decision patterns]
-
-## CPO Gap Assessment
-[Where you are on the IC → Senior → Director → VP → CPO progression.
-What specific behaviors need to change to move to the next level.
-Reference the traits list: define → break down → decide → prototype → test → eval → guardrails → feedback loops → scale.]
+## The one thing to fix next month
+{one behavior change, not a tool or process change, with how you will know by month end}
 ```
-
-## Output Location
-
-Save to: `pm-workflows/analysis/monthly/pm-self-eval-[YYYY-MM].md`
-
-## Rules
-
-- Score yourself, then subtract 1 from every score. You're always more generous than reality.
-- If the decision log has fewer than 5 entries for the month, Decision Quality is automatically 2 or below.
-- If "Killed This Week" was empty on 3+ Fridays, Hypothesis Discipline is automatically 2 or below.
-- If you can't point to a specific thing you stopped doing this month, Speed & Focus is automatically 2 or below.
-- The "One Thing to Fix" must be a behavior change, not a tool or process change. Tools don't fix habits.
-
----
 
 ## TERMINATION
 
-Stop when every dimension has a score (after the -1 honesty adjustment) and the
-single "One Thing to Fix" behavior is named. One month per invocation. Do **not**
-build a development plan, draft OKRs, or propose process changes off the back of the
-eval — name the one behavior and stop. If every score is set and the one fix is a
-behavior change, you are finished.
+Stop when every dimension has a score after the caps and the −1 adjustment, each score cites evidence, and the single behavior to change is named. One month per invocation. Do not build a development plan, draft OKRs, or propose process changes off the back of the eval.

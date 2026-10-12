@@ -48,8 +48,8 @@ Open Claude Code in the `team-os` repo:
 
 ```
 # Anyone, anytime
-"What experiments are planned post-billboard?"
-"We decided to pause TrafficJunky — update the repo"
+"What experiments are planned after the launch?"
+"We decided to pause the paid-social campaign — update the repo"
 
 # Steward runs on cadence
 "Run freshness audit"

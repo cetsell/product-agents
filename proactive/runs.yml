@@ -26,14 +26,14 @@ scheduled:
     when: "daily 07:30 local"
     skill: /morning-brief        # ⚠ template only — product-skills.md; build before wiring
     pulls: ["gmail inbox+sent 12h", "slack DMs+@mentions 12h", "calendar today+tomorrow AM"]
-    output: pm-workflows/active/brief-{date}.md
+    output: team/weekly-updates/{date}-brief.md
     termination: "one page, <400 words, all sources processed"
 
   - id: sprint-health
     when: "Monday 09:00 local"
     skill: /sprint-health
-    pulls: ["Linear (project health, velocity, blockers)", "Supernormal (recent meetings)"]
-    output: pm-workflows/analysis/sprint-health-{date}.md
+    pulls: ["issue tracker (project health, velocity, blockers)", "meeting notes (recent meetings)"]
+    output: team/weekly-updates/{date}-sprint-health.md
     decides: "PM triages flagged blockers before standup"
     termination: "report written with action items; every open blocker has an owner or a flag"
 
@@ -41,7 +41,7 @@ scheduled:
     when: "Monday 09:30 local"
     skill: /cadence              # monday kickoff mode
     pulls: ["product/roadmap/current-bet.md", "Linear active issues"]
-    output: pm-workflows/weekly-updates/{date}-kickoff.md
+    output: team/weekly-updates/{date}-kickoff.md
     termination: "kickoff note posted; week's bet + top 3 named"
 
   - id: freshness-audit
@@ -56,7 +56,7 @@ scheduled:
     when: "Wednesday 12:00 local"
     skill: /cadence              # wednesday pulse mode
     pulls: ["Linear progress vs Monday plan"]
-    output: pm-workflows/weekly-updates/{date}-pulse.md
+    output: team/weekly-updates/{date}-pulse.md
     termination: "pulse note posted; on-track / at-risk per top-3 goal"
 
   - id: friday-refresh
@@ -71,7 +71,7 @@ scheduled:
     when: "Friday 15:30 local"
     skill: /cadence              # friday demo + weekly 'Hello All'
     pulls: ["Linear closed this week", "Notion edits", "Slack #shipping/#status"]
-    output: pm-workflows/weekly-updates/{date}-hello-all.md
+    output: team/weekly-updates/{date}-update.md
     evidence: true               # metrics cited to the team need sources + dates
     termination: "update written to template length; no invented metrics"
 
@@ -79,7 +79,7 @@ scheduled:
     when: "Friday 16:00 local"
     skill: /weekly-status        # ⚠ template only — product-skills.md; build before wiring
     pulls: ["Linear closed", "Notion", "Slack", "calendar meeting counts"]
-    output: pm-workflows/weekly-reports/{date}-status.md
+    output: team/weekly-updates/{date}-status.md
     evidence: true
     termination: "stop at audience length (internal 1p / client 1.5p / board 2p); no invented metrics"
 
@@ -87,7 +87,7 @@ scheduled:
     when: "Monday 09:00 UTC"     # rides with freshness-audit + the skill-check CI Action
     skill: /skill-eval
     pulls: ["the top producer skills", "their evals/*-evals.json test cases"]
-    output: pm-workflows/analysis/skill-evals/
+    output: product/analysis/skill-evals/
     decides: "PM decides which flagged skills to tighten or rewrite"
     termination: "each evaluated skill has a 5-dimension scorecard + one verdict; no skill rewritten without approval"
 
@@ -95,7 +95,7 @@ scheduled:
     when: "monthly, 1st 09:00 local"
     skill: /monthly-pm-self-eval
     pulls: ["team/decisions/decisions.md", "recent Friday reports", "Linear"]
-    output: pm-workflows/analysis/self-eval-{month}.md
+    output: product/analysis/monthly/pm-self-eval-{month}.md
     decides: "PM picks one improvement focus for the month"
     termination: "scored against PM standards; one focus named"
 
@@ -104,7 +104,7 @@ reactive:
     on: "new high-stakes row in product/roadmap/betting-table.md, OR a pricing change, OR a launch plan"
     skill: /premortem
     pulls: ["the bet/plan details", "product/roadmap/*", "relevant specs"]
-    output: pm-workflows/analysis/premortem/
+    output: product/analysis/premortem/
     decides: "PM signs off on the revised plan BEFORE the bet is committed"
     evidence: true
     termination: "report + transcript written; 3-sentence chat summary delivered"
@@ -122,7 +122,7 @@ reactive:
     on: "a tracked metric in product/analytics/metrics-dictionary.md crosses its threshold"
     skill: /data-analyst
     pulls: ["BigQuery", "funnel definitions"]
-    output: pm-workflows/analysis/alert-{metric}-{date}.md
+    output: product/analysis/data/alert-{metric}-{date}.md
     decides: "PM decides whether to intervene"
     evidence: true
     termination: "breach quantified with source + date; likely cause hypothesized"
@@ -131,5 +131,5 @@ reactive:
     on: "a competitor pricing/launch/hire signal surfaces"
     skill: /competitor-scan      # ⚠ template only — product-skills.md; build before wiring
     pulls: ["competitor sites", "positioning doc"]
-    output: pm-workflows/market-research/competitor-{date}.md
+    output: product/analysis/strategy/competitor-{date}.md
     termination: "per-competitor section has all 5 fields; no industry overview"

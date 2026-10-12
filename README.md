@@ -12,7 +12,7 @@ Shared context repository for your product team. AI-agent optimized — every fo
 | **`engineering/`** | Codebase conventions and runtime context for your application repos |
 | **`templates/`** | Standardized formats for bets, decisions, call summaries, reviews, specs, eval-requirements docs |
 | **`proactive/`** | Scheduled + triggered proactive runs — the operating rhythm and reactive triggers, scheduler-agnostic |
-| **`.claude/`** | 35 Claude Code skills, 4 agents, and commands |
+| **`.claude/`** | 31 Claude Code skills, 4 agents, and commands |
 
 ## How to Use
 
@@ -76,7 +76,7 @@ Every skill is held to a checkable bar — a role line, a structured output shap
 - **Layer 1 — static:** `node check-skills.mjs` lints every `SKILL.md` against the bar and runs in CI (`.github/workflows/skill-check.yml`), so a skill that drops its role line or stop condition fails the build.
 - **Layer 2 — behavioral:** `/skill-eval` runs a skill against representative prompts and scores the *output* (stayed in role, wrote into the shape, terminated, evidence loop, triggered correctly), wrapping the `skill-creator` harness.
 
-## Skills (35)
+## Skills (31)
 
 Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.md` with frameworks, data sources, and output conventions. Invoke with `/skill-name`. Load only the skill you need — not all at once.
 
@@ -84,7 +84,7 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 
 | Skill | What it does |
 |-------|-------------|
-| `/cadence` | Weekly/monthly PM rituals — Monday kickoff, Wednesday pulse, Friday demo, weekly email, monthly recap. Pulls from Linear + Granola + local artifacts. |
+| `/cadence` | Weekly/monthly PM rituals — Monday kickoff, Wednesday pulse, Friday demo, weekly email, monthly recap. Pulls from your issue tracker, meeting notes, and the roadmap files. |
 | `/strategy` | OKR cascades, RICE/ICE prioritization, competitive analysis, discovery frameworks, bet briefs, PRDs, user stories, sprint planning, vision alignment. |
 | `/audit` | Operational and product health audits with 5-phase research process. Modes: operational intel, product intel, funnel analysis, requirements brief, post-mortem, process audit, KPI framework. |
 | `/sprint-health` | Pre-launch sprint health check — ticket quality, velocity signals, launch readiness gates, blocker scan. Switches to pre-launch mode 4 weeks before ship date. |
@@ -93,7 +93,7 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 
 | Skill | What it does |
 |-------|-------------|
-| `/data-analyst` | BigQuery-powered analytics against your data warehouse and dbt models. Conversion funnel audits, weekly growth trends, activation signals, monetization analysis, device breakdowns, acquisition ROI. |
+| `/data-analyst` | Warehouse analytics (BigQuery by default). Conversion funnel audits, weekly growth trends, activation signals, monetization analysis, device breakdowns, acquisition ROI. |
 
 ### Issue Creation & Specs
 
@@ -106,7 +106,7 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 
 | Skill | What it does |
 |-------|-------------|
-| `/eval-runner` | Automated prompt evaluation — runs test conversations against variants, scores with LLM-as-judge across 6 dimensions (phase progression, aha moment, cliffhanger, tone, flexibility, brevity). |
+| `/eval-runner` | Scores prompt variants for an AI feature against a labeled dataset and the pass bar in its eval-requirements doc, with an explicit, configurable judge model. |
 | `/senior-prompt-engineer` | Production prompt engineering. Prompt audit, new prompt design, structured output engineering, evaluation, debug. |
 | `/evidence-loop` | Pressure-tests any output for unsupported claims — claim/source trail, the assumption that would flip the decision, and the human decision point. The "how do we know?" guardrail. |
 | `/premortem` | Prospective-hindsight failure analysis — assumes the plan already failed and works backward to find every reason why, then returns a revised plan + pre-launch checklist. |
@@ -117,8 +117,7 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 | Skill | What it does |
 |-------|-------------|
 | `/check-artifacts` | Grades artifact health A–F based on freshness, quality, and alignment with your issue tracker. Checks roadmap, betting table, current bet, and initiative alignment. |
-| `/monthly-pm-self-eval` | Brutally honest monthly self-evaluation — scores Decision Quality, Hypothesis Discipline, Communication Clarity, Speed & Focus, CPO-Track Growth (each 1–5). |
-| `/project-campaign-review` | Campaign retrospective with cross-functional accountability. Tracks critical path, risk categories (P0/P1/P2), and generates weekly dashboards. |
+| `/monthly-pm-self-eval` | Evidence-based monthly self-evaluation — scores decision quality, hypothesis discipline, communication, speed, and leverage (each 1–5) and names one behavior to change. |
 
 ### Marketing & Growth
 
@@ -126,7 +125,6 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 |-------|-------------|
 | `/copywriting` | Conversion copywriting for any page — homepage, landing, pricing, feature, about. Hero → Social Proof → Problem → Solution → How It Works → Testimonials → CTA. |
 | `/email-sequence` | Design drip campaigns and lifecycle automation. 12+ sequence templates: welcome, nurture, re-engagement, post-purchase, upgrade, win-back, dunning, NPS. |
-| `/email-systems` | Email infrastructure — SPF/DKIM/DMARC, deliverability, bounce handling, IP warm-up, SendGrid configuration, transactional vs marketing separation. |
 | `/marketing-strategy-pmm` | Product marketing — April Dunford positioning methodology, ICP definition, messaging hierarchy, launch playbooks, competitive battlecards, market entry. |
 | `/marketing-psychology` | 70+ mental models for marketing — first principles, JTBD, inversion, second-order thinking, Pareto, diminishing returns, barbell strategy, buyer decision frameworks. |
 | `/pricing-strategy` | SaaS pricing and packaging — value metrics (per-user, per-usage, per-feature), freemium vs trial, tier design, willingness-to-pay research, annual vs monthly. |
@@ -152,26 +150,18 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 | `/writing-clearly-and-concisely` | Strunk & White for AI — omit needless words, active voice, definite language, positive form. Catches AI puffery (pivotal, crucial, groundbreaking). |
 | `/copy-editing` | The Seven Sweeps framework — Clarity, Concision, Flow, Tone, Specificity, Persuasion, Polish. Enhances without rewriting. Preserves voice. |
 
-### Specialized
-
-| Skill | What it does |
-|-------|-------------|
-| `/lenny` | Advice from 284 episodes of Lenny's Podcast — growth, retention, AI products, pricing, hiring, leadership. Searches transcripts from Duolingo, Figma, Airbnb, Linear, Notion, Spotify, +250 operators. |
-| `/graphify` | Transform any input (code, docs, papers, images) into a knowledge graph with community detection. Outputs clustered HTML visualization, GraphRAG-ready JSON, and plain-language audit report. |
-| `/remotion-best-practices` | Video creation in React with Remotion — 3D (Three.js), animations, captions, transitions, Tailwind integration, asset handling, composition patterns. |
-
 ## Commands
 
 | Command | What it does |
 |---------|-------------|
-| `/create-prd` | Generate a Product Requirements Document from product context, feature docs, and JTBD. Uses PRD template, outputs to `product-development/current-feature/PRD.md`. |
+| `/create-prd` | Generate a Product Requirements Document from product context, feature docs, and JTBD. Superseded by `/pm-super-agent`; removal scheduled. |
 
 ## What's NOT Here
 
 - Source code (lives in your application repos)
 - API keys or credentials (use environment variables)
 - Google Docs or Notion content (linked, not duplicated)
-- Meeting recordings or transcripts (in Gemini)
+- Meeting recordings or transcripts (they stay in your meeting-notes tool)
 
 ## Contributing
 
