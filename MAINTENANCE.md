@@ -31,7 +31,7 @@ Everyone on the team contributes via pull requests. See [CONTRIBUTING.md](CONTRI
 
 One agent handles all Team OS tasks: `.claude/agents/team-os.md`
 
-Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-loads skills only when needed. (Inspired by [Browserbase's bb architecture](https://x.com/kylejeong21/status/2044878529666662616) — one core loop, skills as loadable context, scoped permissions.)
+Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-loads skills only when needed. (One core loop, skills as loadable context, scoped permissions.)
 
 ### Modes
 
@@ -39,7 +39,7 @@ Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-
 |------|------------|-------------|---------|
 | **Navigate** | Anyone | Find + summarize context. Read-only. | "What's the current bet?" |
 | **Contribute** | Anyone | Format + route updates to the right file. | "Log a decision: switching to [tool] for [feature]" |
-| **Refresh** | Steward (PM, Friday) | Pull Linear data, update roadmap files. | "Refresh the roadmap for this week" |
+| **Refresh** | Steward (PM, Friday) | Review the automated roadmap-refresh PR (or run Refresh by hand). | "Refresh the roadmap for this week" |
 | **Audit** | Steward (PM, Monday) | Scan for stale content, flag drift. | "What's stale this week?" |
 
 ### How to use
@@ -65,7 +65,7 @@ Without one owner per managed mode, you get either duplication (three people ref
 - **One agent, many modes.** No separate bots. Intent routing replaces agent selection.
 - **Progressive disclosure.** Start with doc index. Load a skill only if the task demands it.
 - **Propose, don't auto-commit.** Show the user what changed. They review and commit.
-- **Cite sources.** Every data point gets a date and origin (e.g., "Source: Linear API, queried 2026-04-18").
+- **Cite sources.** Every data point gets a date and origin (e.g., "Source: Linear API, queried 2026-10-09").
 - **Never fabricate.** If Linear is unreachable or data isn't in the repo, say so.
 
 ---
@@ -90,13 +90,20 @@ GitHub Actions that run on a schedule to catch drift.
 - `gtm/campaign-tracker.md` (must be <14 days)
 - `product/analytics/data-quality-log.md` (must be <30 days)
 
-### Future automations (not yet built)
+### Proactive runs (wired)
 
-| Automation | What it would do | Prerequisite |
-|-----------|-----------------|-------------|
-| **Linear Sync** | Pull sprint data from Linear API weekly, update roadmap files | `LINEAR_API_KEY` in GitHub Secrets |
-| **Decision Digest** | Weekly Slack post summarizing new decisions added to the log | Slack webhook in GitHub Secrets |
-| **Onboarding Validator** | Check that tool-setup.md links are all still valid | HTTP checker action |
+| Run | Workflow / mechanism | Needs | Output |
+|-----|----------------------|-------|--------|
+| Artifact grade (Mon) | `.github/workflows/artifact-grade.yml` | `ANTHROPIC_API_KEY` secret | PR with `product/analysis/audit/artifacts-{date}.md` |
+| Roadmap refresh (Fri) | `.github/workflows/roadmap-refresh.yml` | `ANTHROPIC_API_KEY`, `LINEAR_API_KEY` secrets | PR updating `product/roadmap/` factual fields |
+| Cadence notes, sprint health | Claude Code routines (`proactive/routines/`) | a routine per run | draft PRs in `team/weekly-updates/` |
+| Repo checks (every PR) | `.github/workflows/skill-check.yml` | nothing | scrub check, skill/agent conformance, plugin validation |
+
+Full manifest: `proactive/runs.yml`.
+
+### Steward rotation
+
+The PM is the default steward for Refresh (Friday) and Audit (Monday). If the PM is out, the Eng Lead runs both; the steward's job is to review and merge or close the automated PRs, not to write the updates by hand.
 
 ---
 

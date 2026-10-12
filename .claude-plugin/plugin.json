@@ -1,0 +1,25 @@
+{
+  "name": "team-os",
+  "version": "2.0.0",
+  "description": "A product team's shared operating layer for Claude Code: 29 outcome-focused skills (cadence, PRDs, sprint health, strategy, evidence loops, evals, CRO), 3 agents, and the templates they need.",
+  "author": {
+    "name": "Chad Etsell",
+    "url": "https://github.com/cetsell"
+  },
+  "homepage": "https://github.com/cetsell/product-agents",
+  "repository": "https://github.com/cetsell/product-agents",
+  "keywords": [
+    "product-management",
+    "pm",
+    "skills",
+    "evals",
+    "roadmap",
+    "experimentation"
+  ],
+  "skills": [
+    "./.claude/skills/"
+  ],
+  "experimental": {
+    "evals": "evals"
+  }
+}

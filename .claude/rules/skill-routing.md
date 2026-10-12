@@ -12,6 +12,7 @@ Load only the skill the request needs. Most navigate-and-update tasks need no sk
 | PRD, spec, scope or break down an idea, turn notes into product work | `/pm-super-agent` |
 | Audit, design, or debug a production prompt; structured output | `/senior-prompt-engineer` |
 | Sprint sweep, what's stuck, blocker scan, launch readiness / go-no-go | `/sprint-health` |
+| What can team-os do, which skill fits, set up team-os in a project | `/team-os-guide` |
 
 ## Decision quality
 

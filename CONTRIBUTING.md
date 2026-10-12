@@ -1,6 +1,6 @@
 # Contributing to Team OS
 
-This repo is the shared brain for your team. **Everyone contributes** — engineers, GTM, design, ops, leadership. You don't need to be technical. If you know something the team should know, it belongs here.
+This repo is your team's shared operating layer. **Everyone contributes** — engineers, GTM, design, ops, leadership. You don't need to be technical. If you know something the team should know, it belongs here.
 
 ---
 
@@ -88,6 +88,51 @@ Not sure how to format something? Just describe what changed in plain English in
 > "We decided in Thursday's sync that attribution tracking is blocked until [person] finishes the event-tracking migration. [Person] is pausing spend on that channel. [Person] flagged the paywall redesign needs another week."
 
 A reviewer (or Claude Code agent) can help structure this into the right files.
+
+---
+
+## Adding or changing a skill
+
+A skill earns its place only if it moves a metric, sharpens a bet, or removes time from the loop between idea and measured result. One that only produces a document does not meet the bar.
+
+1. Create `.claude/skills/<name>/SKILL.md` from this template. Keep it under 300 lines; long reference material goes in `references/*.md` inside the folder and is loaded on demand.
+
+```markdown
+---
+name: <folder name>
+description: >
+  <What it does, third person, 1–3 sentences, concrete outputs.>
+when_to_use: >
+  <Trigger phrases. Not for X (use /y).>
+argument-hint: "[what the user passes]"
+allowed-tools: Read, Grep, Glob, Write
+model: claude-sonnet-5-5        # see product/playbooks/model-selection.md
+effort: medium
+metadata:
+  version: 1.0.0
+---
+
+# <Title>
+
+**Role:** <who you are; the one job>
+**Outcome:** <Velocity | Decision quality | Vision & strategy | Acquisition & activation | Retention | Monetization> — <the KPI, decision, or cycle time it moves>. **Leaves behind:** <artifact and path>.
+**Output:** <shape and path>
+
+Read `product/context.md` first. <Degraded path if a data source or MCP server is missing.>
+
+## <Workflow and output shape>
+
+## TERMINATION
+<A checkable stop condition: one deliverable per invocation, no scope expansion, stop before sending or creating anything.>
+```
+
+   Optional fields when they fit: `context: fork` for long reads that return one report, `disable-model-invocation: true` for skills that must never fire on their own (note: scheduled runs cannot invoke those either), `hooks:` for skill-scoped hooks. Unknown keys are ignored by Claude Code and flagged by the linter.
+
+2. Add an eval suite: `evals/<name>/` with at least three cases (in-scope, over-produce trap, out-of-scope). Copy an existing suite; the fixture in `evals/_fixture/` is shared.
+3. Run `node check-skills.mjs --strict` (also runs the scrub check) and fix every finding.
+4. Run the suite (`claude plugin eval . --case "<name>-*" --scaffold --trust-plugin --judge-model claude-opus-5-5`) and commit the dated summary to `product/analysis/skill-evals/`. Record failures as failures.
+5. Add the skill to `.claude/rules/skill-routing.md`, the `team-os-guide` routing table, and the README skill table under its outcome.
+6. Never put another team's names, metrics, tools, or paths in a skill. Values come from `product/context.md` at run time; the scrub check enforces the obvious cases.
 
 ---
 

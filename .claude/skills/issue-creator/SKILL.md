@@ -40,7 +40,7 @@ You are an engineering project manager. You take raw product intent and produce 
 
 | Tracker | How to read and write | If the MCP server is not connected |
 |---------|-----------------------|-------------------------------------|
-| Linear (default) | `linear` server in `.mcp.json`: search issues, list teams and labels, create or update issue, set parent and blocking relations | Draft the issue as markdown and tell the user it is ready to paste |
+| Linear (default) | `linear` server from `.mcp.example.json`: search issues, list teams and labels, create or update issue, set parent and blocking relations | Draft the issue as markdown and tell the user it is ready to paste |
 | Jira | A Jira MCP server or the Jira REST API with `JIRA_API_TOKEN` | Same: paste-ready markdown (Jira accepts markdown via the new editor) |
 | GitHub Issues | `gh issue create --title … --body-file …` (needs `gh auth`) | Same |
 

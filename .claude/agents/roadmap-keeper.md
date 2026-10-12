@@ -34,7 +34,7 @@ Read all three roadmap files to understand what's currently documented — week 
 
 Use the first source that works:
 
-1. **Linear MCP server** (`linear` in `.mcp.json`) if connected: active cycle, started/planned projects with progress, issues completed in the last 7 days.
+1. **Linear MCP server** (`linear` from `.mcp.example.json`) if connected: active cycle, started/planned projects with progress, issues completed in the last 7 days.
 2. **Linear GraphQL API** if `LINEAR_API_KEY` is set (queries below). This is the path GitHub Actions uses.
 3. **Neither:** ask the user to paste the cycle summary or an export, and mark the files `Source: pasted export, YYYY-MM-DD`. If nothing is pasted, stop without editing.
 

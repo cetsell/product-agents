@@ -52,7 +52,7 @@ WHERE s.timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY)
 
 ## Access
 
-- **MCP server**: optional `bigquery` server in `.mcp.json` (read-only `SELECT`); without it, `/data-analyst` writes the SQL for you to run and paste back
+- **MCP server**: optional `bigquery` server from `.mcp.example.json` (read-only `SELECT`); without it, `/data-analyst` writes the SQL for you to run and paste back
 - **Skill**: `/data-analyst` for guided analysis
 - **Console**: <!-- add BigQuery console URL -->
 

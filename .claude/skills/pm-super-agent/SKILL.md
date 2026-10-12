@@ -70,7 +70,7 @@ Enter at any stage. Stage 0 runs first unless the user says "skip context" or th
 
 Extract keywords (feature, area, user type, metric), then search, 2–4 sources max:
 
-1. **Issue tracker** (primary): existing or duplicate tickets, prior attempts and what happened, related specs, blocking relationships, current projects. Use the tracker's MCP server (e.g. `linear` in `.mcp.json`) if connected. If not, ask the user once: "Is there existing work on this? Paste any related tickets." Then continue.
+1. **Issue tracker** (primary): existing or duplicate tickets, prior attempts and what happened, related specs, blocking relationships, current projects. Use the tracker's MCP server (e.g. `linear` from `.mcp.example.json`) if connected. If not, ask the user once: "Is there existing work on this? Paste any related tickets." Then continue.
 2. **Team chat** (if a chat MCP server is connected): prior discussion and decisions.
 3. **Repo:** `product/context.md`, `product/roadmap/betting-table.md`, `product/customer-insights/`, `product/analysis/`.
 4. **Data:** the baseline for the metric this idea targets (`product/context.md` → Baselines, or `/data-analyst` if it is missing and the stakes are high).

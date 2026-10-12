@@ -33,7 +33,7 @@ Read `product/context.md` (North Star, baselines, which warehouse), `product/ana
 
 ## Data access (pick the first that works)
 
-1. **Warehouse MCP server connected** (e.g. `bigquery` in `.mcp.json`): list datasets and tables, describe the tables you need, then run read-only `SELECT` queries. Never run DDL or DML.
+1. **Warehouse MCP server connected** (e.g. `bigquery` from `.mcp.example.json`): list datasets and tables, describe the tables you need, then run read-only `SELECT` queries. Never run DDL or DML.
 2. **No MCP server:** write the exact SQL for each step, ask the user to run it and paste the results (or a CSV export), and continue the analysis from what they paste. Label every number `from pasted result, {date}`.
 3. **No data at all:** stop after writing the queries and the analysis plan. Do not estimate numbers.
 

@@ -12,6 +12,6 @@ Which system answers which question, in priority order. The team's actual tools 
 
 ## Rules
 
-- MCP servers are optional (`.mcp.json`). If the one a task needs is not connected, ask once for a pasted export, label numbers from it as pasted with the date, and continue. Never estimate a number you were not given.
+- MCP servers are optional (`.mcp.example.json`; copy it to `.mcp.json` to enable). If the one a task needs is not connected, ask once for a pasted export, label numbers from it as pasted with the date, and continue. Never estimate a number you were not given.
 - Every data point carries a date and a source. No undated metrics or status claims.
 - Content more than 14 days old may be stale: cite it with its date or verify it before deciding on it.

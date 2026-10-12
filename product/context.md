@@ -58,7 +58,7 @@ The numbers skills compare against. Stale baselines produce wrong calls; `/check
 
 ## Tools
 
-Which system answers which question. Skills use the MCP server if it is connected and fall back to asking you to paste an export if it is not. See `.mcp.json` for the optional servers.
+Which system answers which question. Skills use the MCP server if it is connected and fall back to asking you to paste an export if it is not. See `.mcp.example.json` for the optional servers (copy it to `.mcp.json` to enable).
 
 | Job | Your tool | MCP server name (optional) |
 |-----|-----------|----------------------------|
