@@ -14,6 +14,8 @@ when_to_use: >
   (use /paywall-upgrade-cro).
 argument-hint: "[onboarding flow, screenshots, or funnel data]"
 allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

@@ -12,6 +12,8 @@ when_to_use: >
   feedback on a draft or factual questions.
 argument-hint: "[plan, or path to it]"
 allowed-tools: Read, Grep, Glob, Write, Agent
+model: claude-opus-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

@@ -11,6 +11,8 @@ when_to_use: >
   agreement". Not for evaluating team-os skills (use /skill-eval).
 argument-hint: "[path to eval-requirements doc] [variant files...]"
 allowed-tools: Read, Grep, Glob, Write, Bash
+model: claude-opus-5-5
+effort: high
 context: fork
 metadata:
   version: 2.0.0

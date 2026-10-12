@@ -13,6 +13,8 @@ when_to_use: >
   for ranking several ideas use /strategy.
 argument-hint: "[idea, or path to notes]"
 allowed-tools: Read, Grep, Glob, Write
+model: claude-opus-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

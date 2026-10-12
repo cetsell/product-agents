@@ -14,6 +14,8 @@ when_to_use: >
   /churn-prevention).
 argument-hint: "[pricing question or topic]"
 allowed-tools: Read, Grep, Glob, Write, WebSearch, WebFetch
+model: claude-opus-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

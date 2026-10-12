@@ -15,6 +15,8 @@ when_to_use: >
   rewrite (use /copywriting).
 argument-hint: "[page URL or screenshot]"
 allowed-tools: Read, Grep, Glob, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

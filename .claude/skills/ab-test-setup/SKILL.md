@@ -14,6 +14,8 @@ when_to_use: >
   (use those skills) or writing variant copy (use /copywriting).
 argument-hint: "[change to test, or results to read out]"
 allowed-tools: Read, Grep, Glob, Edit
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

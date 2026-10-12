@@ -12,6 +12,8 @@ when_to_use: >
   /pricing-strategy), or writing final page and email copy (use /copywriting, /email-sequence).
 argument-hint: "[positioning|messaging|launch|battlecard] [product, feature, or competitor]"
 allowed-tools: Read, Grep, Glob, Write, WebSearch, WebFetch
+model: claude-opus-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

@@ -14,6 +14,8 @@ when_to_use: >
   or test design (use /ab-test-setup).
 argument-hint: "[write|edit] [page type, URL, or pasted copy]"
 allowed-tools: Read, Grep, Glob, Write, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

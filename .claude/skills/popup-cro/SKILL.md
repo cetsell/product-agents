@@ -13,6 +13,8 @@ when_to_use: >
   /paywall-upgrade-cro).
 argument-hint: "[popup URL, screenshot, or goal]"
 allowed-tools: Read, Grep, Glob, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

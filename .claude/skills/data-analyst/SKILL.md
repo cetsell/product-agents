@@ -13,6 +13,8 @@ when_to_use: >
   number from the warehouse. Not for multi-week operational audits (use /audit).
 argument-hint: "[question or metric]"
 allowed-tools: Read, Grep, Glob, Write, WebSearch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

@@ -11,6 +11,8 @@ when_to_use: >
   product/playbooks/evidence-loop.md.
 argument-hint: "[path to artifact, or 'the last output']"
 allowed-tools: Read, Grep, Glob, Write
+model: claude-opus-5-5
+effort: high
 hooks:
   Stop:
     - hooks:

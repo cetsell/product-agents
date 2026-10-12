@@ -12,6 +12,8 @@ when_to_use: >
   check", "decision memo", "tradeoff". Not for writing a PRD (use /pm-super-agent) or
   tickets (use /issue-creator).
 allowed-tools: Read, Grep, Glob, Write, WebSearch
+model: claude-opus-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

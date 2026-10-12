@@ -13,6 +13,8 @@ when_to_use: >
   /page-cro), or popup lead capture (use /popup-cro).
 argument-hint: "[signup URL, screenshot, or flow description]"
 allowed-tools: Read, Grep, Glob, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

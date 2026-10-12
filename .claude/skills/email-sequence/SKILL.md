@@ -13,6 +13,8 @@ when_to_use: >
   (use /churn-prevention), or the landing pages emails link to (use /copywriting).
 argument-hint: "[sequence type, trigger, and goal]"
 allowed-tools: Read, Grep, Glob, Write
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

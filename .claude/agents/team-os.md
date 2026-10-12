@@ -2,7 +2,8 @@
 name: team-os
 description: Single agent for all Team OS operations. Routes by intent — navigate, contribute, refresh, or audit. Load skills on demand.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: claude-sonnet-5-5
+effort: medium
 permissionMode: acceptEdits
 skills:
   - evidence-loop

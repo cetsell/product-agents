@@ -14,6 +14,8 @@ when_to_use: >
   of new users (use /onboarding-cro).
 argument-hint: "[surface: cancel flow | save offer | proactive retention | dunning | win-back]"
 allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

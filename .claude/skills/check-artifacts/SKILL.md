@@ -10,6 +10,8 @@ when_to_use: >
   roadmap", "what's stale", "do I have it handled", or before a leadership review,
   planning session, or Friday decide.
 allowed-tools: Read, Grep, Glob, Write
+model: claude-haiku-5-5
+effort: low
 metadata:
   version: 2.0.0
 ---

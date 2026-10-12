@@ -11,6 +11,8 @@ when_to_use: >
   check-skills.mjs`; to score an AI product feature use /eval-runner.
 argument-hint: "[skill name]"
 allowed-tools: Read, Grep, Glob, Write, Bash, Agent
+model: claude-opus-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

@@ -13,6 +13,8 @@ when_to_use: >
   engineering work. For a full PRD use /pm-super-agent.
 argument-hint: "[what the ticket is for]"
 allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

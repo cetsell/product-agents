@@ -14,6 +14,8 @@ when_to_use: >
   comparison pages (use /marketing-strategy-pmm).
 argument-hint: "[keyword pattern or page type]"
 allowed-tools: Read, Grep, Glob, Write, WebSearch, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

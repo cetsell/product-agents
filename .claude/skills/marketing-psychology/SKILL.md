@@ -13,6 +13,8 @@ when_to_use: >
   prices (use /pricing-strategy).
 argument-hint: "[proposed change or behavior to influence]"
 allowed-tools: Read, Grep, Glob, Write
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

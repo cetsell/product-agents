@@ -12,6 +12,8 @@ when_to_use: >
   /eval-runner.
 argument-hint: "[path to prompt file or surface name]"
 allowed-tools: Read, Grep, Glob, Write
+model: claude-sonnet-5-5
+effort: high
 metadata:
   version: 2.0.0
 ---

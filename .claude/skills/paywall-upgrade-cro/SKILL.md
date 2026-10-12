@@ -13,6 +13,8 @@ when_to_use: >
   /pricing-strategy), or cancel and save flows (use /churn-prevention).
 argument-hint: "[paywall screenshot, trigger, or upgrade funnel data]"
 allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

@@ -12,6 +12,8 @@ when_to_use: >
   /email-sequence) or the referred-user landing page (use /page-cro or /copywriting).
 argument-hint: "[referral or affiliate, and product]"
 allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

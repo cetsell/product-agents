@@ -2,7 +2,8 @@
 name: roadmap-keeper
 description: Refreshes product/roadmap/ files from live Linear data. Invoke at sprint boundaries or when bet status changes.
 tools: Read, Write, Edit, Bash, Grep, Glob
-model: opus
+model: claude-sonnet-5-5
+effort: medium
 isolation: worktree
 ---
 

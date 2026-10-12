@@ -11,6 +11,8 @@ when_to_use: >
   "exec update", "monthly recap", "investor update", or a day-of-week plus report
   keyword ("monday report", "friday summary").
 allowed-tools: Read, Grep, Glob, Write
+model: claude-sonnet-5-5
+effort: medium
 metadata:
   version: 2.0.0
 ---

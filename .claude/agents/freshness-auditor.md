@@ -2,7 +2,8 @@
 name: freshness-auditor
 description: Scans Team OS for stale content, flags files past their freshness window, and proposes updates or corrections.
 tools: Read, Write, Edit, Grep, Glob, Bash
-model: sonnet
+model: claude-haiku-5-5
+effort: low
 maxTurns: 25
 memory: project
 ---
