@@ -74,6 +74,10 @@ Files to update:
 - `product/roadmap/betting-table.md` — active bets, shipped items, pipeline changes
 - `product/roadmap/experiment-roadmap.md` — only if experiments launched/read out/killed
 
+### Data sources
+
+Linear MCP server if connected; otherwise the GraphQL queries below if `LINEAR_API_KEY` is set; otherwise ask the user to paste a cycle summary. Never update a roadmap file from memory.
+
 ### Linear queries
 
 ```bash

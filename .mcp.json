@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "linear": {
+      "type": "http",
+      "url": "${LINEAR_MCP_URL:-https://mcp.linear.app/mcp}"
+    },
+    "bigquery": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@toolbox-sdk/server", "--prebuilt", "bigquery", "--stdio"],
+      "env": {
+        "BIGQUERY_PROJECT": "${BIGQUERY_PROJECT:-}",
+        "BIGQUERY_WRITE_MODE": "${BIGQUERY_WRITE_MODE:-blocked}"
+      }
+    },
+    "meeting-notes": {
+      "type": "http",
+      "url": "${MEETING_NOTES_MCP_URL:-https://example.invalid/set-MEETING_NOTES_MCP_URL}"
+    }
+  }
+}

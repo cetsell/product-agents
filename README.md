@@ -156,6 +156,18 @@ Skills are specialized domain expertise in `.claude/skills/`. Each is a `SKILL.m
 |---------|-------------|
 | `/create-prd` | Generate a Product Requirements Document from product context, feature docs, and JTBD. Superseded by `/pm-super-agent`; removal scheduled. |
 
+## MCP servers (optional)
+
+Every skill runs with zero MCP servers connected. Servers make the data step automatic; without them, a skill asks you to paste an export (or writes the SQL for you to run) and continues. `.mcp.json` declares three optional servers. Claude Code asks you to approve each project server on first launch; decline any you do not use.
+
+| Server | Env vars | Used by |
+|--------|----------|---------|
+| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, linear-issue-creator, team-os agent (Refresh) |
+| `bigquery` (warehouse) | `BIGQUERY_PROJECT`, optional `BIGQUERY_WRITE_MODE` (defaults to `blocked`) | data-analyst |
+| `meeting-notes` | `MEETING_NOTES_MCP_URL` (your meeting-notes tool's MCP endpoint) | cadence, sprint-health, audit |
+
+**MCP-free skills** (never call a server): evidence-loop, premortem, eval-runner, skill-eval, senior-prompt-engineer, and every marketing and CRO skill.
+
 ## What's NOT Here
 
 - Source code (lives in your application repos)

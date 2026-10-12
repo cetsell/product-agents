@@ -29,9 +29,15 @@ You maintain the `product/roadmap/` section of Team OS by pulling live data from
 
 Read all three roadmap files to understand what's currently documented — week number, bet name, completion percentages, shipped items.
 
-### Step 2: Pull from Linear
+### Step 2: Pull from the issue tracker
 
-Use the Linear GraphQL API to get current sprint data:
+Use the first source that works:
+
+1. **Linear MCP server** (`linear` in `.mcp.json`) if connected: active cycle, started/planned projects with progress, issues completed in the last 7 days.
+2. **Linear GraphQL API** if `LINEAR_API_KEY` is set (queries below). This is the path GitHub Actions uses.
+3. **Neither:** ask the user to paste the cycle summary or an export, and mark the files `Source: pasted export, YYYY-MM-DD`. If nothing is pasted, stop without editing.
+
+Linear GraphQL queries:
 
 ```bash
 # Get active sprint cycle
