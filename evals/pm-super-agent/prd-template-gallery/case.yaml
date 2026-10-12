@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: pm-super-agent-prd-template-gallery
+description: "in-scope case for /pm-super-agent"
+tags: [pm-super-agent, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "PRD for the template gallery bet in the betting table. Skip the clarifying questions and draft it; the tracker is not connected."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?pm-super-agent"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/specs/*-prd-*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if the PRD leads with a numbered problem, has a job story, hypothesis / measure / kill trigger with a date or threshold / confidence, a leading indicator and counter-metric, explicit in/out scope, testable acceptance criteria, and an Evidence Loop appendix; and a ticket list is proposed but no tickets are created
+      FAIL otherwise.

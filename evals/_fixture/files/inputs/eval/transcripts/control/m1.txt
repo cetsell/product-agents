@@ -1,0 +1,1 @@
+- The team had a growth sync and talked about the invite step and analytics events, and Ana will handle QA while Raj looks at events.

@@ -1,0 +1,12 @@
+diff --git a/product/specs/CLAUDE.md b/product/specs/CLAUDE.md
+index 7f7b909..084189f 100644
+--- a/product/specs/CLAUDE.md
++++ b/product/specs/CLAUDE.md
+@@ -13,6 +13,7 @@ Feature specs and technical design documents. Most live in Google Docs — this
+ | Spec | Status | Reference |
+ |------|--------|-----------|
+ | [Spec name] | Not started | [Reference] |
++| Template gallery PRD | Draft (2026-10-12); Step 0 baseline check pending | `product/specs/template-gallery-prd-2026-10-12.md` |
+ 
+ ## Where Specs Live
+ 

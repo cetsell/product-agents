@@ -1,0 +1,3 @@
+- Decided: keep weekly demos.
+- Decided: move standup to 10am.
+- Sam (Eng Lead): update the calendar.

@@ -62,7 +62,7 @@ If unclear, ask which mode. One mode per invocation.
 Use **ICE** (Impact, Confidence, Ease, each 1–10) for weekly bet selection where reach is similar across candidates.
 
 1. List candidates (from the betting table, the user, or both).
-2. Score each, citing the source for Reach and the evidence behind Confidence.
+2. Score each, citing the source for Reach and the evidence behind Confidence. Use one Reach unit for every candidate (users or teams, per quarter); convert before comparing, and say how.
 3. Rank. Tag quick wins (high score, low effort) and big bets (high score, high effort).
 4. Name the pillar from `product/context.md` each candidate serves; flag any that serve none.
 5. Sensitivity check: which single score, if wrong, changes the top pick?

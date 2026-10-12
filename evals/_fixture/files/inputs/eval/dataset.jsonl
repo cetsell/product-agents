@@ -1,0 +1,6 @@
+{"id": "m1", "input": "Growth sync. Decided: ship invite step behind flag. Ana (Eng) owns QA by Thursday. Raj (Analytics) to fix duplicate invite_sent event.", "human_labels": {"control": {"decisions": "bad", "owners": "good", "brevity": "bad"}, "variant-a": {"decisions": "very good", "owners": "very good", "brevity": "very good"}}}
+{"id": "m2", "input": "Pricing chat. No decision yet on Team plan price. Lee (PM) to pull upgrade data by Friday.", "human_labels": {"control": {"decisions": "bad", "owners": "good", "brevity": "very good"}}}
+{"id": "m3", "input": "Retro. Decided: keep weekly demos. Decided: move standup to 10am. Sam (Eng Lead) to update the calendar.", "human_labels": {"variant-a": {"decisions": "very good", "owners": "very good", "brevity": "very good"}}}
+{"id": "m4", "input": "Design review. Decided: use template gallery v2 layout. Kim (Design) to ship specs Monday. Ana (Eng) to estimate.", "human_labels": {"control": {"decisions": "bad", "owners": "bad", "brevity": "good"}}}
+{"id": "m5", "input": "Customer call with a 12-person team. They want Jira export. No decisions. Lee (PM) to add to customer insights."}
+{"id": "m6", "input": "Incident review. Decided: add paste-size limit. Decided: alert on editor crash rate above 1%. Raj (Analytics) owns the alert."}

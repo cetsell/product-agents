@@ -1,0 +1,23 @@
+schema_version: "1.1"
+name: issue-creator-epic-split-trap
+description: "over-produce trap case for /issue-creator"
+tags: [issue-creator, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Turn 'Improve onboarding' (ACM-405 in inputs/tracker-export.csv) into tickets."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?issue-creator"'
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if it recognizes the item is too vague or epic-sized, proposes a split as a table (titles + one-line summaries + dependencies) or asks the material questions, and stops for approval without drafting full bodies for every ticket or creating anything
+      FAIL otherwise.

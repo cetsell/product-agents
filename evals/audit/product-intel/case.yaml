@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: audit-product-intel
+description: "in-scope case for /audit"
+tags: [audit, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Run a product intelligence audit: are we shipping to learn? Use the tracker export and meeting notes in inputs/ and the roadmap files."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?audit"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/analysis/audit/*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if the report puts the 'so what' first, tracks shipped items to whether a metric was read (shipped-to-measured lag or an explicit 'not measured'), maps work to pillars, cites at least two dated sources per finding or marks it assumed, names owners, and ends with an Evidence Loop appendix
+      FAIL otherwise.

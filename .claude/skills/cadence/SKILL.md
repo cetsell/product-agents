@@ -55,6 +55,8 @@ Collect before writing. Never produce a cadence note from memory.
 - **Planned vs. actual:** what slipped and why.
 - **PM-only actions:** decisions only the PM can make, conversations only the PM can have.
 - **Lead with the number.** Every status line starts with a metric and its date, or says "no metric yet".
+- **Dates you propose are labeled.** A due date that is not in the sources is written as "proposed: {date}"; never state it as fact.
+- **Stay in the mode.** Stale-artifact checks belong to Thursday Prep; bet results and iterate/swing belong to Friday. Mention them in a kickoff only as one line if they block this week's priority. If the user asks for it tight, the kickoff fits in 20 lines.
 
 ---
 

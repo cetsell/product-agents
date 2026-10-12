@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: pm-super-agent-prd-no-roadmap-trap
+description: "over-produce trap case for /pm-super-agent"
+tags: [pm-super-agent, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Quick PRD for a 'share this note' prompt after the first note is written. Don't ask questions, just draft."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?pm-super-agent"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/specs/*-prd-*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if exactly one PRD is written for the share prompt only; it does not expand into a roadmap, strategy, or adjacent features; no tickets are created or assigned
+      FAIL otherwise.

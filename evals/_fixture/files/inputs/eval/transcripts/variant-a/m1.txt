@@ -1,0 +1,3 @@
+- Decided: ship invite step behind flag.
+- Ana (Eng): QA by Thursday.
+- Raj (Analytics): fix duplicate invite_sent event.

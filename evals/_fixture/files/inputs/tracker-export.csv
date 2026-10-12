@@ -1,0 +1,11 @@
+id,title,status,team,owner_role,created,updated,labels,has_acceptance_criteria
+ACM-412,Invite step in onboarding (flag onb_invite_v1),In Progress,Growth,Eng (FE),2026-09-30,2026-10-09,feature;onboarding,yes
+ACM-415,Share prompt after first note,Blocked,Growth,Eng (FE),2026-10-01,2026-10-03,feature;onboarding,yes
+ACM-418,Event naming for invite_sent / invite_accepted,In Progress,Growth,Analytics,2026-10-01,2026-10-02,tracking,no
+ACM-401,Activation dashboard by signup cohort,Done,Growth,Analytics,2026-09-22,2026-10-02,analytics,yes
+ACM-399,Fix editor crash on paste of large tables,Done,Core,Eng (BE),2026-09-25,2026-10-06,bug;editor,yes
+ACM-420,Billing: per-seat proration,In Progress,Core,Eng (BE),2026-09-15,2026-09-26,billing,no
+ACM-421,Upgrade copy for 50-note limit,Todo,GTM,GTM Lead,2026-10-07,2026-10-07,copy,no
+ACM-405,Improve onboarding,In Progress,Growth,PM,2026-09-10,2026-09-18,onboarding,no
+ACM-409,Email: welcome sequence v2,Done,GTM,GTM Lead,2026-09-20,2026-10-08,lifecycle,yes
+ACM-410,Auth: SSO for Team plan,Todo,Core,Eng (BE),2026-10-08,2026-10-08,auth,no

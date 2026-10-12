@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: cadence-monday-kickoff
+description: "in-scope case for /cadence"
+tags: [cadence, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Run the Monday kickoff for this week. Tracker and meeting notes are not connected; the exports are in inputs/tracker-export.csv and inputs/meeting-notes.md."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?cadence"'
+  - name: wrote-output
+    type: file_exists
+    path: "team/weekly-updates/*-kickoff.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if the kickoff note names exactly one priority framed as a job story, 2-3 success criteria demo-able by Friday, last week's wins with a metric or an explicit 'no metric yet', dependencies, and PM actions; every metric carries a date; nothing is invented beyond the fixture files
+      FAIL otherwise.

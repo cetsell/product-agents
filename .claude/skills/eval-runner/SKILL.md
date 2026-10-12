@@ -37,11 +37,13 @@ metadata:
 - Load the dataset (JSONL or YAML: `id`, `input` or `turns`, optional `human_label`).
 - Load each variant; substitute template variables from the dataset row.
 
-### 2. Generate
+### 2. Generate (skip if outputs already exist)
+If the user supplies existing outputs (production logs, or transcripts from an earlier run) as one file per variant × case, skip generation and judge those. Never generate a missing output yourself and label it as the variant's.
+
 Write a small script in the scratch output folder that, for each variant × case, calls `EVAL_GEN_URL` with `EVAL_GEN_MODEL`, replays every turn, and saves the transcript as JSON. Read API keys from the environment (`ANTHROPIC_API_KEY`, or the production provider's key); never write keys to disk. If no key is available, stop and tell the user which variable to set.
 
 ### 3. Judge
-For each transcript, score every criterion with the doc's text labels (`bad` / `good` / `very good`), never numbers.
+Judge blind: score every output before opening the human labels, so agreement in step 4 is a real check. For each transcript, score every criterion with the doc's text labels (`bad` / `good` / `very good`), never numbers.
 
 - If `ANTHROPIC_API_KEY` is set, the script calls `EVAL_JUDGE_MODEL` with the judge prompt below and records the model ID in the results.
 - Otherwise, judge in this session and record the session's model as the judge. Say so in the report header.
@@ -93,6 +95,7 @@ Next lever if the bar is not met: prompt / retrieval / fine-tune (from the doc)
 ## Rules
 
 - The pass bar comes from the doc. Do not move it after seeing results.
+- Apply each criterion as written. If a criterion looks wrong for some inputs (e.g. a bullet minimum on a note with two facts), label it as written, flag the conflict, and show the pass rate both ways if it changes the call.
 - A variant that wins on pass rate but loses badly on one criterion is flagged, not shipped silently.
 - Report the judge's model ID. An eval whose judge is unknown is not comparable to the next one.
 

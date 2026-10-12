@@ -69,12 +69,24 @@ Consequential outputs carry an **Evidence Loop** appendix — a claim-by-claim t
 
 The shift from reactive (you ask) to proactive (it runs without being asked). `proactive/runs.yml` is a scheduler-agnostic manifest of **scheduled runs** (morning brief, sprint health, weekly status, monthly self-eval) and **reactive triggers** (a new high-stakes bet auto-fires `/premortem`; any stakeholder-facing artifact passes an `/evidence-loop` gate). Every run names a steward, a decision point, and a hard stop condition. Wire it to `/schedule`, GitHub Actions, or hooks when ready — see `proactive/CLAUDE.md`.
 
-### Skill evals (quality bar)
+## Quality
 
-Every skill is held to a checkable bar — a role line, a structured output shape, and an explicit **TERMINATION** condition (the rule that prevents an unattended run from expanding to fill its whole budget).
+Two layers. **Static:** `node check-skills.mjs --strict` lints every skill and agent (frontmatter fields, outcome line, TERMINATION, 300-line cap, preload and schedule references) and runs in CI with the scrub check. **Behavioral:** `evals/` holds three cases per core skill (in-scope, over-produce trap, out-of-scope) in `claude plugin eval` format, run against a fictional product with no MCP servers.
 
-- **Layer 1 — static:** `node check-skills.mjs` lints every `SKILL.md` against the bar and runs in CI (`.github/workflows/skill-check.yml`), so a skill that drops its role line or stop condition fails the build.
-- **Layer 2 — behavioral:** `/skill-eval` runs a skill against representative prompts and scores the *output* (stayed in role, wrote into the shape, terminated, evidence loop, triggered correctly), wrapping the `skill-creator` harness.
+Latest behavioral run: **2026-10-12** — [summary](product/analysis/skill-evals/2026-10-12/summary.md), raw outputs in the same folder. Method: subagent runs, one per case, judged by a separate Opus 5.5 subagent; triggering measured by a description-routing proxy. `claude plugin eval` has not been run yet (see the summary).
+
+| Skill | Grader pass (in-scope / trap) | Terminated (in-scope / trap) | Verdict |
+|-------|-------------------------------|------------------------------|---------|
+| cadence | pass / pass | good / good | tighten skill body |
+| pm-super-agent | pass / pass | very good / very good | tighten skill body |
+| issue-creator | pass / pass | very good / very good | ship as-is |
+| sprint-health | pass / pass | very good / very good | ship as-is |
+| strategy | pass / pass | good / very good | tighten skill body |
+| audit | pass / pass | good / good | tighten skill body |
+| eval-runner | pass / pass | very good / very good | ship (after one fix) |
+| evidence-loop | pass / pass | very good / very good | ship as-is |
+
+Routing proxy: 24/24 prompts routed to the right skill (or away from it for out-of-scope prompts). Fixes applied after the run are listed in the summary and have not been re-evaluated.
 
 ## Skills (28), by the outcome they move
 

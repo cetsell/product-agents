@@ -123,7 +123,7 @@ If the PRD is more than ~3 days of engineering, break it into 1–3 day tickets 
 | # | Ticket | Area | Depends on | Est. days | Confidence |
 |---|--------|------|------------|-----------|------------|
 
-Present the table and wait for explicit approval before creating anything.
+Present the table in chat, not inside the PRD, and wait for explicit approval before creating anything. The hypothesis you write must be detectable by the test you size: if the minimum detectable effect is larger than the expected lift, say so in Success and change the test or the claim.
 
 ### Stage 6: Retro
 

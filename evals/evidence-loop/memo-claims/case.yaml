@@ -1,0 +1,23 @@
+schema_version: "1.1"
+name: evidence-loop-memo-claims
+description: "in-scope case for /evidence-loop"
+tags: [evidence-loop, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Evidence loop on inputs/strategy-memo.md before it goes to leadership."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?evidence-loop"'
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if every claim in the memo gets exactly one status row; claims backed by fixture files (1.4x notification retention, 52% week-4 retention, 2-3 week app review) are supported or partial with a file and date; unbacked claims (competitors all ship Slack, digest lifts paid conversion, two-week estimate) are assumed; the flip-assumption and a human decision with an owner are named; the memo itself is not rewritten
+      FAIL otherwise.
