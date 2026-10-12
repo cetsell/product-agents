@@ -47,5 +47,5 @@ How to set up the tools your team uses. Update this file with your actual worksp
 ### Claude Code
 - **What**: AI coding assistant with access to team context
 - **Install**: `npm install -g @anthropic-ai/claude-code`
-- **Setup**: Clone `team-os` repo, open in Claude Code — `CLAUDE.md` files provide context automatically
+- **Setup**: Clone `product-agents` repo, open in Claude Code — `CLAUDE.md` files provide context automatically
 - **Skills**: Type `/skill-name` (e.g., `/data-analyst`, `/strategy`) for specialized PM tools

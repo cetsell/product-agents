@@ -1,6 +1,6 @@
 # Maintenance Playbook
 
-How Team OS stays alive. Three layers: human contributions, agent maintenance, automated checks.
+How Product Agents stays alive. Three layers: human contributions, agent maintenance, automated checks.
 
 ---
 
@@ -29,7 +29,7 @@ Everyone on the team contributes via pull requests. See [CONTRIBUTING.md](CONTRI
 
 ## Layer 2: Agent — One Loop, Many Modes
 
-One agent handles all Team OS tasks: `.claude/agents/team-os.md`
+One agent handles all Product Agents tasks: `.claude/agents/product-agents.md`
 
 Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-loads skills only when needed. (One core loop, skills as loadable context, scoped permissions.)
 
@@ -44,7 +44,7 @@ Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-
 
 ### How to use
 
-Open Claude Code in the `team-os` repo:
+Open Claude Code in the `product-agents` repo:
 
 ```
 # Anyone, anytime

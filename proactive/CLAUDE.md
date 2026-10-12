@@ -22,7 +22,7 @@ The GitHub workflows skip cleanly with a notice when their secrets are missing. 
 
 - `monthly-pm-self-eval`: the skill has `disable-model-invocation: true` (a self-evaluation should not fire on its own), which also means scheduled runs cannot invoke it. The PM runs it by name on the first working day.
 - `skill-health`: needs an authenticated `claude plugin eval` (see `evals/README.md`).
-- `metric-breach`: team-os ships no metric monitor. If you have one, point it at a routine that runs `/data-analyst`.
+- `metric-breach`: product-agents ships no metric monitor. If you have one, point it at a routine that runs `/data-analyst`.
 
 ## Principles every run obeys
 

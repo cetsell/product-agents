@@ -1,6 +1,6 @@
-# Why Team OS is shaped this way
+# Why Product Agents is shaped this way
 
-The short version: a product team's agents are only as good as the shared context they load, the workflows they run, and the evidence they leave behind. Team OS is those three things in a repo. This note records the ideas it was built from so that future changes stay coherent, and credits where they came from.
+The short version: a product team's agents are only as good as the shared context they load, the workflows they run, and the evidence they leave behind. Product Agents is those three things in a repo. This note records the ideas it was built from so that future changes stay coherent, and credits where they came from.
 
 ## The layers
 

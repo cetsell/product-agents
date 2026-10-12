@@ -1,4 +1,4 @@
-# Team OS — instructions for any coding agent
+# Product Agents — instructions for any coding agent
 
 A product team's shared operating layer: context, skills, and proactive runs that help the team get more out of AI on the outcomes that matter (KPIs, vision, pace). Claude Code reads this file through `CLAUDE.md`; other agents read it directly. Skills are plain markdown in `.claude/skills/<name>/SKILL.md`: any agent can follow one by reading it.
 

@@ -1,4 +1,4 @@
-# Team OS Upgrade Plan — October 2026
+# Product Agents Upgrade Plan — October 2026
 
 *Written 2026-10-12 for an Opus session to execute. Repo last pushed 2026-05-27. Local `main` is in sync with `origin/main` (github.com/cetsell/product-agents).*
 
@@ -8,7 +8,7 @@ Every skill in this repo exists to help a product team get more out of AI on the
 
 ## Goal
 
-Make team-os the reference example of a product team's shared operating layer for Claude 5-era agents: safe to clone, current with Claude Code's skill/agent/plugin/hook model, demonstrably evaluated, and free of the one client's internals. Ship it as a release and a LinkedIn post.
+Make product-agents the reference example of a product team's shared operating layer for Claude 5-era agents: safe to clone, current with Claude Code's skill/agent/plugin/hook model, demonstrably evaluated, and free of the one client's internals. Ship it as a release and a LinkedIn post.
 
 ## What the audit found (2026-10-12)
 
@@ -125,7 +125,7 @@ Supported: `name` (no `:`), `description`, `tools`, `disallowedTools`, `model`, 
 
 Apply:
 - Remove `TodoWrite` from `context-manager` (not available on Claude 5 models without `CLAUDE_CODE_ENABLE_TODO_TOOLS=1`). Reconsider whether `context-manager` earns its place at all; Claude 5 context handling and `autoCompactWindow` (v2.1.296) cover most of it.
-- `team-os` agent: add `skills:` preloading `evidence-loop` and `check-artifacts`; set `permissionMode: acceptEdits` for Contribute/Refresh and document that Navigate/Audit are read-only by instruction, not enforcement.
+- `product-agents` agent: add `skills:` preloading `evidence-loop` and `check-artifacts`; set `permissionMode: acceptEdits` for Contribute/Refresh and document that Navigate/Audit are read-only by instruction, not enforcement.
 - `freshness-auditor`: `model: haiku`, `effort: low`, `maxTurns: 25`, `memory: project` so it remembers what it flagged last week.
 - `roadmap-keeper`: `isolation: worktree` and open a PR instead of writing to `main`.
 - Move the custom `category/steward/cadence` keys into the body or into `proactive/runs.yml`; they are ignored in frontmatter.
@@ -176,11 +176,11 @@ Keep `runs.yml` as the human-readable manifest, add a `binding:` field per entry
 
 ### 5.7 Plugin packaging (docs: plugins/manifest-reference, marketplace-reference)
 
-- `.claude-plugin/plugin.json` with `name: team-os` (not `claude-*`), `"skills": ["./.claude/skills/"]`, and `agents` listing each of the four `.md` files individually (`agents` replaces the default and takes files only). Paths must start with `./`.
-- `.claude-plugin/marketplace.json` with `name`, `owner`, `plugins: [{ name: "team-os", source: "." }]`. **Verify** the same-repo `source: "."` pattern end to end before documenting it.
-- A root `CLAUDE.md` is not loaded for plugins, so the routing lives in `.claude/rules/` (5.5) and in a `team-os-guide` skill.
+- `.claude-plugin/plugin.json` with `name: product-agents` (not `claude-*`), `"skills": ["./.claude/skills/"]`, and `agents` listing each of the four `.md` files individually (`agents` replaces the default and takes files only). Paths must start with `./`.
+- `.claude-plugin/marketplace.json` with `name`, `owner`, `plugins: [{ name: "product-agents", source: "." }]`. **Verify** the same-repo `source: "."` pattern end to end before documenting it.
+- A root `CLAUDE.md` is not loaded for plugins, so the routing lives in `.claude/rules/` (5.5) and in a `product-agents-guide` skill.
 - `claude plugin validate . --strict` in CI. `claude plugin eval` (v2.1.269) can replace the hand-rolled behavioral eval loop in `skill-eval`; evaluate and adopt if it covers the rubric.
-- Install docs: `claude plugin marketplace add cetsell/product-agents` then `claude plugin install team-os@product-agents`. Skills become `/team-os:cadence`; keep the clone-and-fork path for teams that want to edit.
+- Install docs: `claude plugin marketplace add cetsell/product-agents` then `claude plugin install product-agents@product-agents`. Skills become `/product-agents:cadence`; keep the clone-and-fork path for teams that want to edit.
 
 ### 5.8 Deprecations to clean
 

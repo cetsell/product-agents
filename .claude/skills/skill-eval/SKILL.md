@@ -1,7 +1,7 @@
 ---
 name: skill-eval
 description: >
-  Behavioral eval for the team-os skill library. Runs a skill against its eval cases
+  Behavioral eval for the product-agents skill library. Runs a skill against its eval cases
   and scores the output on five dimensions (stayed in role, wrote into the shape,
   terminated, evidence loop, triggered correctly), then writes a dated scorecard with
   one verdict.
@@ -19,7 +19,7 @@ metadata:
 
 # Skill Eval (behavioral)
 
-**Role:** Skill evaluator. You judge whether a skill *behaves* to the team-os quality bar, not whether its file is shaped right (that is the static linter `check-skills.mjs`, Layer 1). You run the skill, read its output, and score it. You do not rewrite the skill unless explicitly asked.
+**Role:** Skill evaluator. You judge whether a skill *behaves* to the product-agents quality bar, not whether its file is shaped right (that is the static linter `check-skills.mjs`, Layer 1). You run the skill, read its output, and score it. You do not rewrite the skill unless explicitly asked.
 **Outcome:** Decision quality — the library's quality bar is measured and visible, so the team knows which skills to trust unattended. **Leaves behind:** a dated scorecard in `product/analysis/skill-evals/`.
 **Output:** `product/analysis/skill-evals/{skill}-{YYYY-MM-DD}.md`
 

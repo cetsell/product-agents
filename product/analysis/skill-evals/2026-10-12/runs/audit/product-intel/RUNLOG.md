@@ -35,7 +35,7 @@
 
 The audit is in `product/analysis/audit/product-intelligence-shipping-to-learn-2026-10-12.md`.
 
-**Are we shipping to learn? Only partly.** The active bet (Invite in onboarding) is set up to learn: the dashboard shipped first, the baseline is stable (invited (d7) has held at 33.0–34.0% for 8 weekly cohorts), and it has a dated kill trigger and a 7-day early read. Outside the bet, 2 of the 3 customer-facing things shipped since 2026-09-11 have no metric or read-out date: the crash fix (ACM-399, 2026-10-06) and welcome sequence v2 (ACM-409, 2026-10-08). That means the median time from shipped to measured can't be computed. The one recorded win (editor load, "week-1 retention +3 pts") can't be checked against any metric or export in team-os.
+**Are we shipping to learn? Only partly.** The active bet (Invite in onboarding) is set up to learn: the dashboard shipped first, the baseline is stable (invited (d7) has held at 33.0–34.0% for 8 weekly cohorts), and it has a dated kill trigger and a 7-day early read. Outside the bet, 2 of the 3 customer-facing things shipped since 2026-09-11 have no metric or read-out date: the crash fix (ACM-399, 2026-10-06) and welcome sequence v2 (ACM-409, 2026-10-08). That means the median time from shipped to measured can't be computed. The one recorded win (editor load, "week-1 retention +3 pts") can't be checked against any metric or export in product-agents.
 
 **Most urgent, because the measured cohort starts tomorrow (2026-10-13):**
 1. The bet's success measure is broken. `invite_sent` fires twice on retry (meeting notes, 2026-10-07). The ticket meant to fix it, ACM-418, has had no update since 2026-10-02 and has no acceptance criteria, and invited (d7) is not defined anywhere. Owner: Analytics.

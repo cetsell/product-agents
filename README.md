@@ -1,4 +1,4 @@
-# Team OS
+# Product Agents
 
 A shared operating layer that helps a product team get more out of AI on the outcomes that matter: the KPIs, the vision, and the pace. It gives Claude Code your team's context, 29 skills that each move a named metric or decision, and proactive runs that keep the weekly loop from idea to measured result to one week.
 
@@ -8,10 +8,10 @@ A shared operating layer that helps a product team get more out of AI on the out
 
 ```bash
 claude plugin marketplace add cetsell/product-agents
-claude plugin install team-os@product-agents
+claude plugin install product-agents@product-agents
 ```
 
-Then run `/team-os:team-os-guide setup` in your project: it copies `product/context.md`, the roadmap templates, and the output folders the skills write to, and walks you through filling in the context. Skills are namespaced (`/team-os:cadence`, `/team-os:strategy`).
+Then run `/product-agents:product-agents-guide setup` in your project: it copies `product/context.md`, the roadmap templates, and the output folders the skills write to, and walks you through filling in the context. Skills are namespaced (`/product-agents:cadence`, `/product-agents:strategy`).
 
 **As your team's repo** (everything: hooks, rules, GitHub workflows, evals):
 
@@ -64,7 +64,7 @@ Each skill and agent pins its model and effort in frontmatter (full IDs, so Bedr
 
 ## Skills (29), by the outcome they move
 
-Invoke with `/skill-name` (or `/team-os:skill-name` as a plugin); Claude also loads a skill when your request matches its description. Routing table: `.claude/rules/skill-routing.md`.
+Invoke with `/skill-name` (or `/product-agents:skill-name` as a plugin); Claude also loads a skill when your request matches its description. Routing table: `.claude/rules/skill-routing.md`.
 
 ### Velocity
 
@@ -76,7 +76,7 @@ Invoke with `/skill-name` (or `/team-os:skill-name` as a plugin); Claude also lo
 | `/pm-super-agent` | idea to a buildable, measurable PRD in one session, scoped to the smallest version that proves the bet | a PRD in `product/specs/` with an evidence appendix and a proposed ticket list |
 | `/senior-prompt-engineer` | prompt changes ship as reviewed diffs with eval cases attached, so AI-feature iterations take hours instead of guesswork cycles | an audit, design, or debug document in `product/analysis/prompts/` plus the diff |
 | `/sprint-health` | stale tickets, blockers, and launch-gate gaps are caught while there is still time in the sprint to fix them | a dated sweep in `team/weekly-updates/` where every flag has an owner |
-| `/team-os-guide` | a new team goes from install to its first useful, measured run in one session instead of a week of reading | a filled-in `product/context.md` (setup) or a one-line routing answer |
+| `/product-agents-guide` | a new team goes from install to its first useful, measured run in one session instead of a week of reading | a filled-in `product/context.md` (setup) or a one-line routing answer |
 
 ### Decision quality
 
@@ -131,7 +131,7 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 
 | Server | Env vars | Used by |
 |--------|----------|---------|
-| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, issue-creator, team-os agent (Refresh) |
+| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, issue-creator, product-agents agent (Refresh) |
 | `bigquery` (warehouse) | `BIGQUERY_PROJECT`, optional `BIGQUERY_WRITE_MODE` (defaults to `blocked`) | data-analyst |
 | `meeting-notes` | `MEETING_NOTES_MCP_URL` (your meeting-notes tool's MCP endpoint) | cadence, sprint-health, audit |
 
@@ -141,7 +141,7 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 
 | Agent | Model | What it does |
 |-------|-------|--------------|
-| `team-os` | Sonnet 5.5 | Routes by intent: Navigate (read-only), Contribute (route an update to the right file), Refresh (tracker → `product/roadmap/`), Audit (freshness and drift, report only). Preloads `evidence-loop` and `check-artifacts`. |
+| `product-agents` | Sonnet 5.5 | Routes by intent: Navigate (read-only), Contribute (route an update to the right file), Refresh (tracker → `product/roadmap/`), Audit (freshness and drift, report only). Preloads `evidence-loop` and `check-artifacts`. |
 | `roadmap-keeper` | Sonnet 5.5 | Friday refresh procedure: factual fields only, in its own worktree, ends in a pull request. |
 | `freshness-auditor` | Haiku 5.5 | Monday audit procedure with project memory, so repeat offenders show up. |
 

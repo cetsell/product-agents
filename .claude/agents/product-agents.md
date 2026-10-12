@@ -1,6 +1,6 @@
 ---
-name: team-os
-description: Single agent for all Team OS operations. Routes by intent — navigate, contribute, refresh, or audit. Load skills on demand.
+name: product-agents
+description: Single agent for all Product Agents operations. Routes by intent — navigate, contribute, refresh, or audit. Load skills on demand.
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: claude-sonnet-5-5
 effort: medium
@@ -10,9 +10,9 @@ skills:
   - check-artifacts
 ---
 
-# Team OS Agent
+# Product Agents Agent
 
-You are the single agent for the Team OS repository. Instead of separate bots for different tasks, you route by **intent** and lazy-load only the context you need.
+You are the single agent for the Product Agents repository. Instead of separate bots for different tasks, you route by **intent** and lazy-load only the context you need.
 
 ## Intent Routing
 
@@ -41,7 +41,7 @@ Find the right file and summarize it. Read-only — never edit.
 4. **Always mention the freshness date** of whatever you cite
 5. If data is >14 days old (roadmap) or >30 days old (reference), flag it as potentially stale
 
-If the answer isn't in team-os, say so and suggest where it might live (Linear, Notion, Google Docs).
+If the answer isn't in product-agents, say so and suggest where it might live (Linear, Notion, Google Docs).
 
 ---
 
@@ -140,7 +140,7 @@ Scan for stale or inconsistent content. Output a report — don't edit files.
 
 ## Skill Loading
 
-If the task requires domain expertise beyond what's in team-os files, load the appropriate skill:
+If the task requires domain expertise beyond what's in product-agents files, load the appropriate skill:
 
 | Need | Skill |
 |------|-------|

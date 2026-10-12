@@ -36,8 +36,8 @@ A full refresh around one bar: every skill must help a product team get more out
 ### Added
 
 - `product/context.md`: the one file strategy, cadence, audit, and analysis skills read first.
-- `team-os-guide` skill: routing and setup for plugin installs.
-- Plugin packaging: `.claude-plugin/plugin.json` and `marketplace.json` (`claude plugin marketplace add cetsell/product-agents`, then `claude plugin install team-os@product-agents`).
+- `product-agents-guide` skill: routing and setup for plugin installs.
+- Plugin packaging: `.claude-plugin/plugin.json` and `marketplace.json` (`claude plugin marketplace add cetsell/product-agents`, then `claude plugin install product-agents@product-agents`).
 - `AGENTS.md` (imported by `CLAUDE.md`), `.claude/rules/` (two always-on, two path-scoped).
 - Hooks: SessionStart context, confirmation on every issue-tracker write, skill lint on Stop, premortem nudge when the betting table changes, a once-only evidence-loop check.
 - `evals/`: suites in `claude plugin eval` format with a fictional-product fixture; `product/analysis/skill-evals/2026-10-12/` holds the first results.

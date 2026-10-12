@@ -2,7 +2,7 @@
 // Runs `claude plugin validate . --strict --json` and fails on any error or
 // warning except two that are deliberate in this repo:
 //   - root CLAUDE.md is not loaded for plugin installs (it serves clone users;
-//     plugin users get the same routing from the team-os-guide skill)
+//     plugin users get the same routing from the product-agents-guide skill)
 //   - agents/ is a symlink to .claude/agents (one source for clone and plugin)
 import { spawnSync } from "node:child_process";
 

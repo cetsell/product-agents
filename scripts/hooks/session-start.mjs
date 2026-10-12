@@ -52,4 +52,4 @@ for (const [p, max] of windows) {
 }
 if (stale.length) out.push(`Stale: ${stale.join("; ")}. Cite with dates or refresh before deciding on them.`);
 
-if (out.length) console.log(["[team-os]", ...out].join("\n"));
+if (out.length) console.log(["[product-agents]", ...out].join("\n"));

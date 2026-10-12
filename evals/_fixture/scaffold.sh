@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Builds an eval workspace: the team-os template (context, roadmap, templates,
+# Builds an eval workspace: the product-agents template (context, roadmap, templates,
 # playbooks) with the fictional "Acme Notes" fixture laid over it. Runs in the
 # empty eval workspace (cwd) when `claude plugin eval` is invoked with --scaffold.
 # Usage outside plugin eval: bash evals/_fixture/scaffold.sh  (from an empty dir)

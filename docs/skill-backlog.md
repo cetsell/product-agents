@@ -1,6 +1,6 @@
 # Skill backlog
 
-Skills that would earn a place in Team OS but are not built yet. Each entry names the outcome it would move; a skill without one does not get built. To claim one, open an issue, write the skill to the quality bar in `docs/design.md`, add an eval suite under `evals/`, and send a PR.
+Skills that would earn a place in Product Agents but are not built yet. Each entry names the outcome it would move; a skill without one does not get built. To claim one, open an issue, write the skill to the quality bar in `docs/design.md`, add an eval suite under `evals/`, and send a PR.
 
 ## competitor-scan
 

@@ -73,7 +73,7 @@ scheduled:
 
   - id: friday-refresh
     when: "Friday 15:00 UTC"
-    skill: team-os-agent:refresh   # roadmap-keeper agent
+    skill: product-agents-agent:refresh   # roadmap-keeper agent
     binding: github-actions
     executor: .github/workflows/roadmap-refresh.yml
     pulls: ["Linear GraphQL API (LINEAR_API_KEY)"]
@@ -133,7 +133,7 @@ reactive:
   - id: metric-breach
     on: "a metric in product/analytics/metrics-dictionary.md crosses its threshold"
     skill: /data-analyst
-    binding: manual                # no metric monitor ships with team-os; wire one to a routine if you have it
+    binding: manual                # no metric monitor ships with product-agents; wire one to a routine if you have it
     output: product/analysis/data/alert-{metric}-{date}.md
     decides: "PM decides whether to intervene"
     evidence: true
