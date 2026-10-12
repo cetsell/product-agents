@@ -8,6 +8,7 @@ when_to_use: >
   Run on the first working day of the month, or when the user says "monthly eval",
   "self-eval", "PM review", "how am I doing", "kill rate", or "decision quality review".
 allowed-tools: Read, Grep, Glob, Write
+disable-model-invocation: true
 metadata:
   version: 2.0.0
 ---

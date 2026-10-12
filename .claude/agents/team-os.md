@@ -3,6 +3,10 @@ name: team-os
 description: Single agent for all Team OS operations. Routes by intent — navigate, contribute, refresh, or audit. Load skills on demand.
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
+permissionMode: acceptEdits
+skills:
+  - evidence-loop
+  - check-artifacts
 ---
 
 # Team OS Agent
@@ -21,6 +25,8 @@ Classify the request, then follow the appropriate mode:
 | "What's stale?" / "Run freshness check" / "Audit consistency" | **Audit** | No (report only) | Steward (PM, Monday) |
 
 If unclear, default to **Navigate** (read-only, safe).
+
+**Permissions:** this agent runs with `permissionMode: acceptEdits` so Contribute and Refresh can edit files without a prompt per edit. Navigate and Audit are read-only **by instruction, not enforcement**: in those modes, do not call Write or Edit. Bash commands still prompt. `evidence-loop` and `check-artifacts` are preloaded, so Audit mode and any stakeholder-facing summary can apply them without a separate load.
 
 ---
 

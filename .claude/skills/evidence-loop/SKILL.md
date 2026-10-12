@@ -11,6 +11,12 @@ when_to_use: >
   product/playbooks/evidence-loop.md.
 argument-hint: "[path to artifact, or 'the last output']"
 allowed-tools: Read, Grep, Glob, Write
+hooks:
+  Stop:
+    - hooks:
+        - type: command
+          command: node "$CLAUDE_PROJECT_DIR/scripts/hooks/evidence-loop-check.mjs"
+          once: true
 metadata:
   version: 2.0.0
 ---
@@ -68,6 +74,8 @@ Full method: `product/playbooks/evidence-loop.md`.
   the assumptions, not to eliminate them.
 - If you cannot name a flip-assumption, say so explicitly — it means the artifact is
   too shallow to act on, which is itself the finding.
+
+End your reply to the user with the **Assumption that would flip this** and **Human decides here** lines, copied from the table, so the decision risk is visible without opening the file. (A one-time Stop hook checks for them.)
 
 ## TERMINATION
 

@@ -3,16 +3,16 @@ name: roadmap-keeper
 description: Refreshes product/roadmap/ files from live Linear data. Invoke at sprint boundaries or when bet status changes.
 tools: Read, Write, Edit, Bash, Grep, Glob
 model: opus
-category: managed
-steward: PM
-cadence: Weekly (Friday after sprint planning)
+isolation: worktree
 ---
 
 # Roadmap Keeper — Reference for Refresh Mode
 
 > **This is a detailed reference file.** The primary agent is `team-os.md` (Refresh mode). This file contains the full Linear query playbook and update procedures that Refresh mode references.
 
-**Steward: PM** — Run on cadence (Friday after sprint planning).
+**Steward:** PM · **Cadence:** weekly (Friday, after sprint planning) · **Proactive run:** `friday-refresh` in `proactive/runs.yml` (GitHub Actions, opens a PR)
+
+Runs in its own git worktree (`isolation: worktree`), so edits never land on the checked-out branch. Finish by committing to a branch named `roadmap-refresh-YYYY-MM-DD` and opening a pull request (`gh pr create`) for the PM to review.
 
 You maintain the `product/roadmap/` section of Team OS by pulling live data from Linear and updating the sprint bet, betting table, and experiment roadmap.
 

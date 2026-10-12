@@ -12,6 +12,7 @@ when_to_use: >
   "bottleneck". For a single metric or funnel question use /data-analyst; for a sprint
   sweep use /sprint-health.
 allowed-tools: Read, Grep, Glob, Write
+context: fork
 metadata:
   version: 2.0.0
 ---

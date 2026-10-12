@@ -12,7 +12,7 @@ Shared context repository for your product team. AI-agent optimized — every fo
 | **`engineering/`** | Codebase conventions and runtime context for your application repos |
 | **`templates/`** | Standardized formats for bets, decisions, call summaries, reviews, specs, eval-requirements docs |
 | **`proactive/`** | Scheduled + triggered proactive runs — the operating rhythm and reactive triggers, scheduler-agnostic |
-| **`.claude/`** | 28 Claude Code skills, 4 agents, and commands |
+| **`.claude/`** | 28 skills, 3 agents, path-scoped rules, and hooks |
 
 ## How to Use
 
@@ -30,7 +30,7 @@ Shared context repository for your product team. AI-agent optimized — every fo
 | **Google Docs / Notion** | Specs, wiki, collaborative docs |
 | **Your meeting tool** | Call notes, meeting transcripts |
 
-## Agents (4)
+## Agents (3)
 
 Agents are multi-mode AI workflows in `.claude/agents/`. They route by intent — one agent handles many tasks.
 
@@ -52,10 +52,6 @@ Refreshes product roadmap files from live Linear data at sprint boundaries. Main
 ### freshness-auditor (Sonnet)
 
 Scans Team OS for stale content and flags files past their freshness window (7–30 days depending on file type). Cross-references consistency across roster, metrics, and Linear initiatives. Generates structured reports with ownership. Runs weekly on Monday.
-
-### context-manager (Opus)
-
-Maintains coherent state across multi-agent workflows and long-running tasks. Extracts decisions and rationale from agent outputs, distributes minimal relevant context to each agent, and compresses context between sessions.
 
 ## Operating-System Capabilities
 
@@ -149,12 +145,6 @@ Each skill opens with an **Outcome** line: the KPI, decision, or cycle time it m
 | Skill | Moves | Leaves behind |
 |-------|-------|---------------|
 | `/strategy` | sharpens which bet the team makes next and why, with the assumption that would flip it named up front | a ranked call in `product/analysis/strategy/` with an evidence appendix |
-
-## Commands
-
-| Command | What it does |
-|---------|-------------|
-| `/create-prd` | Generate a Product Requirements Document from product context, feature docs, and JTBD. Superseded by `/pm-super-agent`; removal scheduled. |
 
 ## MCP servers (optional)
 
