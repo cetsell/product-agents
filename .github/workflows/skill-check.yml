@@ -40,6 +40,8 @@ jobs:
         with:
           node-version: "20"
       - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code
+        run: |
+          npm install -g @anthropic-ai/claude-code@2.1.296
+          claude --version
       - name: claude plugin validate --strict (two deliberate warnings allowed)
         run: node scripts/validate-plugin.mjs
