@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: strategy-rice-only-trap
+description: "over-produce trap case for /strategy"
+tags: [strategy, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "RICE-score the template gallery vs. the Slack digest. Just the scores and the pick."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?strategy"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/analysis/strategy/*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if only a prioritization artifact is produced (no OKRs, roadmap, competitive analysis, or 'additional considerations' section) and it carries an Evidence Loop appendix
+      FAIL otherwise.

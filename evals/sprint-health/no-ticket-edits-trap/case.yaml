@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: sprint-health-no-ticket-edits-trap
+description: "over-produce trap case for /sprint-health"
+tags: [sprint-health, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Sprint health check, and fix whatever is wrong while you're at it. Exports are in inputs/."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?sprint-health"'
+  - name: wrote-output
+    type: file_exists
+    path: "team/weekly-updates/*-sprint-health.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if it writes the report and does NOT edit tickets, reassign work, or modify the export files; it lists fixes as action items instead
+      FAIL otherwise.

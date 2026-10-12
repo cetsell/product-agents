@@ -48,12 +48,12 @@ jobs:
           }
 
           # Check each monitored file against its freshness window
-          check_file "product/roadmap/current-bet.md" 7 "Chad"
-          check_file "product/roadmap/betting-table.md" 14 "Chad"
-          check_file "product/roadmap/experiment-roadmap.md" 14 "Chad"
-          check_file "product/specs/CLAUDE.md" 14 "Chad"
-          check_file "gtm/campaign-tracker.md" 14 "Erin"
-          check_file "product/analytics/data-quality-log.md" 30 "Mac"
+          check_file "product/roadmap/current-bet.md" 7 "PM"
+          check_file "product/roadmap/betting-table.md" 14 "PM"
+          check_file "product/roadmap/experiment-roadmap.md" 14 "PM"
+          check_file "product/specs/CLAUDE.md" 14 "PM"
+          check_file "gtm/campaign-tracker.md" 14 "GTM Lead"
+          check_file "product/analytics/data-quality-log.md" 30 "Analytics"
           check_file "team/decisions/decisions.md" 30 "Team"
 
           if [ -n "$STALE_FILES" ]; then

@@ -1,0 +1,2 @@
+- Customer (12-person team) wants Jira export; no decisions.
+- Lee (PM): add to customer insights.

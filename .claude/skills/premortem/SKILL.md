@@ -1,18 +1,37 @@
 ---
 name: premortem
-description: "Run a premortem on any plan, launch, product, hire, strategy, or decision. Assumes it already failed 6 months from now and works backward to find every reason why. Produces a revised plan with blind spots exposed. MANDATORY TRIGGERS: 'premortem this', 'premortem my', 'run a premortem', 'what could kill this', 'future-proof this', 'stress test this plan', 'what am i missing here', 'find the blind spots'. STRONG TRIGGERS: 'what could go wrong', 'am i missing anything', 'poke holes in this', 'where will this break', 'devil's advocate this'. Do NOT trigger on simple feedback requests or factual questions. DO trigger when someone has a plan or commitment where the cost of being wrong is high."
+description: >
+  Runs a premortem on a plan, launch, bet, pricing change, hire, or strategy: assumes it
+  failed six months from now, investigates each failure reason in parallel, and returns
+  the most likely and most dangerous failures, the hidden assumption, a revised plan,
+  and a pre-launch checklist.
+when_to_use: >
+  Use for "premortem this", "run a premortem", "what could kill this", "stress test this
+  plan", "find the blind spots", "what am I missing", "poke holes in this", "where will
+  this break", or when a new high-stakes bet enters the betting table. Not for simple
+  feedback on a draft or factual questions.
+argument-hint: "[plan, or path to it]"
+allowed-tools: Read, Grep, Glob, Write, Agent
+model: claude-opus-5-5
+effort: high
+metadata:
+  version: 2.0.0
 ---
+
 # Premortem
+
+**Role:** Premortem facilitator. You assume the plan already failed, find every genuine reason why, and hand back a revised plan; you do not execute it.
+**Outcome:** Decision quality — failure modes surface before money and weeks are committed, while the plan can still change. **Leaves behind:** an HTML report and transcript in `product/analysis/premortem/`.
 
 A premortem is the opposite of a postmortem. Instead of figuring out what went wrong after something fails, you imagine it already failed and figure out why before you start.
 
-The method comes from psychologist Gary Klein (published in HBR). Kahneman called it his single most valuable decision-making technique. Google, Goldman Sachs, and P&G use it before major decisions.
+The method comes from psychologist Gary Klein (published in HBR). This skill is adapted from a community Claude skill that packaged Klein's method (original author unknown; see `docs/design.md`). Kahneman called it his single most valuable decision-making technique. Google, Goldman Sachs, and P&G use it before major decisions.
 
 The core insight: when you ask people "what could go wrong?" they give cautious, hedged answers. When you say "this already failed, tell me why," their brains switch into narrative mode and generate far more specific, honest reasons. Wharton/Cornell researchers call this "prospective hindsight."
 
 Why it matters for AI-assisted decisions: Claude defaults to agreeable, optimistic responses. Ask "is this a good plan?" and it finds reasons to say yes. The premortem forces the frame into "this is dead, explain how it died." This is the failure-mode twin of `/evidence-loop` — evidence-loop checks *what's actually supported*, premortem checks *how it dies*. Both exist to beat sycophancy. Method reference: `product/playbooks/evidence-loop.md`.
 
-**Output directory:** `pm-workflows/analysis/premortem/`
+**Output directory:** `product/analysis/premortem/`
 
 ---
 ## when to run a premortem
@@ -77,17 +96,17 @@ Read every deep-dive and produce:
 5. **The Pre-Launch Checklist** — 3-5 specific things to verify/test/put in place before executing, each preventing or detecting one failure mode.
 
 ### step 5: generate the report
-Single self-contained HTML file with inline CSS, saved to `pm-workflows/analysis/premortem/premortem-report-[timestamp].html`. Dark background, clean scannable typography. Synthesis prominently at top. One visual card per failure reason (header + story + assumption + warning signs), distinct accent colors, a severity/likelihood indicator. Footer with timestamp and what was premortemed. Open the file after generating.
+Single self-contained HTML file with inline CSS, saved to `product/analysis/premortem/premortem-report-[timestamp].html`. Dark background, clean scannable typography. Synthesis prominently at top. One visual card per failure reason (header + story + assumption + warning signs), distinct accent colors, a severity/likelihood indicator. Footer with timestamp and what was premortemed. Open the file after generating.
 
 ### step 6: save the transcript
-Save the full transcript as `pm-workflows/analysis/premortem/premortem-transcript-[timestamp].md`: context gathered, raw failure reasons, all deep-dives, full synthesis.
+Save the full transcript as `product/analysis/premortem/premortem-transcript-[timestamp].md`: context gathered, raw failure reasons, all deep-dives, full synthesis.
 
 ---
 ## output format
 Two files per session:
 ```
-pm-workflows/analysis/premortem/premortem-report-[timestamp].html    # visual report
-pm-workflows/analysis/premortem/premortem-transcript-[timestamp].md  # full transcript
+product/analysis/premortem/premortem-report-[timestamp].html    # visual report
+product/analysis/premortem/premortem-transcript-[timestamp].md  # full transcript
 ```
 Also give a concise chat summary: most likely failure, hidden assumption, single most important revision. Three sentences max.
 

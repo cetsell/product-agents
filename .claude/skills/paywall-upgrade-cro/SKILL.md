@@ -1,18 +1,33 @@
 ---
 name: paywall-upgrade-cro
-description: When the user wants to create or optimize in-app paywalls, upgrade screens, upsell modals, or feature gates. Also use when the user mentions "paywall," "upgrade screen," "upgrade modal," "upsell," "feature gate," "convert free to paid," "freemium conversion," "trial expiration screen," "limit reached screen," "plan upgrade prompt," "in-app pricing," "free users won't upgrade," "trial to paid conversion," or "how do I get users to pay." Use this for any in-product moment where you're asking users to upgrade. Distinct from public pricing pages (see page-cro) — this focuses on in-product upgrade moments where the user has already experienced value. For pricing decisions, see pricing-strategy.
+description: >
+  Audits in-app paywalls, upgrade screens, upsell modals, feature gates, usage-limit
+  and trial-expiration screens. Returns the trigger point, current vs. recommended screen
+  components, and a ranked list of changes, each with the metric it should move,
+  expected direction, confidence, and the A/B test to prove it.
+when_to_use: >
+  Use when the user mentions "paywall", "upgrade screen", "upsell", "feature gate",
+  "convert free to paid", "freemium conversion", "trial expiration screen", "limit
+  reached screen", "free users won't upgrade", "trial to paid conversion", or "how do I
+  get users to pay". Not for public pricing pages (use /page-cro), what to charge (use
+  /pricing-strategy), or cancel and save flows (use /churn-prevention).
+argument-hint: "[paywall screenshot, trigger, or upgrade funnel data]"
+allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Paywall and Upgrade Screen CRO
 
-You are an expert in in-app paywalls and upgrade flows. Your goal is to convert free users to paid, or upgrade users to higher tiers, at moments when they've experienced enough value to justify the commitment.
+**Role:** In-app paywall and upgrade flow specialist; the one job is converting free or trial users to paid at the moment they have seen enough value to justify it.
+**Outcome:** Monetization — free-to-paid or trial-to-paid conversion rate, with post-upgrade churn and free-user retention as guardrails. **Leaves behind:** a paywall review and ranked change list in chat, with the top test ready for `/ab-test-setup`.
+**Output:** chat; trigger and screen review, then ranked changes in the shape below.
+
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Initial Assessment
-
-**Check for product marketing context first:**
-If `.agents/product-marketing-context.md` exists (or `.claude/product-marketing-context.md` in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
 Before providing recommendations, understand:
 
@@ -94,51 +109,6 @@ After X days of free use:
 
 ---
 
-## Specific Paywall Types
-
-### Feature Lock Paywall
-```
-[Lock Icon]
-This feature is available on Pro
-
-[Feature preview/screenshot]
-
-[Feature name] helps you [benefit]:
-• [Capability]
-• [Capability]
-
-[Upgrade to Pro - $X/mo]
-[Maybe Later]
-```
-
-### Usage Limit Paywall
-```
-You've reached your free limit
-
-[Progress bar at 100%]
-
-Free: 3 projects | Pro: Unlimited
-
-[Upgrade to Pro]  [Delete a project]
-```
-
-### Trial Expiration Paywall
-```
-Your trial ends in 3 days
-
-What you'll lose:
-• [Feature used]
-• [Data created]
-
-What you've accomplished:
-• Created X projects
-
-[Continue with Pro]
-[Remind me later]  [Downgrade]
-```
-
----
-
 ## Timing and Frequency
 
 ### When to Show
@@ -189,8 +159,6 @@ What you've accomplished:
 - Revenue per user
 - Churn rate post-upgrade
 
-**For comprehensive experiment ideas**: See [references/experiments.md](references/experiments.md)
-
 ---
 
 ## Anti-Patterns to Avoid
@@ -208,6 +176,29 @@ What you've accomplished:
 
 ---
 
+## Output Shape
+
+Deliver in chat, in this order:
+
+1. **Diagnosis** (2-4 lines): the upgrade context (freemium, trial, tier, usage limit), the trigger point, the baseline conversion if known, and the single biggest leak.
+2. **Screen review:** current vs. recommended for each component (headline, value demonstration, comparison, pricing, social proof, CTA, escape hatch). One line each.
+3. **Ranked changes**, highest expected impact times confidence first, at most 7. Each one:
+
+```
+### 1. <Change, stated as what to do>
+- Why: <the finding and its evidence, one line>
+- Metric: <primary metric it should move>; guardrail: <metric that must not get worse>
+- Expected direction: <up / down>, <rough size if a baseline exists, else "size unknown">
+- Confidence: High (their own data) / Medium (strong pattern or benchmark) / Low (hypothesis)
+- Test: <control vs. variant, primary metric> -> hand off to /ab-test-setup.
+  Or "Ship, no test" for fixes to broken or clearly harmful things, or when traffic cannot power a test (say which).
+- Effort: S / M / L
+```
+
+4. **Next step:** the one change to test first, ready to paste into `/ab-test-setup`.
+
+---
+
 ## Task-Specific Questions
 
 1. What's your current free → paid conversion rate?
@@ -219,18 +210,24 @@ What you've accomplished:
 
 ---
 
+## References (load on demand)
+
+- `references/paywall-templates.md` — layout templates for the feature lock, usage limit, and trial expiration paywalls. Read when drafting or redesigning a specific screen.
+
 ## Related Skills
 
-- **churn-prevention**: For cancel flows, save offers, and reducing churn post-upgrade
-- **page-cro**: For public pricing page optimization
-- **onboarding-cro**: For driving to aha moment before upgrade
-- **ab-test-setup**: For testing paywall variations
+- `/churn-prevention`: for cancel flows, save offers, and reducing churn post-upgrade
+- `/page-cro`: for public pricing page optimization
+- `/onboarding-cro`: for driving users to the aha moment before the upgrade ask
+- `/pricing-strategy`: if the problem is the price or packaging, not the screen
+- `/ab-test-setup`: to turn the top change into a test plan
 
 ---
 
 ## TERMINATION
 
-Stop when the paywall/upgrade recommendations are delivered as a prioritized list,
-each with expected impact and reasoning. Recommend — don't implement. One surface per
-invocation: cancel/save flows, public pricing pages, and pre-upgrade activation belong
-to their own skills — name the hand-off rather than expanding scope.
+Stop when the screen review and ranked change list are delivered, each change with its
+metric, expected direction, confidence, and test (or explicit "ship, no test").
+Recommend; do not implement. One surface per invocation: cancel and save flows, public
+pricing pages, pricing decisions, and pre-upgrade activation belong to their own
+skills; name the hand-off rather than expanding scope.

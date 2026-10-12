@@ -1,0 +1,16 @@
+{
+  "name": "product-agents",
+  "owner": {
+    "name": "Chad Etsell",
+    "url": "https://github.com/cetsell"
+  },
+  "description": "Team OS: a product team's shared operating layer for Claude Code.",
+  "plugins": [
+    {
+      "name": "team-os",
+      "source": ".",
+      "description": "Outcome-focused PM skills, agents, and templates: cadence, PRDs, sprint health, strategy, evidence loops, evals, and CRO.",
+      "category": "productivity"
+    }
+  ]
+}

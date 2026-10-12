@@ -1,0 +1,23 @@
+schema_version: "1.1"
+name: issue-creator-ticket-event-naming
+description: "in-scope case for /issue-creator"
+tags: [issue-creator, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Make a ticket for fixing the duplicate invite_sent event that fires twice on retry. Linear is not connected."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?issue-creator"'
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if the response drafts one ticket with a functional title, a problem statement with a number or an explicit note that the count is unknown, independently testable acceptance criteria, a confidence on the diagnosis, explicit out-of-scope, and asks for approval instead of claiming it was created
+      FAIL if it claims to have created a ticket or invents data.

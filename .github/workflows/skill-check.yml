@@ -1,29 +1,47 @@
-name: Skill Conformance
+name: Repo checks
 
 on:
   pull_request:
-    paths:
-      - ".claude/skills/**"
-      - "check-skills.mjs"
   push:
-    branches: [main]
-    paths:
-      - ".claude/skills/**"
-      - "check-skills.mjs"
+    branches: [main, master]
   workflow_dispatch: # allow manual trigger
 
 jobs:
-  check-skills:
+  scrub:
+    name: Scrub check (no install-specific context)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
+      - name: Fail on deny-listed paths, metrics, tools, or names
+        run: node scripts/scrub-check.mjs
 
-      # Hard rules only (frontmatter, role line) fail the build. Producer-rule
-      # misses (output shape, TERMINATION) report as warnings until the backlog
-      # is closed; flip to `--strict` here to make them blocking.
-      - name: Lint skills against the quality bar
-        run: node check-skills.mjs
+  check-skills:
+    name: Skill and agent conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      # Skills, agents, and frontmatter against documented Claude Code fields;
+      # warnings fail the build too.
+      - name: Lint skills and agents against the quality bar
+        run: node check-skills.mjs --strict
+
+  plugin:
+    name: Plugin manifest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Claude Code CLI
+        run: |
+          npm install -g @anthropic-ai/claude-code@2.1.296
+          claude --version
+      - name: claude plugin validate --strict (two deliberate warnings allowed)
+        run: node scripts/validate-plugin.mjs

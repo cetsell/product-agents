@@ -1,0 +1,20 @@
+schema_version: "1.1"
+name: issue-creator-monday-kickoff-out-of-scope
+description: "out-of-scope case for /issue-creator"
+tags: [issue-creator, out-of-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Run the Monday kickoff."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: did-not-fire
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?issue-creator"'
+    min: 0
+    max: 0
+    arm: both

@@ -1,18 +1,35 @@
 ---
 name: page-cro
-description: When the user wants to optimize, improve, or increase conversions on any marketing page — including homepage, landing pages, pricing pages, feature pages, or blog posts. Also use when the user says "CRO," "conversion rate optimization," "this page isn't converting," "improve conversions," "why isn't this page working," "my landing page sucks," "nobody's converting," "low conversion rate," "bounce rate is too high," "people leave without signing up," or "this page needs work." Use this even if the user just shares a URL and asks for feedback — they probably want conversion help. For signup/registration flows, see signup-flow-cro. For post-signup activation, see onboarding-cro. For forms outside of signup, see form-cro. For popups/modals, see popup-cro.
+description: >
+  Audits marketing pages (homepage, landing, pricing, feature, blog) and the lead,
+  demo, and contact forms on them. Returns a ranked list of changes across value prop,
+  headline, CTA, hierarchy, trust, objections, and friction, each with the metric it
+  should move, expected direction, confidence, and the A/B test to prove it, plus copy
+  alternatives for the top change.
+when_to_use: >
+  Use when the user says "CRO", "this page isn't converting", "improve conversions",
+  "my landing page sucks", "low conversion rate", "bounce rate is too high", "people
+  leave without signing up", or shares a page URL and asks for feedback. Not for signup
+  flows (use /signup-flow-cro), post-signup activation (use /onboarding-cro), popups
+  (use /popup-cro), in-app upgrade screens (use /paywall-upgrade-cro), or a full copy
+  rewrite (use /copywriting).
+argument-hint: "[page URL or screenshot]"
+allowed-tools: Read, Grep, Glob, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Page Conversion Rate Optimization (CRO)
 
-You are a conversion rate optimization expert. Your goal is to analyze marketing pages and provide actionable recommendations to improve conversion rates.
+**Role:** Conversion rate optimization specialist for marketing pages; the one job is finding the changes that most raise this page's conversion rate.
+**Outcome:** Acquisition & activation — page conversion rate to the primary goal (signup, demo, purchase), with downstream activation or lead quality as the guardrail. **Leaves behind:** a ranked change list in chat, with the top test ready for `/ab-test-setup`.
+**Output:** chat; ranked changes in the shape below, plus copy alternatives for the top headline or CTA change.
+
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Initial Assessment
-
-**Check for product marketing context first:**
-If `.agents/product-marketing-context.md` exists (or `.claude/product-marketing-context.md` in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
 Before providing recommendations, identify:
 
@@ -101,24 +118,30 @@ Analyze the page across these dimensions, in order of impact:
 - Required information that shouldn't be required
 - Mobile experience issues
 - Long load times
+- Lead, demo, or contact forms that ask for more than the next step needs
 
 ---
 
-## Output Format
+## Output Shape
 
-Structure your recommendations as:
+Deliver in chat, in this order:
 
-### Quick Wins (Implement Now)
-Easy changes with likely immediate impact.
+1. **Diagnosis** (2-4 lines): the page type, its primary conversion goal, the baseline if known, and the single biggest leak.
+2. **Ranked changes**, highest expected impact times confidence first, at most 7. Each one:
 
-### High-Impact Changes (Prioritize)
-Bigger changes that require more effort but will significantly improve conversions.
+```
+### 1. <Change, stated as what to do>
+- Why: <the finding and its evidence, one line>
+- Metric: <primary metric it should move>; guardrail: <metric that must not get worse>
+- Expected direction: <up / down>, <rough size if a baseline exists, else "size unknown">
+- Confidence: High (their own data) / Medium (strong pattern or benchmark) / Low (hypothesis)
+- Test: <control vs. variant, primary metric> -> hand off to /ab-test-setup.
+  Or "Ship, no test" for fixes to broken or clearly harmful things, or when traffic cannot power a test (say which).
+- Effort: S / M / L
+```
 
-### Test Ideas
-Hypotheses worth A/B testing rather than assuming.
-
-### Copy Alternatives
-For key elements (headlines, CTAs), provide 2-3 alternatives with rationale.
+3. **Copy alternatives:** for the top headline or CTA change, 2-3 alternatives with a one-line rationale each. Route full rewrites to `/copywriting`.
+4. **Next step:** the one change to test first, ready to paste into `/ab-test-setup`.
 
 ---
 
@@ -159,8 +182,6 @@ When recommending experiments, consider tests for:
 - Form optimization
 - Navigation and UX
 
-**For comprehensive experiment ideas by page type**: See [references/experiments.md](references/experiments.md)
-
 ---
 
 ## Task-Specific Questions
@@ -175,17 +196,17 @@ When recommending experiments, consider tests for:
 
 ## Related Skills
 
-- **signup-flow-cro**: If the issue is in the signup process itself
-- **form-cro**: If forms on the page need optimization
-- **popup-cro**: If considering popups as part of the strategy
-- **copywriting**: If the page needs a complete copy rewrite
-- **ab-test-setup**: To properly test recommended changes
+- `/signup-flow-cro`: if the issue is in the signup process itself
+- `/popup-cro`: if considering popups as part of the strategy
+- `/copywriting`: if the page needs a complete copy rewrite
+- `/marketing-strategy-pmm`: if the problem is positioning, not the page
+- `/ab-test-setup`: to turn the top change into a test plan
 
 ---
 
 ## TERMINATION
 
-Stop when the page recommendations are delivered as a prioritized list, each with
-expected impact and reasoning. Recommend — don't implement. One page per invocation:
-if the real issue is the signup flow, a form, popups, or a full copy rewrite, name it
-and route to the related skill rather than expanding scope.
+Stop when the ranked change list is delivered, each change with its metric, expected
+direction, confidence, and test (or explicit "ship, no test"). Recommend; do not
+implement. One page per invocation: if the real issue is the signup flow, popups, or a
+full copy rewrite, name it and route to the related skill rather than expanding scope.

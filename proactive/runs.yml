@@ -1,135 +1,140 @@
-# Proactive runs manifest — scheduler-agnostic.
+# Proactive runs manifest — the human-readable list of everything that runs
+# without being asked. Each entry names the mechanism that actually executes it
+# (`binding`); nothing here is aspirational.
 #
-# Each entry is a skill that fires WITHOUT being asked: on a schedule (time) or a
-# trigger (event). These are NOT yet bound to an executor ("manifest first, wire
-# later"). Until bound, a human runs them per the cadence in CLAUDE.md. To automate,
-# bind each to /schedule, /loop, GitHub Actions, or a hook — see CLAUDE.md.
+# binding values:
+#   github-actions  a workflow in .github/workflows/ (named in `executor`); needs repo secrets
+#   routine         a Claude Code routine (cloud). Create it with /schedule using the prompt
+#                   file in `executor`. Research preview; minimum interval one hour.
+#   desktop-task    same prompt file, run as a desktop scheduled task for teams that keep a
+#                   machine awake (Claude Desktop → Code → Routines → New → Local)
+#   hook            .claude/settings.json or skill frontmatter; fires inside a session
+#   inline          built into the producing skills (no separate trigger)
+#   manual          a human runs it on the cadence; listed so the rhythm is visible
 #
-# Field reference:
-#   when         time schedule (human-readable; translate to cron when wiring)
-#   on           event trigger (for reactive runs)
-#   skill        the skill that executes (⚠ in a comment = template only, not yet built)
-#   pulls        the sources the run reads
-#   output       where results land (shared + searchable — never private)
-#   steward      the human accountable for the run AND the decision
-#   decides      the specific decision point a human owns
-#   evidence     true if output carries the Evidence Loop appendix
-#   termination  the checkable stop condition (required on every run)
+# Fields: id, when | on, skill, binding, executor, pulls, output, steward, decides,
+# evidence, termination. Every automated run writes to a repo path and opens a pull
+# request or issue; none commits to the default branch.
+# `node check-skills.mjs` verifies every skill named here exists and can be model-invoked.
 
 defaults:
   steward: PM
-  open: true            # output is shared + searchable (River principle)
-  evidence: false       # set true on any run whose output drives a decision
+  open: true          # output lands in the repo, visible to the team
+  evidence: false     # true on any run whose output drives a decision
 
 scheduled:
-  - id: morning-brief
-    when: "daily 07:30 local"
-    skill: /morning-brief        # ⚠ template only — product-skills.md; build before wiring
-    pulls: ["gmail inbox+sent 12h", "slack DMs+@mentions 12h", "calendar today+tomorrow AM"]
-    output: pm-workflows/active/brief-{date}.md
-    termination: "one page, <400 words, all sources processed"
+  - id: freshness-audit
+    when: "Monday 09:00 UTC"
+    skill: none                    # deterministic bash; no model, no API key
+    binding: github-actions
+    executor: .github/workflows/freshness-check.yml
+    pulls: ["dated planning files"]
+    output: "GitHub issue labelled freshness-check, listing stale files with owner roles"
+    decides: "PM decides what to refresh vs. retire"
+    termination: "every monitored file checked; stale ones listed with age"
+
+  - id: artifact-grade
+    when: "Monday 09:30 UTC"
+    skill: /check-artifacts
+    binding: github-actions
+    executor: .github/workflows/artifact-grade.yml
+    pulls: ["product/roadmap/*", "product/context.md"]
+    output: "PR adding product/analysis/audit/artifacts-{date}.md"
+    decides: "PM picks which fixes to make this week"
+    termination: "every artifact graded; overall grade and ordered fix list written"
 
   - id: sprint-health
     when: "Monday 09:00 local"
     skill: /sprint-health
-    pulls: ["Linear (project health, velocity, blockers)", "Supernormal (recent meetings)"]
-    output: pm-workflows/analysis/sprint-health-{date}.md
+    binding: routine               # or desktop-task
+    executor: proactive/routines/sprint-health.md
+    pulls: ["issue tracker", "meeting notes"]
+    output: "draft PR adding team/weekly-updates/{date}-sprint-health.md"
     decides: "PM triages flagged blockers before standup"
-    termination: "report written with action items; every open blocker has an owner or a flag"
+    termination: "report written; every flag has an owner role or 'PM to assign'"
 
   - id: monday-kickoff
     when: "Monday 09:30 local"
-    skill: /cadence              # monday kickoff mode
-    pulls: ["product/roadmap/current-bet.md", "Linear active issues"]
-    output: pm-workflows/weekly-updates/{date}-kickoff.md
-    termination: "kickoff note posted; week's bet + top 3 named"
-
-  - id: freshness-audit
-    when: "Monday 09:00 UTC"     # aligns with existing GitHub Action + MAINTENANCE.md Audit duty
-    skill: team-os-agent:audit
-    pulls: ["all team-os files with a freshness date"]
-    output: "flagged list of stale (>14d) files"
-    decides: "PM decides what to refresh vs. retire"
-    termination: "every dated file checked; stale ones listed with age"
+    skill: /cadence
+    binding: routine               # or desktop-task
+    executor: proactive/routines/monday-kickoff.md
+    pulls: ["product/roadmap/current-bet.md", "issue tracker", "meeting notes"]
+    output: "draft PR adding team/weekly-updates/{date}-kickoff.md"
+    termination: "kickoff note written; one priority and its Friday criteria named"
 
   - id: midweek-pulse
     when: "Wednesday 12:00 local"
-    skill: /cadence              # wednesday pulse mode
-    pulls: ["Linear progress vs Monday plan"]
-    output: pm-workflows/weekly-updates/{date}-pulse.md
-    termination: "pulse note posted; on-track / at-risk per top-3 goal"
+    skill: /cadence
+    binding: routine               # or desktop-task
+    executor: proactive/routines/midweek-pulse.md
+    pulls: ["issue tracker progress vs. Monday kickoff"]
+    output: "draft PR adding team/weekly-updates/{date}-pulse.md"
+    termination: "pulse note written; each success criterion marked done / in progress / at risk"
 
   - id: friday-refresh
-    when: "Friday 15:00 local"   # MAINTENANCE.md Refresh duty (source of truth)
-    skill: team-os-agent:refresh
-    pulls: ["Linear (closed issues, velocity, initiative status)"]
-    output: ["product/roadmap/current-bet.md", "product/roadmap/betting-table.md"]
+    when: "Friday 15:00 UTC"
+    skill: team-os-agent:refresh   # roadmap-keeper agent
+    binding: github-actions
+    executor: .github/workflows/roadmap-refresh.yml
+    pulls: ["Linear GraphQL API (LINEAR_API_KEY)"]
+    output: "PR updating product/roadmap/current-bet.md, betting-table.md, experiment-roadmap.md"
     decides: "PM sets next week's bet"
-    termination: "roadmap files updated with this week's data + dates"
+    termination: "factual fields updated with query date, or no change if Linear is unreachable"
 
-  - id: friday-demo-and-update
+  - id: friday-decide
     when: "Friday 15:30 local"
-    skill: /cadence              # friday demo + weekly 'Hello All'
-    pulls: ["Linear closed this week", "Notion edits", "Slack #shipping/#status"]
-    output: pm-workflows/weekly-updates/{date}-hello-all.md
-    evidence: true               # metrics cited to the team need sources + dates
-    termination: "update written to template length; no invented metrics"
-
-  - id: weekly-status
-    when: "Friday 16:00 local"
-    skill: /weekly-status        # ⚠ template only — product-skills.md; build before wiring
-    pulls: ["Linear closed", "Notion", "Slack", "calendar meeting counts"]
-    output: pm-workflows/weekly-reports/{date}-status.md
+    skill: /cadence
+    binding: routine               # or desktop-task
+    executor: proactive/routines/friday-decide.md
+    pulls: ["issue tracker closed this week", "meeting notes", "this week's notes"]
+    output: "draft PR adding team/weekly-updates/{date}-friday.md and {date}-update.md"
     evidence: true
-    termination: "stop at audience length (internal 1p / client 1.5p / board 2p); no invented metrics"
+    termination: "Friday note with iterate/swing call and evidence loop; update drafted; nothing sent"
 
   - id: skill-health
-    when: "Monday 09:00 UTC"     # rides with freshness-audit + the skill-check CI Action
+    when: "monthly, first Monday"
     skill: /skill-eval
-    pulls: ["the top producer skills", "their evals/*-evals.json test cases"]
-    output: pm-workflows/analysis/skill-evals/
-    decides: "PM decides which flagged skills to tighten or rewrite"
-    termination: "each evaluated skill has a 5-dimension scorecard + one verdict; no skill rewritten without approval"
+    binding: manual                # needs an authenticated `claude plugin eval`
+    executor: evals/README.md
+    pulls: ["evals/<skill>/*/case.yaml"]
+    output: product/analysis/skill-evals/
+    decides: "PM decides which flagged skills to tighten"
+    termination: "each evaluated skill has a five-dimension scorecard and one verdict"
 
   - id: monthly-pm-self-eval
-    when: "monthly, 1st 09:00 local"
-    skill: /monthly-pm-self-eval
-    pulls: ["team/decisions/decisions.md", "recent Friday reports", "Linear"]
-    output: pm-workflows/analysis/self-eval-{month}.md
-    decides: "PM picks one improvement focus for the month"
-    termination: "scored against PM standards; one focus named"
+    when: "monthly, 1st working day"
+    skill: /monthly-pm-self-eval   # disable-model-invocation: the PM runs it by name
+    binding: manual
+    pulls: ["team/decisions/decisions.md", "Friday notes", "issue tracker"]
+    output: product/analysis/monthly/pm-self-eval-{month}.md
+    decides: "PM picks one behavior to change"
+    termination: "every dimension scored with evidence; one behavior named"
 
 reactive:
-  - id: premortem-high-stakes        # the auto-trigger — approved
-    on: "new high-stakes row in product/roadmap/betting-table.md, OR a pricing change, OR a launch plan"
+  - id: premortem-high-stakes
+    on: "product/roadmap/betting-table.md changes (new high-stakes bet, pricing change, launch plan)"
     skill: /premortem
-    pulls: ["the bet/plan details", "product/roadmap/*", "relevant specs"]
-    output: pm-workflows/analysis/premortem/
-    decides: "PM signs off on the revised plan BEFORE the bet is committed"
+    binding: hook
+    executor: ".claude/settings.json → PostToolUse (Edit|Write) and FileChanged → scripts/hooks/bet-changed.mjs"
+    output: product/analysis/premortem/
+    decides: "PM signs off on the revised plan before the bet is committed"
     evidence: true
-    termination: "report + transcript written; 3-sentence chat summary delivered"
+    termination: "report + transcript written; 3-sentence summary delivered"
 
   - id: evidence-gate
-    on: "any strategy call / PRD / audit finding about to reach a stakeholder"
+    on: "a strategy call, PRD, audit finding, or Friday note is produced"
     skill: /evidence-loop
-    pulls: ["the artifact under review", "its cited sources"]
-    output: "appended to the artifact"
-    decides: "human reads the evidence table before acting on the artifact"
+    binding: inline                # strategy, audit, pm-super-agent, cadence (Friday) append it
+    output: "Evidence Loop appendix on the artifact"
+    decides: "a human reads the evidence table before acting"
     evidence: true
-    termination: "every claim has one status row; flip-assumption + decision-owner named"
+    termination: "every claim has one status row; flip-assumption and decision owner named"
 
   - id: metric-breach
-    on: "a tracked metric in product/analytics/metrics-dictionary.md crosses its threshold"
+    on: "a metric in product/analytics/metrics-dictionary.md crosses its threshold"
     skill: /data-analyst
-    pulls: ["BigQuery", "funnel definitions"]
-    output: pm-workflows/analysis/alert-{metric}-{date}.md
+    binding: manual                # no metric monitor ships with team-os; wire one to a routine if you have it
+    output: product/analysis/data/alert-{metric}-{date}.md
     decides: "PM decides whether to intervene"
     evidence: true
-    termination: "breach quantified with source + date; likely cause hypothesized"
-
-  - id: competitor-move
-    on: "a competitor pricing/launch/hire signal surfaces"
-    skill: /competitor-scan      # ⚠ template only — product-skills.md; build before wiring
-    pulls: ["competitor sites", "positioning doc"]
-    output: pm-workflows/market-research/competitor-{date}.md
-    termination: "per-competitor section has all 5 fields; no industry overview"
+    termination: "breach quantified with source and date; likely cause hypothesized"

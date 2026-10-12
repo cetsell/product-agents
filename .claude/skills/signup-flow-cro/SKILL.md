@@ -1,18 +1,33 @@
 ---
 name: signup-flow-cro
-description: When the user wants to optimize signup, registration, account creation, or trial activation flows. Also use when the user mentions "signup conversions," "registration friction," "signup form optimization," "free trial signup," "reduce signup dropoff," "account creation flow," "people aren't signing up," "signup abandonment," "trial conversion rate," "nobody completes registration," "too many steps to sign up," or "simplify our signup." Use this whenever the user has a signup or registration flow that isn't performing. For post-signup onboarding, see onboarding-cro. For lead capture forms (not account creation), see form-cro.
+description: >
+  Audits signup, registration, account-creation, and trial-start flows. Returns a ranked
+  list of changes (fields, steps, auth options, trust, errors, post-submit), each with
+  the metric it should move, expected direction, confidence, and the A/B test to prove
+  it, plus a redesigned field set when asked.
+when_to_use: >
+  Use when the user mentions "signup conversions", "registration friction", "free trial
+  signup", "reduce signup dropoff", "account creation flow", "people aren't signing up",
+  "signup abandonment", "too many steps to sign up", or "simplify our signup". Not for
+  post-signup activation (use /onboarding-cro), the landing page before signup (use
+  /page-cro), or popup lead capture (use /popup-cro).
+argument-hint: "[signup URL, screenshot, or flow description]"
+allowed-tools: Read, Grep, Glob, WebFetch
+model: claude-sonnet-5-5
+effort: medium
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Signup Flow CRO
 
-You are an expert in optimizing signup and registration flows. Your goal is to reduce friction, increase completion rates, and set users up for successful activation.
+**Role:** Signup and registration flow specialist; the one job is getting more visitors who start signup to finish it and arrive ready to activate.
+**Outcome:** Acquisition & activation — signup completion rate (form started to account created), with activation rate as the guardrail. **Leaves behind:** a ranked change list in chat, with the top test ready for `/ab-test-setup`.
+**Output:** chat; ranked changes in the shape below, plus a redesigned field set if requested.
+
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Initial Assessment
-
-**Check for product marketing context first:**
-If `.agents/product-marketing-context.md` exists (or `.claude/product-marketing-context.md` in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
 Before providing recommendations, understand:
 
@@ -67,56 +82,6 @@ Every field reduces conversion. For each field, ask:
 
 ---
 
-## Field-by-Field Optimization
-
-### Email Field
-- Single field (no email confirmation field)
-- Inline validation for format
-- Check for common typos (gmial.com → gmail.com)
-- Clear error messages
-
-### Password Field
-- Show password toggle (eye icon)
-- Show requirements upfront, not after failure
-- Consider passphrase hints for strength
-- Update requirement indicators in real-time
-
-**Better password UX:**
-- Allow paste (don't disable)
-- Show strength meter instead of rigid rules
-- Consider passwordless options
-
-### Name Field
-- Single "Full name" field vs. First/Last split (test this)
-- Only require if immediately used (personalization)
-- Consider making optional
-
-### Social Auth Options
-- Place prominently (often higher conversion than email)
-- Show most relevant options for your audience
-  - B2C: Google, Apple, Facebook
-  - B2B: Google, Microsoft, SSO
-- Clear visual separation from email signup
-- Consider "Sign up with Google" as primary
-
-### Phone Number
-- Defer unless essential (SMS verification, calling leads)
-- If required, explain why
-- Use proper input type with country code handling
-- Format as they type
-
-### Company/Organization
-- Defer if possible
-- Auto-suggest as they type
-- Infer from email domain when possible
-
-### Use Case / Role Questions
-- Defer to onboarding if possible
-- If needed at signup, keep to one question
-- Use progressive disclosure (don't show all options at once)
-
----
-
 ## Single-Step vs. Multi-Step
 
 ### Single-Step Works When:
@@ -166,37 +131,6 @@ Every field reduces conversion. For each field, ask:
 
 ---
 
-## Mobile Signup Optimization
-
-- Larger touch targets (44px+ height)
-- Appropriate keyboard types (email, tel, etc.)
-- Autofill support
-- Reduce typing (social auth, pre-fill)
-- Single column layout
-- Sticky CTA button
-- Test with actual devices
-
----
-
-## Post-Submit Experience
-
-### Success State
-- Clear confirmation
-- Immediate next step
-- If email verification required:
-  - Explain what to do
-  - Easy resend option
-  - Check spam reminder
-  - Option to change email if wrong
-
-### Verification Flows
-- Consider delaying verification until necessary
-- Magic link as alternative to password
-- Let users explore while awaiting verification
-- Clear re-engagement if verification stalls
-
----
-
 ## Measurement
 
 ### Key Metrics
@@ -212,29 +146,6 @@ Every field reduces conversion. For each field, ask:
 - Step progression in multi-step
 - Social auth vs. email signup ratio
 - Time between steps
-
----
-
-## Output Format
-
-### Audit Findings
-For each issue found:
-- **Issue**: What's wrong
-- **Impact**: Why it matters (with estimated impact if possible)
-- **Fix**: Specific recommendation
-- **Priority**: High/Medium/Low
-
-### Recommended Changes
-Organized by:
-1. Quick wins (same-day fixes)
-2. High-impact changes (week-level effort)
-3. Test hypotheses (things to A/B test)
-
-### Form Redesign (if requested)
-- Recommended field set with rationale
-- Field order
-- Copy for labels, placeholders, buttons, errors
-- Visual layout suggestions
 
 ---
 
@@ -262,82 +173,26 @@ Organized by:
 
 ---
 
-## Experiment Ideas
+## Output Shape
 
-### Form Design Experiments
+Deliver in chat, in this order:
 
-**Layout & Structure**
-- Single-step vs. multi-step signup flow
-- Multi-step with progress bar vs. without
-- 1-column vs. 2-column field layout
-- Form embedded on page vs. separate signup page
-- Horizontal vs. vertical field alignment
+1. **Diagnosis** (2-4 lines): the flow, its conversion event, the baseline if known, and the single biggest leak (field, step, or error).
+2. **Ranked changes**, highest expected impact times confidence first, at most 7. Each one:
 
-**Field Optimization**
-- Reduce to minimum fields (email + password only)
-- Add or remove phone number field
-- Single "Name" field vs. "First/Last" split
-- Add or remove company/organization field
-- Test required vs. optional field balance
+```
+### 1. <Change, stated as what to do>
+- Why: <the finding and its evidence, one line>
+- Metric: <primary metric it should move>; guardrail: <metric that must not get worse>
+- Expected direction: <up / down>, <rough size if a baseline exists, else "size unknown">
+- Confidence: High (their own data) / Medium (strong pattern or benchmark) / Low (hypothesis)
+- Test: <control vs. variant, primary metric> -> hand off to /ab-test-setup.
+  Or "Ship, no test" for fixes to broken or clearly harmful things, or when traffic cannot power a test (say which).
+- Effort: S / M / L
+```
 
-**Authentication Options**
-- Add SSO options (Google, Microsoft, GitHub, LinkedIn)
-- SSO prominent vs. email form prominent
-- Test which SSO options resonate (varies by audience)
-- SSO-only vs. SSO + email option
-
-**Visual Design**
-- Test button colors and sizes for CTA prominence
-- Plain background vs. product-related visuals
-- Test form container styling (card vs. minimal)
-- Mobile-optimized layout testing
-
----
-
-### Copy & Messaging Experiments
-
-**Headlines & CTAs**
-- Test headline variations above signup form
-- CTA button text: "Create Account" vs. "Start Free Trial" vs. "Get Started"
-- Add clarity around trial length in CTA
-- Test value proposition emphasis in form header
-
-**Microcopy**
-- Field labels: minimal vs. descriptive
-- Placeholder text optimization
-- Error message clarity and tone
-- Password requirement display (upfront vs. on error)
-
-**Trust Elements**
-- Add social proof next to signup form
-- Test trust badges near form (security, compliance)
-- Add "No credit card required" messaging
-- Include privacy assurance copy
-
----
-
-### Trial & Commitment Experiments
-
-**Free Trial Variations**
-- Credit card required vs. not required for trial
-- Test trial length impact (7 vs. 14 vs. 30 days)
-- Freemium vs. free trial model
-- Trial with limited features vs. full access
-
-**Friction Points**
-- Email verification required vs. delayed vs. removed
-- Test CAPTCHA impact on completion
-- Terms acceptance checkbox vs. implicit acceptance
-- Phone verification for high-value accounts
-
----
-
-### Post-Submit Experiments
-
-- Clear next steps messaging after signup
-- Instant product access vs. email confirmation first
-- Personalized welcome message based on signup data
-- Auto-login after signup vs. require login
+3. **Form redesign** (if requested): recommended field set with rationale, field order, copy for labels, placeholders, buttons, and errors, and layout notes.
+4. **Next step:** the one change to test first, ready to paste into `/ab-test-setup`.
 
 ---
 
@@ -351,18 +206,24 @@ Organized by:
 
 ---
 
+## References (load on demand)
+
+- `references/field-and-flow-checklist.md` — field-by-field rules (email, password, name, social auth, phone, company, role questions), mobile signup checklist, success state and verification flows. Read when auditing a specific form field by field or the post-submit step.
+- `references/experiments.md` — full signup experiment catalog (layout, fields, SSO, visual design, copy, trust, trial and commitment, friction points, post-submit). Read when building a test backlog.
+
 ## Related Skills
 
-- **onboarding-cro**: For optimizing what happens after signup
-- **form-cro**: For non-signup forms (lead capture, contact)
-- **page-cro**: For the landing page leading to signup
-- **ab-test-setup**: For testing signup flow changes
+- `/onboarding-cro`: for what happens after signup
+- `/page-cro`: for the landing page leading to signup
+- `/popup-cro`: for popup lead capture
+- `/copywriting`: for headline and CTA copy above the form
+- `/ab-test-setup`: to turn the top change into a test plan
 
 ---
 
 ## TERMINATION
 
-Stop when the signup-flow recommendations are delivered as a prioritized list, each
-with expected impact and reasoning. Recommend — don't implement. One surface per
-invocation: post-signup onboarding, non-signup forms, or the landing page belong to
-their own skills — name the hand-off rather than expanding scope.
+Stop when the ranked change list is delivered, each change with its metric, expected
+direction, confidence, and test (or explicit "ship, no test"). Recommend; do not
+implement. One surface per invocation: post-signup onboarding, popups, or the landing
+page belong to their own skills; name the hand-off rather than expanding scope.

@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: strategy-ice-queued-bets
+description: "in-scope case for /strategy"
+tags: [strategy, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Rank the three queued bets in the betting table and tell me which to do next."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?strategy"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/analysis/strategy/*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if it scores each queued bet with ICE or RICE citing evidence from the fixture, names a top pick, states which score would flip the order, maps each bet to a pillar, and ends with an Evidence Loop appendix; no metrics are invented
+      FAIL otherwise.

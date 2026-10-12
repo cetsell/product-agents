@@ -1,297 +1,124 @@
 ---
 name: sprint-health
-description: Pre-launch sprint health auditor. Pulls live data from Linear MCP and Supernormal to assess sprint cleanliness, ticket quality, velocity, blockers, escalations, and launch readiness. Use weekly during pre-launch periods. Outputs structured report with specific action items for Chad.
+description: >
+  Sprint health sweep: ticket quality, staleness, done-to-in-progress ratio, regression
+  risk, orphan bets, and escalations, with launch-readiness gates when a launch is
+  within four weeks. Ends in a ranked action list where every flag has an owner.
+when_to_use: >
+  Use for "sprint health", "velocity check", "blocker scan", "what's stuck", "launch
+  readiness", "go/no-go", "are we ready to launch", or before a Monday kickoff or
+  Thursday prep. Not for multi-week trend audits (use /audit).
+argument-hint: "[launch name and date, optional]"
+allowed-tools: Read, Grep, Glob, Write
+model: claude-sonnet-5-5
+effort: medium
+metadata:
+  version: 2.0.0
 ---
 
 # Sprint Health
 
-**Role:** Pre-launch sprint auditor — gives Chad a real-time, data-grounded picture of what's moving, what's stuck, and what needs a decision before the next launch window
-**Philosophy:** "Shipped regressions are worse than unshipped features" — sprint health is about quality of progress, not volume of tickets
-**Output:** `team/weekly-updates/sprint-health-[date].md`
+**Role:** Sprint auditor. You give the PM a data-grounded picture of what is moving, what is stuck, and what needs a decision before the next ship date.
+**Outcome:** Velocity — stale tickets, blockers, and launch-gate gaps are caught while there is still time in the sprint to fix them. **Leaves behind:** a dated sweep in `team/weekly-updates/` where every flag has an owner.
+**Philosophy:** Shipped regressions are worse than unshipped features. Health is quality of progress, not ticket volume.
+**Output:** `team/weekly-updates/{YYYY-MM-DD}-sprint-health.md`
 
 ---
 
-## MANDATORY DATA COLLECTION
+## Data collection (all four before writing)
 
-**Run ALL of these before generating any output:**
-
-### 1. Linear MCP (Required — all queries)
-```python
-# Everything in flight
-mcp__linear__list_issues(state="In Progress", limit=100)
-
-# What's queued
-mcp__linear__list_issues(state="Todo", limit=100)
-
-# What shipped (last 14 days)
-mcp__linear__list_issues(state="Done", updatedAt="-P14D", limit=50)
-
-# Strategic health
-mcp__linear__list_initiatives(includeProjects=True)
-
-# Recent updates
-mcp__linear__list_project_updates(createdAt="-P14D")
-
-# Milestones
-mcp__linear__list_milestones(limit=50)
-```
-
-### 2. Meeting Summaries (Required — fresh meeting data)
-
-Read recent meeting summaries from your meeting tool (Granola, Supernormal, Gemini, etc.) for: decisions made, blockers raised, commitments, escalations, anything that doesn't have a Linear ticket yet.
-
-### 3. Recent Weekly Reports (Required — trajectory)
-Read the last 2 weeks of weekly reports from `team/weekly-updates/`:
-- Look for recurring blockers (same issue in multiple weeks = systemic)
-- Look for commitments made but not closed
-- Look for items that keep moving without resolution
-
-### 4. Current Artifacts
-```
-Read: pm-workflows/current-bet.md
-Read: pm-workflows/betting-table.md
-```
-
-**STOP: Do not generate output until all four sources are loaded.**
+1. **Issue tracker:** in progress (owner, age, last update, acceptance criteria present?), to do, done in the last 14 days, initiatives or projects with health, milestones, recent project updates.
+   - If an issue-tracker MCP server (e.g. Linear) is connected, query it.
+   - If not, ask the user once to paste an export with title, status, owner, created/updated dates, and labels. Continue with what they provide; label every tracker-derived number `from pasted export, {date}`.
+2. **Meeting notes** for decisions, blockers, escalations, and commitments with no ticket. MCP server if connected; pasted notes otherwise; or record "meeting notes: not available".
+3. **Last two sprint-health and Friday notes** in `team/weekly-updates/`: recurring blockers (same item two weeks running = systemic), commitments not closed.
+4. **Repo files:** `product/context.md` (teams, baselines), `product/roadmap/current-bet.md`, `betting-table.md`.
 
 ---
 
-## Analysis Sections
+## A. Ticket quality
 
-### A. SPRINT HEALTH — Ticket Quality Assessment
+```markdown
+## In progress
+| Issue | Team | Age (d) | Acceptance criteria? | Blocked? | Status |
 
-For each In Progress issue from Linear:
+### Stale (in progress > 5 days with no update)
+- {issue} — {days} — likely cause: {hypothesis}
 
-```
-🔍 SPRINT HEALTH — [Date]
+### Ticket quality problems
+- {issue} — {no testable criterion / no owner / scope > 1 sprint} → {split / add criteria / assign}
 
-## In Progress Issues
-
-| Issue | Team | Age (days) | Has Acceptance Criteria? | Blocked? | Status |
-|-------|------|-----------|--------------------------|----------|--------|
-| [title] | D2C/GTM | X days | Yes/No | Yes/No | 🟢/🟡/🔴 |
-
-### Staleness Flags (In Progress > 5 days without update)
-- [Issue title] — [X days] — likely cause: [hypothesis]
-
-### Ticket Quality Problems
-Issues that lack clear acceptance criteria or are too vague to be "done":
-- [Issue title] — Problem: [no success criteria / no owner / scope unclear]
-  Recommendation: [split / add criteria / reassign]
-
-### Regressions or "Shipped Backward" Risk
-Any completed tickets in the last 14 days that may have introduced regressions:
-- [Issue title] — Risk: [specific concern]
+### Regression risk (done in last 14 days)
+- {issue} — {touches auth, payments, or tracking; no staging step; no named reviewer}
 ```
 
----
+A ticket can be "done" only if it has a testable acceptance criterion, a single owner, an estimate or time-box, and fits in one sprint.
 
-### B. VELOCITY SIGNAL
+## B. Velocity signal
 
+```markdown
+Done (14d): X · In progress now: Y · Ratio X:Y
+Healthy ≥ 2:1 · At risk ≤ 1:1 (work is starting, not finishing)
+
+| Team | Done (14d) | In progress | Ratio | Trend |
+Closing fast: {pattern} · Stalling: {pattern}
+Velocity × quality: high velocity + regressions = shipping backward
 ```
-📊 VELOCITY — [Date Range]
 
-## Throughput
-Issues Done (last 14d): [X]
-Issues In Progress right now: [X]
-Ratio (Done:InProgress): [X:1]
+Use the team names from `product/context.md`.
 
-Healthy ratio: ≥2:1 (Done:InProgress)
-At-risk ratio: 1:1 or worse (team is getting stuck, not completing)
+## C. Launch readiness (only when a launch is within 4 weeks)
 
-## Team Breakdown
-| Team | Done (14d) | In Progress | Ratio | Trend |
-|------|-----------|-------------|-------|-------|
-| D2C | X | X | X:1 | ↑/↓/→ |
-| GTM | X | X | X:1 | ↑/↓/→ |
+The launch comes from the argument, `current-bet.md`, or `betting-table.md`. If none is named, skip this section.
 
-## What's Completing Fast (pattern)
-[Types of work that close quickly — e.g., bounded feature tickets, UI changes]
+```markdown
+## Launch readiness — {launch} in {N} days
+| Gate | Status | Owner (role) | Due | Evidence |
+| Tracking and attribution verified | | | | |
+| Signup / auth funnel stable | | | | |
+| Payment flow functional (if applicable) | | | | |
+| No open P0 regressions | | | | |
+| Go / no-go decision scheduled | | PM | | |
 
-## What's Stalling (pattern)
-[Types of work that stay open — e.g., root cause investigations, cross-team instrumentation]
+Verdict: Launch on {date} / Conditional ({what to monitor}) / Delay to {date} ({blockers that must close})
+```
 
-## Velocity vs. Quality Check
-High velocity + regressions = shipping backward
-Low velocity + no regressions = building carefully
-[Assessment of current velocity quality, not just volume]
+Gates are binary. In pre-launch mode, order every action by launch risk.
+
+## D. Initiative health
+
+```markdown
+| Initiative | Health | Milestones done/total | At-risk milestone | Action |
+Orphan bets: in betting-table.md but no tracker initiative for 3+ weeks → decide: scope it or move it out.
+Coverage gaps: pillars in product/context.md with no active initiative.
+```
+
+## E. Escalations
+
+```markdown
+| Decision only the PM can make | Context | Deadline | Cost of delay |
+| Item waiting on a call | Blocker | Waiting on | Impact H/M/L |
+| Commitment made in a meeting | Made by (role) | When | Has a ticket? |
+```
+
+## F. Action items
+
+```markdown
+| # | Action | Owner (role) | Urgency (today / this sprint) | Why |
+(max 10; launch risk first, then velocity, then pipeline)
+
+Not this sprint: {item} — {reason}
 ```
 
 ---
 
-### C. LAUNCH READINESS (Pre-Launch Mode)
+## Normal vs. pre-launch mode
 
-**This section activates when a launch date is known. Current launch: March 30 billboard campaign.**
+- **Normal:** velocity, ticket quality, pipeline health. Escalations are about drift and bet selection.
+- **Pre-launch (launch ≤ 4 weeks):** section C leads. The question is "are we stable enough to acquire users?", not "are we building the right things?"
 
-```
-🚀 LAUNCH READINESS — [Launch Name] in [X days]
-
-## Gate Criteria (must all be GREEN before launch)
-| Gate | Status | Owner | Due | Evidence |
-|------|--------|-------|-----|----------|
-| Tracking/attribution working | 🔴/🟡/🟢 | [name] | [date] | [source] |
-| Registration/auth funnel stable | 🔴/🟡/🟢 | [name] | [date] | [source] |
-| Paywall + payment flow functional | 🔴/🟡/🟢 | [name] | [date] | [source] |
-| No P0 regressions active | 🔴/🟡/🟢 | [name] | [date] | [source] |
-| Go/No-Go decision made | 🔴/🟡/🟢 | Chad | [date] | — |
-
-## Track 1: Site Stability / Performance
-[What's IN FLIGHT, what's PLANNED, and what's a GAP]
-Status: 🔴 Not Ready / 🟡 At Risk / 🟢 Ready
-
-## Track 2: Conversion Funnel
-[What's IN FLIGHT, what's PLANNED, and what's a GAP]
-Status: 🔴 Not Ready / 🟡 At Risk / 🟢 Ready
-
-## Track 3: Engagement / Retention Experiments
-[What experiments are IN FLIGHT, what's PLANNED, what's a GAP]
-Status: 🔴 Not Ready / 🟡 At Risk / 🟢 Ready
-Note: If Track 3 is not ready by launch, that's okay — scope it for the week AFTER launch
-
-## Launch Decision
-✅ Launch on [date] — all gates green
-⚠️ Conditional launch — [specific conditions to monitor]
-❌ Delay to [revised date] — [specific blockers that must close first]
-```
-
----
-
-### D. INITIATIVE HEALTH
-
-```
-📋 INITIATIVE HEALTH — [Date]
-
-From Linear initiative query:
-| Initiative | Health | Milestones | At-Risk Milestone | Action |
-|-----------|--------|-----------|------------------|--------|
-| [name] | onTrack/atRisk/offTrack | X total / Y done | [milestone + date] | [action] |
-
-## Orphan Bets (in betting-table but no Linear Initiative)
-[Bets that have been "Drafting" for more than 3 weeks with no Linear initiative]
-These need a decision: scope to this quarter or explicitly move to Q2.
-
-## Initiative Coverage Gaps
-[Any roadmap pillar with no active Linear initiative]
-```
-
----
-
-### E. ESCALATIONS & DECISIONS NEEDED
-
-```
-⚡ ESCALATIONS — [Date]
-
-Decisions only Chad can make:
-| Decision | Context | Deadline | Consequence of delay |
-|----------|---------|----------|---------------------|
-| [decision] | [why it's Chad's call] | [date] | [what breaks if not decided] |
-
-Items blocked waiting on a call (from Supernormal):
-| Item | Blocker | Waiting on | Est. impact |
-|------|---------|-----------|-------------|
-| [item] | [what's blocking it] | [person/decision] | H/M/L |
-
-Cross-team misalignment signals (from meetings + Linear):
-| Signal | Teams | Implication |
-|--------|-------|-------------|
-| [signal] | [team A vs team B] | [what to do] |
-
-Not-in-Linear commitments (from Supernormal meetings):
-| Commitment | Made by | Made when | Has a ticket? |
-|-----------|---------|----------|--------------|
-| [commitment] | [name] | [meeting] | Yes/No |
-```
-
----
-
-### F. ACTION ITEMS
-
-```
-✅ TOP 10 ACTION ITEMS — [Date]
-(Ordered by: launch risk first, then velocity impact, then pipeline health)
-
-| # | Action | Owner | Urgency | Why |
-|---|--------|-------|---------|-----|
-| 1 | [specific action with ticket name if applicable] | [Chad/name/team] | Today / This sprint / This week | [one line rationale] |
-...
-
-## What NOT to Work On This Sprint
-(High effort, low launch relevance — do not let these distract)
-- [item] — reason: [deferred to Q2 / not on critical path / post-launch]
-```
-
----
-
-## Pre-Launch vs. Normal Mode
-
-This skill has two operating modes based on context:
-
-**Normal Mode** (no imminent launch):
-- Focus on velocity trends, ticket quality, betting table pipeline
-- Escalations are about strategic drift and bet selection
-- Action items are about improving team throughput
-
-**Pre-Launch Mode** (launch within 4 weeks):
-- Section C (Launch Readiness) becomes the primary focus
-- Gate criteria are binary — green or not green
-- Action items are ordered by launch risk, not strategic value
-- The question is "are we stable enough to acquire users?" not "are we building the right things?"
-
-**Signal to switch modes:** A named launch date exists in current-bet.md or betting-table.md within 4 weeks.
-**Current mode as of 2026-03-12:** PRE-LAUNCH (March 30 billboard = 18 days)
-
----
-
-## Ticket Quality Standards
-
-When assessing in-progress tickets, apply these quality checks:
-
-**Well-defined ticket (can be "Done"):**
-- [ ] Has a specific, testable acceptance criterion (not "improve X")
-- [ ] Has a single named owner
-- [ ] Has an estimate or time-box
-- [ ] Is scoped to ≤1 sprint (if not, split it)
-
-**Stale ticket (escalate):**
-- In Progress for >5 days without a status update comment
-- In Progress for >2 weeks (should have shipped or been cut)
-- Blocked with no unblocking plan or owner
-
-**Regression risk ticket:**
-- Touches core auth, registration, payment, or tracking
-- Has no staging-first requirement noted
-- Was shipped without a named QA reviewer
-
----
-
-## Output File Location
-
-```
-team/weekly-updates/2026/week-[XX]-[date]/sprint-health-[YYYY-MM-DD].md
-```
-
-Run this skill **in addition to** /monday-kickoff or /friday-demo, not instead of them. It provides the real-time data layer that those skills use for analysis.
-
-**Frequency:**
-- Pre-launch (4 weeks before launch): Run every Monday morning before kickoff
-- Normal sprints: Run every Thursday before Thursday-setup
-- Crisis mode (P0 issue active): Run daily until resolved
-
----
-
-## Context
-- Current date: {{CURRENT_DATE}}
-- Current launch target: March 30 billboard campaign
-- Pre-launch mode: ACTIVE (18 days as of 2026-03-12)
-- Key baselines: 20% session→account, 2% account→payment, 4 msgs/user
-- Last sprint health report: `team/weekly-updates/2026/week-10-mar09/sprint-health-2026-03-12.md`
-- Linear initiative health source: `mcp__linear__list_initiatives(includeProjects=True)`
-
----
+Cadence: pre-launch, every Monday before kickoff; normal, Thursday before prep; daily while a P0 is open.
 
 ## TERMINATION
 
-Stop when the report is written to its output location and every flagged blocker,
-risk, or escalation has an owner or an explicit flag for the PM. Report and flag —
-do **not** start fixing tickets, reassigning work, or editing Linear issues in the
-same pass. One sprint sweep per invocation. If every flag has an owner, you are done.
+Stop when the report is written to `team/weekly-updates/{YYYY-MM-DD}-sprint-health.md` and every flagged blocker, risk, or escalation has an owner role or an explicit "PM to assign". Report and flag; do not edit, reassign, or comment on tickets in the same pass. One sweep per invocation.

@@ -1,23 +1,34 @@
 ---
 name: evidence-loop
 description: >
-  Pressure-tests any consequential output for unsupported claims before it drives a
-  decision. Produces a claim-by-claim evidence appraisal: what's claimed, what's
-  actually supported by a dated source, the assumption that would flip the decision,
-  and where a human must decide. Use when the user says "evidence loop," "how do we
-  know," "pressure-test this," "what's this actually based on," "audit these claims,"
-  "is this supported," "check my reasoning," "stress-test this recommendation," or
-  before sending a strategy call / PRD / audit finding / metric to a stakeholder.
-  Reference: product/playbooks/evidence-loop.md.
+  Pressure-tests a consequential output before it drives a decision. Produces a
+  claim-by-claim appraisal: what is claimed, what a dated source actually supports, the
+  one assumption that would flip the decision, and where a human must decide.
+when_to_use: >
+  Use for "evidence loop", "how do we know", "pressure-test this", "what's this based
+  on", "audit these claims", "is this supported", "check my reasoning", or before a
+  strategy call, PRD, audit finding, or metric goes to a stakeholder. Method:
+  product/playbooks/evidence-loop.md.
+argument-hint: "[path to artifact, or 'the last output']"
+allowed-tools: Read, Grep, Glob, Write
+model: claude-opus-5-5
+effort: high
+hooks:
+  Stop:
+    - hooks:
+        - type: command
+          command: node "$CLAUDE_PROJECT_DIR/scripts/hooks/evidence-loop-check.mjs"
+          once: true
+metadata:
+  version: 2.0.0
 ---
 
 # Evidence Loop
 
-**Role:** Evidence auditor. You do ONE thing — separate supported claims from
-assumed ones in a given artifact and surface the decision risk. You do not rewrite
-the artifact, improve it, or add new recommendations. Audit only.
+**Role:** Evidence auditor. You do one thing: separate supported claims from assumed ones in a given artifact and surface the decision risk. You do not rewrite the artifact, improve it, or add new recommendations. Audit only.
+**Outcome:** Decision quality — no assumption reaches a stakeholder dressed as a fact. **Leaves behind:** an evidence table appended to the artifact (or `product/analysis/evidence/`).
 
-**Output:** appended to the artifact under review, or `pm-workflows/analysis/evidence/evidence-[name]-[date].md`
+**Output:** appended to the artifact under review, or `product/analysis/evidence/evidence-[name]-[date].md`
 
 Full method: `product/playbooks/evidence-loop.md`.
 
@@ -65,6 +76,8 @@ Full method: `product/playbooks/evidence-loop.md`.
   the assumptions, not to eliminate them.
 - If you cannot name a flip-assumption, say so explicitly — it means the artifact is
   too shallow to act on, which is itself the finding.
+
+End your reply to the user with the **Assumption that would flip this** and **Human decides here** lines, copied from the table, so the decision risk is visible without opening the file. (A one-time Stop hook checks for them.)
 
 ## TERMINATION
 

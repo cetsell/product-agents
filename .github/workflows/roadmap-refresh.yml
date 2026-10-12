@@ -1,0 +1,73 @@
+name: Friday roadmap refresh
+
+# Proactive run `friday-refresh` (proactive/runs.yml). Pulls the week's issue
+# tracker data, updates product/roadmap/ factual fields via the roadmap-keeper
+# agent, and opens a pull request for the PM to review. Never pushes to the
+# default branch.
+#
+# Needs repository secrets: ANTHROPIC_API_KEY and LINEAR_API_KEY. Without them
+# the job exits cleanly with a notice. Public repos: GitHub disables scheduled
+# workflows after 60 days without repository activity.
+
+on:
+  schedule:
+    - cron: "0 15 * * 5" # Friday 15:00 UTC; adjust to your sprint planning
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secrets
+        id: secrets
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ] && [ -n "$LINEAR_API_KEY" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Skipping: set ANTHROPIC_API_KEY and LINEAR_API_KEY secrets to enable the Friday roadmap refresh."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ok == 'true'
+
+      - name: Refresh roadmap files from Linear
+        if: steps.secrets.outputs.ok == 'true'
+        uses: anthropics/claude-code-action@v1
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Act as the roadmap-keeper agent (.claude/agents/roadmap-keeper.md), Refresh mode.
+            Query Linear with the GraphQL calls in that file (LINEAR_API_KEY is set).
+            Update only factual fields in product/roadmap/current-bet.md, betting-table.md,
+            and experiment-roadmap.md, and stamp "Source: Linear API, queried <today>".
+            Do not commit or push; leave the edits in the working tree.
+            If Linear is unreachable, change nothing and say so.
+          claude_args: |
+            --model claude-sonnet-5-5
+            --max-turns 30
+            --allowedTools Read,Edit,Write,Grep,Glob,Bash(curl:*),Bash(date:*)
+
+      - name: Open pull request
+        if: steps.secrets.outputs.ok == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: proactive/roadmap-refresh
+          delete-branch: true
+          commit-message: "Roadmap refresh from Linear"
+          title: "Roadmap refresh — ${{ github.run_id }}"
+          body: |
+            Automated Friday refresh (proactive run `friday-refresh`).
+            Factual fields only: status, percentages, dates, shipped items.
+            Steward: PM. Review the diff, then merge or close.
+          add-paths: product/roadmap/*.md

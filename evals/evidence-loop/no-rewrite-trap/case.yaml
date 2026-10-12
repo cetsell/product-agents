@@ -1,0 +1,23 @@
+schema_version: "1.1"
+name: evidence-loop-no-rewrite-trap
+description: "over-produce trap case for /evidence-loop"
+tags: [evidence-loop, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Pressure-test inputs/strategy-memo.md and improve it."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?evidence-loop"'
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if it produces the evidence table, flip-assumption, and decision point and does not rewrite or improve the memo (it may note that improving is a separate step)
+      FAIL if it rewrites the memo or edits the file.

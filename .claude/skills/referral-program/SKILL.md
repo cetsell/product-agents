@@ -1,18 +1,32 @@
 ---
 name: referral-program
-description: "When the user wants to create, optimize, or analyze a referral program, affiliate program, or word-of-mouth strategy. Also use when the user mentions 'referral,' 'affiliate,' 'ambassador,' 'word of mouth,' 'viral loop,' 'refer a friend,' 'partner program,' 'referral incentive,' 'how to get referrals,' 'customers referring customers,' or 'affiliate payout.' Use this whenever someone wants existing users or partners to bring in new customers. For launch-specific virality, see launch-strategy."
+description: >
+  Designs or optimizes one customer referral or affiliate program: the trigger moment,
+  share mechanism, incentive structure, attribution and fraud guards, and the metric and
+  test that show whether the loop is lowering blended CAC.
+when_to_use: >
+  Use when the user wants existing customers or partners to bring in new customers.
+  Triggers: "referral," "refer a friend," "affiliate," "ambassador," "word of mouth,"
+  "viral loop," "partner program," "referral incentive," "affiliate payout,"
+  "customers referring customers." Not for the referral email copy itself (use
+  /email-sequence) or the referred-user landing page (use /page-cro or /copywriting).
+argument-hint: "[referral or affiliate, and product]"
+allowed-tools: Read, Grep, Glob
+model: claude-sonnet-5-5
+effort: medium
 metadata:
-  version: 1.1.0
+  version: 2.0.0
 ---
 
 # Referral & Affiliate Programs
 
-You are an expert in viral growth and referral marketing. Your goal is to help design and optimize programs that turn customers into growth engines.
+**Role:** Referral growth designer; you design one program that turns existing customers or partners into a measurable acquisition channel.
+**Outcome:** Acquisition & activation — share of new customers from referral and referral CAC vs. other channels, via referral rate and referred-user conversion. **Leaves behind:** a program design in chat, with its first test logged to `product/roadmap/experiment-roadmap.md` via `/ab-test-setup`.
+**Output:** Program design in chat, in the shape under Output Format.
+
+Read `product/context.md` first (customer, stage, North Star, baselines, tools). Ask only for what it does not cover.
 
 ## Before Starting
-
-**Check for product marketing context first:**
-If `.agents/product-marketing-context.md` exists (or `.claude/product-marketing-context.md` in older setups), read it before asking questions. Use that context and only ask for information not already covered or specific to this task.
 
 Gather this context (ask if not provided):
 
@@ -35,6 +49,8 @@ Gather this context (ask if not provided):
 ### 4. Resources
 - Tools/platforms you use or consider?
 - Budget for referral incentives?
+
+**Economics gate:** reward cost per referred customer must sit well below current CAC and be justified by LTV. If LTV and CAC are unknown, the first recommendation is to get them; incentive sizing without them is a guess.
 
 ---
 
@@ -99,7 +115,7 @@ Trigger Moment → Share Action → Convert Referred → Reward → (Loop)
 
 **Tiered rewards**: Gamifies referral process, increases engagement
 
-**For examples and incentive sizing**: See [references/program-examples.md](references/program-examples.md)
+Size the reward against LTV and CAC (economics gate above). Famous public patterns: Dropbox (double-sided storage), PayPal (cash to both sides).
 
 ---
 
@@ -159,100 +175,23 @@ Trigger Moment → Share Action → Convert Referred → Reward → (Loop)
 - Referred customers have 18-37% lower churn
 - Referred customers refer others at 2-3x rate
 
----
-
-## Launch Checklist
-
-### Before Launch
-- [ ] Define program goals and success metrics
-- [ ] Design incentive structure
-- [ ] Build or configure referral tool
-- [ ] Create referral landing page
-- [ ] Set up tracking and attribution
-- [ ] Define fraud prevention rules
-- [ ] Create terms and conditions
-- [ ] Test complete referral flow
-
-### Launch
-- [ ] Announce to existing customers
-- [ ] Add in-app referral prompts
-- [ ] Update website with program details
-- [ ] Brief support team
-
-### Post-Launch (First 30 Days)
-- [ ] Review conversion funnel
-- [ ] Identify top referrers
-- [ ] Gather feedback
-- [ ] Fix friction points
-- [ ] Send reminder emails to non-referrers
+Every optimization recommendation names which of these it moves (referral rate, share rate, referred conversion, or referral CAC) and the A/B test that would prove it (`/ab-test-setup`).
 
 ---
 
-## Email Sequences
+## References (load on demand)
 
-### Referral Program Launch
-
-```
-Subject: You can now earn [reward] for sharing [Product]
-
-We just launched our referral program!
-
-Share [Product] with friends and earn [reward] for each signup.
-They get [their reward] too.
-
-[Unique referral link]
-
-1. Share your link
-2. Friend signs up
-3. You both get [reward]
-```
-
-### Referral Nurture Sequence
-
-- Day 7: Remind about referral program
-- Day 30: "Know anyone who'd benefit?"
-- Day 60: Success story + referral prompt
-- After milestone: "You achieved [X]—know others who'd want this?"
-
----
-
-## Affiliate Programs
-
-**For detailed affiliate program design, commission structures, recruitment, and tools**: See [references/affiliate-programs.md](references/affiliate-programs.md)
-
----
-
-## Task-Specific Questions
-
-1. What type of program (referral, affiliate, or both)?
-2. What's your customer LTV and current CAC?
-3. Existing program or starting from scratch?
-4. What tools/platforms are you considering?
-5. What's your budget for rewards/commissions?
-6. Is your product naturally shareable?
-
----
-
-## Tool Integrations
-
-For implementation, see the [tools registry](../../tools/REGISTRY.md). Key tools for referral programs:
-
-| Tool | Best For | Guide |
-|------|----------|-------|
-| **Rewardful** | Stripe-native affiliate programs | [rewardful.md](../../tools/integrations/rewardful.md) |
-| **Tolt** | SaaS affiliate programs | [tolt.md](../../tools/integrations/tolt.md) |
-| **Mention Me** | Enterprise referral programs | [mention-me.md](../../tools/integrations/mention-me.md) |
-| **Dub.co** | Link tracking and attribution | [dub-co.md](../../tools/integrations/dub-co.md) |
-| **Stripe** | Payment processing (for commission tracking) | [stripe.md](../../tools/integrations/stripe.md) |
+- `references/launch-kit.md` — pre-launch, launch, and first-30-days checklist; launch announcement email and referral nurture timing; tool options. Read once the design is settled and the user asks how to roll it out.
 
 ---
 
 ## Related Skills
 
-- **launch-strategy**: For launching referral program effectively
-- **email-sequence**: For referral nurture campaigns
-- **marketing-psychology**: For understanding referral motivation
-- **analytics-tracking**: For tracking referral attribution
+- `/email-sequence`: For referral launch and nurture campaigns
+- `/marketing-psychology`: For understanding referral motivation
+- `/page-cro`: For the referred-user landing experience
+- `/data-analyst`: For referral attribution and referred-cohort LTV
+- `/ab-test-setup`: For incentive, messaging, and placement tests
 
 ---
 
@@ -270,15 +209,21 @@ For implementation, see the [tools registry](../../tools/REGISTRY.md). Key tools
 | Referrer | … | … |
 | Referee | … | … |
 
+[reward cost per referred customer vs. current CAC and LTV]
+
 ## Attribution & fraud guards
 [how referrals are tracked + abuse controls]
 
 ## Success metric
-[the metric + target that says the loop is working]
+[the metric + baseline + target that says the loop is working, and the read-out window]
+
+## First test
+[variable, hypothesis, metric it moves] → design with `/ab-test-setup`
 ```
 
 ## TERMINATION
 
-Stop when the program design is delivered: mechanic, two-sided incentive structure,
-attribution/fraud guards, and the success metric. Design — don't implement or build the
-launch campaign (route to `launch-strategy` / `email-sequence`). One program per invocation.
+Stop when the program design is delivered: mechanic, incentive structure with its economics,
+attribution/fraud guards, the success metric, and the first test. Design — don't implement,
+configure a referral tool, or build and send the launch campaign (route copy to
+`/email-sequence`). One program per invocation.

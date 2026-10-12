@@ -1,105 +1,84 @@
 ---
 name: skill-eval
 description: >
-  Behavioral eval for the team-os skill library — Layer 2 of skill evals. Runs a
-  target skill against representative prompts and scores the OUTPUT against the
-  quality bar (role, output shape, termination, evidence loop) plus description
-  triggering. Use when the user says "eval this skill," "skill eval," "is this skill
-  any good," "test the skill," "score the skill," "did the skill drift," "benchmark
-  the skill," or wants behavioral (not just static) checking of a skill. For the
-  static file-conformance check, use `node check-skills.mjs` instead.
+  Behavioral eval for the team-os skill library. Runs a skill against its eval cases
+  and scores the output on five dimensions (stayed in role, wrote into the shape,
+  terminated, evidence loop, triggered correctly), then writes a dated scorecard with
+  one verdict.
+when_to_use: >
+  Use for "eval this skill", "skill eval", "is this skill any good", "test the skill",
+  "did the skill drift", "benchmark the skill". For the static file check run `node
+  check-skills.mjs`; to score an AI product feature use /eval-runner.
+argument-hint: "[skill name]"
+allowed-tools: Read, Grep, Glob, Write, Bash, Agent
+model: claude-opus-5-5
+effort: high
+metadata:
+  version: 2.0.0
 ---
 
 # Skill Eval (behavioral)
 
-**Role:** Skill evaluator. You judge whether a skill *behaves* to the team-os quality
-bar — not whether its file is shaped right (that's the static linter `check-skills.mjs`,
-Layer 1). You run the skill, read its output, and score it. You do not rewrite the
-skill unless explicitly asked.
-
-**Output:** `pm-workflows/analysis/skill-evals/{skill}-{date}.md`
-
-## Don't reinvent the harness
-
-The installed **`skill-creator`** plugin already runs skill evals — use it, don't
-hand-roll a judge loop:
-- **Triggering:** `skill-creator/scripts/run_eval.py` tests whether a skill's
-  *description* causes Claude to trigger the skill for a set of queries. Use it for
-  the triggering dimension below.
-- **Behavioral runs:** skill-creator's `evals.json` + with-skill-vs-baseline subagent
-  loop runs each test prompt twice (with and without the skill) so you can see what
-  the skill actually changed. Use that loop to produce the transcripts you score.
-
-This skill supplies the **rubric and test cases**; skill-creator supplies execution.
+**Role:** Skill evaluator. You judge whether a skill *behaves* to the team-os quality bar, not whether its file is shaped right (that is the static linter `check-skills.mjs`, Layer 1). You run the skill, read its output, and score it. You do not rewrite the skill unless explicitly asked.
+**Outcome:** Decision quality — the library's quality bar is measured and visible, so the team knows which skills to trust unattended. **Leaves behind:** a dated scorecard in `product/analysis/skill-evals/`.
+**Output:** `product/analysis/skill-evals/{skill}-{YYYY-MM-DD}.md`
 
 ## The rubric (text labels, not numbers)
 
-Score each dimension `bad` / `good` / `very good`. The five dimensions ARE the quality
-bar — the same spec that defines a good skill (`product-skills.md`) and the static
-linter:
+Score each dimension `bad` / `good` / `very good`.
 
-| # | Dimension | A `very good` output… |
-|---|-----------|------------------------|
-| 1 | **Stayed in role** | did the one job the role line names — no scope drift into adjacent jobs |
-| 2 | **Wrote into the shape** | filled the skill's defined output structure; didn't invent a new shape |
-| 3 | **Terminated** | stopped at the TERMINATION condition — didn't over-produce, pad, or iterate for polish |
-| 4 | **Evidence loop** (if consequential) | carried the claim/source/flip-assumption appendix where the skill requires it |
-| 5 | **Triggered correctly** | fired for in-scope prompts and stayed quiet for out-of-scope ones (from run_eval.py) |
-
-Dimension 4 applies only to skills that mandate an evidence loop (strategy, audit,
-pm-super-agent, etc.). Mark `n/a` otherwise.
+| # | Dimension | A `very good` output… | Grader in `evals/` |
+|---|-----------|------------------------|--------------------|
+| 1 | **Stayed in role** | did the one job the role line names; no drift into adjacent jobs | `llm` (shape-and-scope) |
+| 2 | **Wrote into the shape** | filled the skill's output structure at its output path | `file_exists` + `llm` |
+| 3 | **Terminated** | stopped at the TERMINATION condition; the over-produce trap stayed scoped | `llm` on the trap case |
+| 4 | **Evidence loop** | carried the claim/source/flip-assumption appendix where the skill requires it (`n/a` otherwise) | `llm` |
+| 5 | **Triggered correctly** | fired for in-scope prompts, stayed quiet for the out-of-scope prompt | `tool_used: Skill` (`max: 0` on out-of-scope) |
 
 ## Test cases
 
-Reuse skill-creator's format. Save to `evals/{skill}-evals.json`:
+Each core skill has a suite in `evals/{skill}/`, one folder per case, in `claude plugin eval` format (`case.yaml` with prompt and graders). Every suite has at least:
 
-```json
-{
-  "skill_name": "strategy",
-  "evals": [
-    { "id": 1, "prompt": "in-scope task that should trigger + produce", "expected_output": "what good looks like", "files": [] },
-    { "id": 2, "prompt": "an over-produce trap — a narrow ask the skill is tempted to expand", "expected_output": "stays scoped, terminates", "files": [] },
-    { "id": 3, "prompt": "an out-of-scope prompt that should NOT trigger this skill", "expected_output": "skill does not fire", "files": [] }
-  ]
-}
-```
+1. an **in-scope** task,
+2. an **over-produce trap**: a narrow ask the skill is tempted to expand (Dimension 3 is the one the static linter cannot catch), and
+3. an **out-of-scope** prompt that must not trigger the skill (Dimension 5).
 
-Always include at least: one in-scope task, one **over-produce trap** (Dimension 3 is
-the one the static linter cannot catch — a skill with a TERMINATION line that still
-rambles), and one out-of-scope prompt (Dimension 5).
+All cases run in a workspace built by `evals/_fixture/scaffold.sh`: the repo template plus a fictional product ("Acme Notes") with filled context, roadmap, and exports in `inputs/`, and no MCP servers. To add a case, copy an existing folder and edit `case.yaml`.
 
 ## Workflow
 
-1. Read the target skill and extract its role, output shape, and TERMINATION condition
-   — these become the pass conditions for Dimensions 1–3.
-2. Draft 3–5 test cases (above) if none exist. Get a quick OK on the over-produce trap.
-3. Run triggering via `run_eval.py`; run behavioral cases via skill-creator's
-   with/without loop.
-4. Score each run on the 5 dimensions. Quote the single best and worst moment.
+1. Read the target skill: its role line, output shape, and TERMINATION condition are the pass conditions for Dimensions 1–3.
+2. If `evals/{skill}/` does not exist, draft the three cases above and get a quick OK on the trap.
+3. **Run.** Preferred: from the repo root,
+   `claude plugin eval . --case "{skill}-*" --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5`
+   (the default judge is Haiku; use a judge at least as strong as the model the skill runs on — `product/playbooks/model-selection.md`).
+   Fallback when the CLI cannot run (not authenticated, or no `claude` binary): build each workspace with `scaffold.sh`, run each in-scope and trap case in a subagent that reads and follows the SKILL.md with no MCP tools, then judge each output in a separate subagent against the case's `llm` criteria. Test triggering by giving a fresh subagent the skill listing (name + description + when_to_use for every skill) and the case prompts, and recording which skill it picks. Label the scorecard "fallback method: subagent runs; triggering is a description-routing proxy".
+4. Score each case on the five dimensions. Quote the single worst moment.
 5. Write the scorecard.
 
-## Output Format
+## Output
 
 ```markdown
 # Skill Eval — {skill} | {date}
 
-## Scorecard
+Method: {claude plugin eval vX, runs per case | fallback: subagent runs}
+Runner model: {model} · Judge model: {model}
+
 | Dimension | Label | Note |
 |-----------|-------|------|
-| Stayed in role | very good / good / bad | one line |
-| Wrote into the shape | … | … |
-| Terminated | … | … |
-| Evidence loop | … / n/a | … |
-| Triggered correctly | … | trigger rate X/Y in-scope, Z false-fires |
+| Stayed in role | | |
+| Wrote into the shape | | |
+| Terminated | | trap case: {name} |
+| Evidence loop | / n/a | |
+| Triggered correctly | | in-scope X/Y, false fires Z |
 
 ## Verdict: ship as-is | tweak description | tighten skill body | rewrite
-## Worst moment: "[quote]" — which dimension it failed and why
-## Recommended fix (if any): [one concrete change]
+## Worst moment: "{quote}" — dimension it failed and why
+## Recommended fix (if any): {one concrete change}
 ```
+
+Record failures as failures. A scorecard that rounds a `bad` up is worse than no scorecard.
 
 ## TERMINATION
 
-Stop when every test case has been scored on all five dimensions and the scorecard
-yields one verdict + at most one recommended fix. One skill per invocation. Report the
-scores — do NOT rewrite the evaluated skill unless the user explicitly asks; that is a
-separate, human-approved step.
+Stop when every case for the skill is scored on all five dimensions and the scorecard yields one verdict and at most one recommended fix. One skill per invocation. Do not rewrite the evaluated skill unless the user explicitly asks; that is a separate, human-approved step.

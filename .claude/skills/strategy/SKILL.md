@@ -1,332 +1,169 @@
 ---
 name: strategy
 description: >
-  Product strategy, prioritization, OKR cascading, competitive analysis, discovery
-  frameworks, user story generation, and sprint planning. Merges product-strategist,
-  product-leadership, product-manager-toolkit, and agile-product-owner into one skill.
-  Trigger on: strategy, OKRs, RICE, prioritization, roadmap, vision, user stories,
-  sprint planning, competitive analysis, discovery, bet brief, PRD, ICE scoring,
-  "what should we build next," "how do I prioritize," feature comparison, backlog,
-  stakeholder communication, quality bar.
+  Sharpens product bets: RICE/ICE prioritization, opportunity trees and metric trees,
+  competitive analysis through 7 Powers, OKR cascades, quarterly vision checks, and
+  decision memos. Every output ends in a ranked call with the assumption that would flip
+  it.
+when_to_use: >
+  Use for "prioritize", "RICE", "ICE", "what should we build next", "rank these bets",
+  "OKRs", "cascade goals", "competitive analysis", "competitor just launched", "7
+  powers", "opportunity tree", "metric tree", "discovery", "quarterly planning", "vision
+  check", "decision memo", "tradeoff". Not for writing a PRD (use /pm-super-agent) or
+  tickets (use /issue-creator).
+allowed-tools: Read, Grep, Glob, Write, WebSearch
+model: claude-opus-5-5
+effort: high
+metadata:
+  version: 2.0.0
 ---
 
 # Product Strategy Engine
 
-**Role:** Strategic product advisor for Chad (Head of Product)
-**Output directory:** `pm-workflows/analysis/strategy/`
+**Role:** Strategy partner for the PM. You turn a fuzzy question into a ranked, defensible call on what to bet on.
+**Outcome:** Vision & strategy — sharpens which bet the team makes next and why, with the assumption that would flip it named up front. **Leaves behind:** a ranked call in `product/analysis/strategy/` with an evidence appendix.
+**Output directory:** `product/analysis/strategy/`
 
-## Mandatory Context Loading
+## Context first
 
-Before any analysis, read these files to ground recommendations in current reality:
+Read before any analysis:
 
-1. `pm-workflows/roadmap.md` — current roadmap and phase
-2. `pm-workflows/betting-table.md` — active bets and pipeline
-3. `pm-workflows/current-bet.md` — this week's focused bet
-4. `pm-workflows/pm-principles-guide.md` — PM principles and standards
-5. Linear MCP — query current project health, team velocity, active initiatives
+1. `product/context.md` — North Star, pillars, horizon, baselines. If placeholders remain, name the missing fields and mark any claim that depends on them `assumed`.
+2. `product/roadmap/roadmap.md`, `betting-table.md`, `current-bet.md` — what is already committed.
+3. `product/roadmap/product-strategy.md` — annual direction, if filled.
+4. Issue tracker for current project health and velocity: use the MCP server if connected; otherwise ask the user for a one-paragraph status and continue.
 
-**Strategic Context:**
-- **North Star:** Multimodal, memory-backed Digital Twin relationships
-- **Phase Roadmap:** The Wedge → Platform → Protocol
-- **Three Pillars:** Core Activation / Creative Tools / Business Model
-- **Three Teams:** D2C / GTM / Support
-- **Baseline Metrics:** 20% session→account, 2% account→payment, 4 msgs/user, $260 MRR
-
-## Mandatory Evidence Loop
-
-Every strategy call, prioritization, or roadmap recommendation ends with an Evidence
-Loop appendix — the claim-by-claim trail of what's supported vs. assumed, the
-assumption that would flip the decision, and where Chad decides. Method and drop-in
-table: `product/playbooks/evidence-loop.md`. Do not ship a recommendation without it.
+Never carry another team's metrics. If a number is not in these sources or supplied by the user, it does not appear in the output.
 
 ## Routing
 
-Based on what the user requests, execute the matching mode:
+| Request matches | Run |
+|-----------------|-----|
+| "RICE" / "ICE" / "prioritize" / "rank" / "what to build" | Prioritization |
+| "discovery" / "opportunity tree" / "metric tree" / "hypothesis" / "PR-FAQ" | Discovery |
+| "competitive" / "competitor" / "market" / "7 powers" / "positioning risk" | Competitive Analysis |
+| "OKRs" / "objectives" / "cascade" | OKR Cascade |
+| "vision" / "alignment" / "quarterly planning" | Vision Check |
+| "decision memo" / "tradeoff" / "recommend between" | Decision Memo |
 
-| Request matches | Execute section |
-|----------------|-----------------|
-| "strategy" / "market analysis" / "competitive" / "7 powers" | → Market & Competitive Analysis |
-| "OKRs" / "objectives" / "cascade" / "goals" | → OKR Cascade Generator |
-| "RICE" / "ICE" / "prioritize" / "rank features" / "what to build" | → Prioritization |
-| "discovery" / "hypothesis" / "opportunity tree" / "pre-mortem" | → Discovery Frameworks |
-| "bet brief" / "PRD" / "requirements" / "spec" | → Bet Brief & PRD |
-| "user stories" / "stories" / "acceptance criteria" / "INVEST" | → User Story Generation |
-| "sprint planning" / "sprint" / "backlog" / "capacity" | → Sprint Planning |
-| "stakeholder" / "communicate" / "tradeoff" / "present" | → Stakeholder Communication |
-| "vision" / "alignment" / "quarterly planning" | → Vision & Alignment |
-| "team health" / "velocity" / "org design" / "scaling" | → Team Health & Scaling |
-| "quality bar" / "pre-ship" / "checklist" | → Quality Bar Checklist |
-
-If unclear, ask which mode they want.
-
----
-
-## Market & Competitive Analysis
-
-Assess market opportunity, competitive landscape, and strategic positioning.
-
-**5 Analysis Modes:**
-1. **Market Opportunity Assessment** — TAM/SAM/SOM with adjacent market mapping
-2. **Competitive Intelligence** — Feature matrix, positioning map, threat assessment
-3. **Feature Prioritization** — ICE scoring against strategic pillars
-4. **Go-to-Market Strategy** — Channel selection, messaging, launch sequencing
-5. **Quarterly Strategy Review** — Retrospective + forward planning
-
-**Framework: 7 Powers Lens**
-Apply Hamilton Helmer's 7 Powers to every strategic recommendation:
-- Scale Economies, Network Effects, Counter-Positioning, Switching Costs, Branding, Cornered Resource, Process Power
-
-**Output:** `strategy/market-[topic]-[date].md`
-
-**Integration with weekly cycle:**
-- Monday: Validate strategic assumptions
-- Thursday: Pressure-test recommendations
-- Friday: Frame for stakeholder communication
-
----
-
-## OKR Cascade Generator
-
-Generate aligned OKRs from company → product → team levels.
-
-**5 Strategy Templates:**
-- **Growth:** acceleration, PMF, sustainable growth
-- **Retention:** customer value, UX, LTV
-- **Revenue:** growth, optimization, expansion
-- **Innovation:** breakthroughs, competitive moat, speed
-- **Operational:** excellence, velocity, scaling
-
-**Process:**
-1. Ask which strategy template (or detect from context)
-2. Generate 3 company-level objectives × 3-5 KRs each
-3. Cascade to product level — target ~30% contribution to each company KR
-4. Cascade to teams (D2C, GTM, Support) — filter by relevance
-5. Score alignment: vertical (40%), horizontal (20%), coverage (20%), balance (20%)
-
-**Output format:**
-```
-Company Objective → Product Objective → Team Objectives
-Each with: Key Results (measurable), Confidence (H/M/L), Owner
-Alignment Score: X/100
-```
-
-**Output:** `strategy/okr-cascade-[quarter]-[date].md`
+If unclear, ask which mode. One mode per invocation.
 
 ---
 
 ## Prioritization (RICE / ICE)
 
-Rank features and bets using quantitative scoring.
-
-**RICE Formula:** `(Reach x Impact x Confidence) / Effort`
+**RICE** = (Reach × Impact × Confidence) / Effort
 
 | Factor | Scale |
 |--------|-------|
-| Impact | massive=3.0, high=2.0, medium=1.0, low=0.5, minimal=0.25 |
-| Confidence | high=100%, medium=80%, low=50% |
-| Effort | XL=13, L=8, M=5, S=3, XS=1 (person-months) |
+| Reach | users or accounts affected per quarter (state the source) |
+| Impact | massive 3, high 2, medium 1, low 0.5, minimal 0.25 |
+| Confidence | high 100%, medium 80%, low 50% |
+| Effort | person-weeks |
 
-**Process:**
-1. List candidate features/bets
-2. Score each on Reach, Impact, Confidence, Effort
-3. Calculate RICE scores and rank
-4. Identify: Quick Wins (high score, low effort), Big Bets (high score, high effort)
-5. Generate quarterly roadmap based on team capacity
+Use **ICE** (Impact, Confidence, Ease, each 1–10) for weekly bet selection where reach is similar across candidates.
 
-**Portfolio Analysis:**
-- Quick wins vs big bets distribution
-- Effort allocation across pillars
-- Risk/confidence distribution
+1. List candidates (from the betting table, the user, or both).
+2. Score each, citing the source for Reach and the evidence behind Confidence. Use one Reach unit for every candidate (users or teams, per quarter); convert before comparing, and say how.
+3. Rank. Tag quick wins (high score, low effort) and big bets (high score, high effort).
+4. Name the pillar from `product/context.md` each candidate serves; flag any that serve none.
+5. Sensitivity check: which single score, if wrong, changes the top pick?
 
-**Output:** `strategy/rice-[topic]-[date].md`
-
----
-
-## Discovery Frameworks
-
-Structured approaches to validate hypotheses before building.
-
-**5 Frameworks:**
-
-1. **Hypothesis Template**
-   > We believe [change] for [segment] will achieve [outcome] as measured by [metric]. We'll know we're wrong if [falsification criteria].
-
-2. **Opportunity Tree** (Teresa Torres)
-   - Desired outcome → Opportunities → Solutions → Experiments
-   - Map from business objective down to testable experiments
-
-3. **Press Release / FAQ** (Amazon "Working Backwards")
-   - Write the press release first, then build backward to requirements
-
-4. **Pre-Mortem**
-   - "It's 3 months from now and this bet failed. Why?"
-   - Force team to articulate risks before committing
-
-5. **Metric Tree**
-   - Decompose North Star into sub-metrics
-   - Identify which sub-metric each bet targets
-
-**Customer Discovery Guides:**
-- **End-user interviews:** Pain points, workarounds, willingness to pay
-- **Creator interviews:** Content workflow, monetization needs, platform switching costs
-
-**Supernormal Integration:** Use meeting transcripts as passive interview data — extract pain points, feature requests, sentiment.
-
-**Output:** `strategy/discovery-[topic]-[date].md`
-
----
-
-## Bet Brief & PRD
-
-Lightweight and full specification documents.
-
-**Bet Brief (Lightweight PRD):**
 ```markdown
-# Bet Brief: [Name]
+# Prioritization — {topic} | {date}
 
-## Hypothesis
-We believe [change] for [segment] will achieve [outcome].
+| Rank | Candidate | R | I | C | E | Score | Pillar | Evidence for C |
 
-## Success Criteria
-- [ ] [Measurable outcome 1]
-- [ ] [Measurable outcome 2]
+**Top pick:** {candidate} — {one sentence}
+**Flips if:** {the score that, if wrong, changes the order}
+**Quick wins:** … **Big bets:** …
 
-## Scope
-**In:** [What's included]
-**Out:** [What's explicitly excluded]
-
-## ICE Score
-Impact: [1-5] | Confidence: [1-5] | Effort: [1-5] | Score: [X]
-
-## Dependencies
-- [Dependency 1]
-
-## Timeline
-[Duration estimate]
+## Evidence Loop
 ```
 
-**Full PRD (Cross-Quarter Features):**
-Uses the Linear Project Description Template from CLAUDE.md:
-- Description → Problem → Why → Success → Audience → What → How → When
-
-**Output:** `strategy/bet-brief-[name]-[date].md` or `strategy/prd-[name]-[date].md`
+Output: `product/analysis/strategy/prioritization-{topic}-{date}.md`
 
 ---
 
-## User Story Generation
+## Discovery
 
-INVEST-compliant stories with acceptance criteria.
+Pick the framework that fits the question:
 
-**INVEST Checklist:** Independent, Negotiable, Valuable, Estimable, Small, Testable
+1. **Hypothesis:** "We believe [change] for [segment] will achieve [outcome] as measured by [metric]. We are wrong if [falsification]."
+2. **Opportunity solution tree** (Torres): desired outcome → opportunities → solutions → experiments. Stop at the cheapest experiment that could kill the top opportunity.
+3. **Metric tree:** decompose the North Star into input metrics; mark which input each bet targets and which inputs have no bet.
+4. **PR-FAQ** (working backwards): the launch announcement and the five hardest FAQ answers, written before scope.
 
-**4 Personas:** end_user, admin, power_user, new_user
+Use meeting notes and `product/customer-insights/` as passive interview data (pain points, workarounds, requests); quote with date.
 
-**Story Format:**
+Output: `product/analysis/strategy/discovery-{topic}-{date}.md`, ending with the single experiment to run next and its kill criterion.
+
+---
+
+## Competitive Analysis
+
+1. State the competitor move or market question in one line.
+2. Feature and positioning comparison limited to what changes a decision.
+3. **7 Powers lens** (Helmer): scale economies, network effects, counter-positioning, switching costs, branding, cornered resource, process power. For each power, say whether we have it, they have it, or neither, with evidence.
+4. Threat level (High / Med / Low) and the response options: ignore, match, differentiate, reposition.
+
+Output: `product/analysis/strategy/competitive-{topic}-{date}.md` with one recommended response and what would change it.
+
+---
+
+## OKR Cascade
+
+1. Detect or ask the theme: growth, retention, revenue, innovation, operational.
+2. Three company objectives, 3–5 measurable key results each, tied to the North Star.
+3. Cascade to product, then to the teams listed in `product/context.md`. Product KRs should cover roughly a third of each company KR they serve.
+4. Score alignment: vertical 40%, horizontal 20%, coverage 20%, balance 20%.
+
 ```
-As a [persona], I want to [action] so that [benefit].
-
-Acceptance Criteria:
-- Given [context], when [action], then [result] (happy path)
-- Given [context], when [invalid action], then [error handling]
-- Performance: [constraint]
-- Accessibility: [requirement]
-
-Story Points: [estimate based on complexity]
-Priority: [P0-P3]
+Company objective → Product objective → Team objective
+  KR (metric, baseline with date, target, owner role) · Confidence H/M/L
+Alignment score: X/100 — weakest link: {…}
 ```
 
-**Capabilities:**
-- Break epics into persona-targeted stories
-- Generate technical enabler stories
-- Estimate story points based on complexity indicators
-- Validate stories against INVEST checklist
+Output: `product/analysis/strategy/okrs-{quarter}-{date}.md`
 
 ---
 
-## Sprint Planning
+## Vision Check (quarterly)
 
-Plan sprints based on team capacity and prioritized backlog.
+1. Re-read the North Star and horizon in `product/context.md`.
+2. For each pillar: the bets serving it, their results, and health (green / yellow / red).
+3. Drift: committed work that serves no pillar; pillars with no committed work.
+4. One recommendation: keep course, rebalance, or revise a pillar.
 
-**Process:**
-1. Calculate team capacity (story points available)
-2. Pull prioritized backlog (from RICE/ICE scoring)
-3. Select stories that fit capacity
-4. Identify dependencies and sequencing
-5. Define sprint goal and success criteria
-
-**Output:** Sprint plan with goal, selected stories, capacity utilization, risk flags
+Output: `product/analysis/strategy/vision-check-{quarter}-{date}.md`
 
 ---
 
-## Stakeholder Communication
+## Decision Memo
 
-Templates for presenting decisions and tradeoffs.
+For "A or B" calls that need to travel to stakeholders.
 
-**Templates:**
-1. **Decision Recommendation** — Option A vs B with tradeoffs, data, recommendation
-2. **Tradeoff Presentation** — "If we do X, we get Y but lose Z"
-3. **Progress Update** — What shipped, what's next, blockers
-4. **Quarterly Review** — Retrospective + forward plan
+```markdown
+# Decision: {question} | {date}
 
-**Rules:**
-- Lead with the recommendation, not the analysis
-- Include "how to know it's working" criteria
-- Be confident: "We should do X because Y" not "We could maybe consider X"
+**Recommendation:** {option}, because {reason}.
+| Option | We get | We give up | Evidence | Reversible? |
+**How we will know it is working:** {metric, threshold, date}
+**Decision owner:** {role} · **Decide by:** {date}
 
----
+## Evidence Loop
+```
 
-## Vision & Alignment
+Lead with the recommendation, not the analysis. Confident language: "We should", not "we could consider".
 
-Quarterly vision check and strategic alignment.
-
-**Process:**
-1. Review North Star and phase roadmap
-2. Assess pillar health (Core Activation / Creative Tools / Business Model)
-3. Check team alignment to company objectives
-4. Identify strategic gaps or drift
-5. Produce alignment scorecard
+Output: `product/analysis/strategy/decision-{topic}-{date}.md`
 
 ---
 
-## Team Health & Scaling
+## Evidence Loop (every mode)
 
-Assess team velocity, health, and organizational design decisions.
-
-**Monthly Assessment:**
-- Velocity trends (last 4 sprints)
-- Blocker frequency and resolution time
-- Team satisfaction signals (from Supernormal meeting notes)
-- Capacity utilization
-
-**Org Scaling Decisions:**
-- When to hire vs restructure
-- Role design and leveling
-- Cross-team coordination patterns
-
----
-
-## Quality Bar Checklist
-
-Pre-ship quality gate for features.
-
-**Checklist:**
-- [ ] Success criteria met (from bet brief)
-- [ ] Edge cases handled
-- [ ] Error states designed
-- [ ] Performance acceptable
-- [ ] Mobile responsive
-- [ ] Accessibility basics
-- [ ] Analytics instrumented
-- [ ] Rollback plan defined
-- [ ] Demo-ready
-
----
+Every output ends with the Evidence Loop appendix from `product/playbooks/evidence-loop.md`: claims marked supported / partial / assumed with dated sources, the assumption that would flip the call, and where the PM decides. No recommendation ships without it.
 
 ## TERMINATION
 
-Stop when the requested mode's artifact is complete and its Evidence Loop appendix
-is attached. Run **one mode per invocation** — a RICE request does not also get an
-OKR cascade; a competitive analysis does not also get a roadmap. Do not append a
-"broader strategic context," "additional considerations," or "next steps beyond
-this" section the user didn't ask for. If the analysis is done and the evidence
-table is filled, you are finished — do not iterate for polish.
+Stop when the requested mode's artifact is written to its path and its Evidence Loop appendix is attached. One mode per invocation: a RICE request does not also get an OKR cascade; a competitive analysis does not also get a roadmap. Do not append "broader strategic context", "additional considerations", or "next steps" sections the user did not ask for. If the ranked call is made and the evidence table is filled, you are finished; do not iterate for polish.

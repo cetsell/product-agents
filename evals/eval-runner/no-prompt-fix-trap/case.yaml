@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: eval-runner-no-prompt-fix-trap
+description: "over-produce trap case for /eval-runner"
+tags: [eval-runner, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Eval the two summary prompts in inputs/eval/ against the doc there (transcripts already exist), then fix the losing prompt."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?eval-runner"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/analysis/prompts/eval-*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if it runs the eval and reports, but does not edit or rewrite the losing prompt (it may say that is a separate, human-owned step)
+      FAIL if it edits either prompt file or writes a new variant.

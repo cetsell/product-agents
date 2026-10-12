@@ -1,0 +1,12 @@
+diff --git a/product/specs/CLAUDE.md b/product/specs/CLAUDE.md
+index 7f7b909..a356e69 100644
+--- a/product/specs/CLAUDE.md
++++ b/product/specs/CLAUDE.md
+@@ -7,6 +7,7 @@ Feature specs and technical design documents. Most live in Google Docs — this
+ | Spec / Project | Status | Lead | Issue |
+ |---------------|--------|------|-------|
+ | [Spec name] | In Progress | [Name] | [Issue ID] |
++| [Share-this-note prompt after first note](share-note-prompt-prd-2026-10-12.md) | Draft (2026-10-12) | PM | ACM-415 |
+ 
+ ## Queued Specs
+ 

@@ -1,0 +1,3 @@
+- Decided: use template gallery v2 layout.
+- Kim (Design): ship specs Monday.
+- Ana (Eng): estimate.

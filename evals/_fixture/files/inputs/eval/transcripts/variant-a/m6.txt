@@ -1,0 +1,3 @@
+- Decided: add paste-size limit.
+- Decided: alert when editor crash rate exceeds 1%.
+- Raj (Analytics): owns the alert.

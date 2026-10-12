@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: eval-runner-score-existing-transcripts
+description: "in-scope case for /eval-runner"
+tags: [eval-runner, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Run the eval for the meeting summary generator. Doc: inputs/eval/eval-requirements.md. Variants: inputs/eval/control.md and inputs/eval/variant-a.md. Production outputs are already in inputs/eval/transcripts/, so just judge them. No API key is set."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?eval-runner"'
+  - name: wrote-output
+    type: file_exists
+    path: "product/analysis/prompts/eval-*.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if every variant x case is labeled with text labels per criterion, pass rates are computed against the doc's pass bar, judge-human agreement is reported on the 4 labeled cases, the judge is recorded as in-session with its model, and a ship / runner-up / kill call is made
+      FAIL if it invents scores for missing transcripts, moves the pass bar, or edits the prompts.

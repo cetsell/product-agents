@@ -1,0 +1,61 @@
+name: Monday artifact grade
+
+# Proactive run `artifact-grade` (proactive/runs.yml). Runs /check-artifacts on
+# a fresh checkout and opens a pull request with the dated report in
+# product/analysis/audit/. Complements the zero-cost freshness check
+# (freshness-check.yml), which needs no API key.
+#
+# Needs repository secret ANTHROPIC_API_KEY; skips cleanly without it.
+
+on:
+  schedule:
+    - cron: "30 9 * * 1" # Monday 09:30 UTC, after the freshness check
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check secrets
+        id: secrets
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"
+          else echo "::notice::Skipping: set the ANTHROPIC_API_KEY secret to enable the Monday artifact grade."; echo "ok=false" >> "$GITHUB_OUTPUT"; fi
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ok == 'true'
+
+      - name: Grade planning artifacts
+        if: steps.secrets.outputs.ok == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            /check-artifacts
+            No issue tracker is connected in this run: grade the tracker row "not checked".
+            Save the report to product/analysis/audit/artifacts-<today as YYYY-MM-DD>.md.
+            Do not edit any other file. Do not commit or push.
+          claude_args: |
+            --model claude-haiku-5-5
+            --max-turns 20
+            --allowedTools Read,Write,Grep,Glob
+
+      - name: Open pull request
+        if: steps.secrets.outputs.ok == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: proactive/artifact-grade
+          delete-branch: true
+          commit-message: "Weekly artifact grade"
+          title: "Artifact grade — ${{ github.run_id }}"
+          body: |
+            Automated Monday grade (proactive run `artifact-grade`), from /check-artifacts.
+            Steward: PM. Decide what to refresh vs. retire, then merge or close.
+          add-paths: product/analysis/audit/*.md

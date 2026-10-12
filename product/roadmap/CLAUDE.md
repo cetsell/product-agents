@@ -6,6 +6,7 @@ Sprint bets, pipeline, experiment roadmap, and annual strategy. These are PM too
 
 | File | What it is | When to read |
 |------|-----------|--------------|
+| `roadmap.md` | Rolling roadmap: Now (6 weeks) / Next (6 months) / Later, plus Not doing | "What's the plan?" or before a leadership review |
 | `current-bet.md` | Active sprint: one priority, success criteria, owners | "What's the current priority?" or "What should I focus on?" |
 | `betting-table.md` | Full bet pipeline: active, queued, shipped, killed | "What's next?" or "What's in the pipeline?" |
 | `experiment-roadmap.md` | Running and queued experiments with hypotheses and read-out dates | "What experiments are planned?" or "What are we testing next?" |

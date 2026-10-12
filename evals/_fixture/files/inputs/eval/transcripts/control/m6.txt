@@ -1,0 +1,1 @@
+- Talked about the incident and some limits and alerts that might be added in the future to help with the editor crashes we saw.

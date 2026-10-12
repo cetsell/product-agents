@@ -1,0 +1,27 @@
+schema_version: "1.1"
+name: sprint-health-sweep-with-export
+description: "in-scope case for /sprint-health"
+tags: [sprint-health, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Run sprint health. Linear isn't connected; use inputs/tracker-export.csv and inputs/meeting-notes.md."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?sprint-health"'
+  - name: wrote-output
+    type: file_exists
+    path: "team/weekly-updates/*-sprint-health.md"
+  - name: shape-and-scope
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if the report flags stale in-progress items (e.g
+      ACM-405, ACM-420) and tickets without acceptance criteria, computes a done:in-progress ratio from the export, lists the meeting commitment with no ticket (share-prompt copy), and every flag has an owner role or 'PM to assign'; numbers are labeled as from the pasted export
+      FAIL otherwise.

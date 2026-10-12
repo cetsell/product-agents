@@ -16,4 +16,4 @@ Team roster, weekly cadence, onboarding, decisions, and retros.
 | `onboarding/` | New member checklist, tool setup | New hire joining the team |
 | `decisions/` | Decision log — what we decided and why | "Why did we decide X?" or "What did we decide about Y?" |
 | `retros/` | Monthly retrospective notes | Looking back at past sprints |
-| `weekly-updates/` | Archive of "Hello All" team emails | Historical context, what shipped when |
+| `weekly-updates/` | Dated cadence notes (kickoff, pulse, Friday decide, sprint health) and team update emails | What shipped when, what was decided each Friday |

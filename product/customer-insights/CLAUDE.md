@@ -22,9 +22,9 @@ Use `template.md` in this folder.
 
 ## Categories
 
-- **onboarding** — friction in first session, drop-off points
-- **content** — image/video requests, quality feedback, generation UX
-- **voice** — call experience, character voice, billboard-driven users
-- **pricing** — willingness to pay, objections, token confusion
-- **retention** — why they came back or didn't, what they remember
+- **onboarding** — friction in the first session, drop-off points
+- **activation** — what made the product click (or not), time to first value
+- **feature-requests** — asks, workarounds, jobs the product does not do yet
+- **pricing** — willingness to pay, objections, plan confusion
+- **retention** — why they came back or did not, what they remember
 - **other**

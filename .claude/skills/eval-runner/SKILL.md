@@ -1,250 +1,107 @@
 ---
 name: eval-runner
 description: >
-  Automated prompt evaluation for AI product features. Runs test conversations
-  against prompt variants, scores with LLM-as-judge, produces comparison tables.
-  Use when the user says "eval," "run evals," "compare prompts," "test these
-  variants," "which prompt is better," "score these," "prompt evaluation,"
-  "eval-runner," or wants to compare two or more prompt approaches systematically.
-  Also trigger on: "run the eval," "how does variant A compare to B," "test the
-  stage variants."
+  Scores prompt or model variants for an AI feature against a labeled dataset and the
+  pass bar in its eval-requirements doc, using an explicit, configurable LLM judge.
+  Reports pass rate per variant, judge-human agreement, and a ship / runner-up / kill
+  call.
+when_to_use: >
+  Use for "run evals", "eval this prompt", "compare prompts", "which variant is better",
+  "test these variants", "score these outputs", "what's our pass rate", "check judge
+  agreement". Not for evaluating team-os skills (use /skill-eval).
+argument-hint: "[path to eval-requirements doc] [variant files...]"
+allowed-tools: Read, Grep, Glob, Write, Bash
+model: claude-opus-5-5
+effort: high
+context: fork
+metadata:
+  version: 2.0.0
 ---
 
 # Eval Runner
 
-**Role:** Automated prompt evaluator for AI products
-**Output:** `pm-workflows/analysis/prompts/eval-[name]-[date].md`
-
-## How It Works
-
-```
-User provides: variant files (or "all stage variants")
-                            ↓
-            1. Load prompt variants from files
-            2. Load or generate test cases
-            3. Run each test case as a simulated multi-turn conversation
-            4. Score each response with LLM-as-judge (Claude = the judge)
-            5. Produce comparison table + recommendation
-```
-
-**Key design:** The eval runner does NOT call the production API. It calls the LLM directly to keep it independent of the runtime pipeline and lets us eval prompts that aren't deployed yet.
+**Role:** Prompt evaluator for AI product features. You measure variants against a written definition of "good" and report numbers a PM can ship on.
+**Outcome:** Decision quality — AI-feature variants ship or die on measured pass rate against a written bar, not on a demo. **Leaves behind:** an eval report with judge model ID, agreement, and transcripts.
+**Output:** `product/analysis/prompts/eval-{feature}-{date}.md` plus raw transcripts in `product/analysis/prompts/eval-{feature}-{date}/`.
 
 ## Inputs
 
-The user provides:
-1. **Variant files** — paths to prompt variant .md files (or "all stage variants" to load from `dev/docs/prompting docs/prompt variants/`)
-2. **Test cases** — either a test case file, or the user describes scenarios and the skill generates them
-3. **Config** (optional):
-   - Turns per conversation (default: 10)
-   - Generation model (default: match whatever model is used in production)
-   - Judge model: Claude (the current session — self-judge via structured reasoning)
-   - Character persona: default test persona (below) or user-specified
+1. **Eval-requirements doc** (`templates/eval-requirements-doc.md` filled in): criteria with text labels, pass bar, target pass rate, dataset path, human-labeled sample. If none exists, stop and offer to draft one with the user first; an eval without a written pass bar measures nothing.
+2. **Variants:** two or more prompt files (or model choices) to compare. One should be the current production control.
+3. **Config** (defaults in parentheses):
+   - `EVAL_GEN_MODEL` — the model the feature runs on in production (ask; do not guess).
+   - `EVAL_GEN_URL` — generation endpoint (Anthropic Messages API; set an OpenAI-compatible URL if production uses one).
+   - `EVAL_JUDGE_MODEL` — judge model (`claude-opus-5-5`). The judge must be at least as strong as the generator; see `product/playbooks/model-selection.md`.
+   - Runs per case (1; use 3 when variants are within 5 points).
 
-## Default Test Persona
+## Execution
 
-When no specific character is provided, use this test persona to fill `{{char_*}}` template variables:
+### 1. Prepare
+- Load the dataset (JSONL or YAML: `id`, `input` or `turns`, optional `human_label`).
+- Load each variant; substitute template variables from the dataset row.
 
-```
-char_name: Mia
-char_age: 24
-char_occupation: fitness trainer and lifestyle influencer
-char_interests: yoga, hiking, cooking, photography
-char_description: athletic build, long dark hair, warm brown eyes, always smiling
-char_personality_traits: confident, playful, direct, a little competitive, secretly romantic
-```
+### 2. Generate (skip if outputs already exist)
+If the user supplies existing outputs (production logs, or transcripts from an earlier run) as one file per variant × case, skip generation and judge those. Never generate a missing output yourself and label it as the variant's.
 
-## Test Case Format
+Write a small script in the scratch output folder that, for each variant × case, calls `EVAL_GEN_URL` with `EVAL_GEN_MODEL`, replays every turn, and saves the transcript as JSON. Read API keys from the environment (`ANTHROPIC_API_KEY`, or the production provider's key); never write keys to disk. If no key is available, stop and tell the user which variable to set.
 
-Each test case is a sequence of user messages simulating a user archetype:
+### 3. Judge
+Judge blind: score every output before opening the human labels, so agreement in step 4 is a real check. For each transcript, score every criterion with the doc's text labels (`bad` / `good` / `very good`), never numbers.
 
-```yaml
-- name: "Friendly opener"
-  user_messages:
-    - "hey! what's up"
-    - "haha that's cute, i'm jake from miami"
-    - "yeah just got home from work, pretty tired"
-    - "lol what are you wearing rn"
-    - "mmm that sounds nice"
-    - "you're really fun to talk to"
-    - "tell me more about yourself"
-    - "that's actually really interesting"
-    - "i wish i was there with you"
-    - "what would you do if i was?"
-```
+- If `ANTHROPIC_API_KEY` is set, the script calls `EVAL_JUDGE_MODEL` with the judge prompt below and records the model ID in the results.
+- Otherwise, judge in this session and record the session's model as the judge. Say so in the report header.
 
-The eval runner sends `user_messages[0]`, gets a response, sends `user_messages[1]`, gets a response, etc. If the conversation goes beyond scripted messages, the eval runner stops at the last scripted message.
-
-## Standard Test Suite
-
-If the user doesn't provide test cases, use these 5 standard scenarios (10 messages each):
-
-1. **Friendly opener** — casual, responsive, shares when asked
-2. **Terse/low-effort** — "hey" / "ok" / "cool" / "lol" responses
-3. **Sexually forward** — explicit opener, stays forward throughout
-4. **Personal sharer** — volunteers name, location, feelings immediately
-5. **Mixed signals** — flirty → distant → "sorry was busy" → flirty again
-
-Generate the full 10-message scripts for each before running.
-
-## Scoring (LLM-as-Judge)
-
-After each full conversation, score using this judge prompt:
+Judge prompt:
 
 ```
-You are evaluating an AI character's conversation performance. You will see a system
-prompt and a full conversation transcript. Score the character on these criteria
-(1-5 each):
-
-1. PHASE PROGRESSION: Does the character's behavior change across the conversation?
-   Does it start different from how it ends? Is there a clear arc?
-   1=identical behavior throughout, 5=clear natural progression
-
-2. AHA MOMENT: Is there a point where the conversation feels personal — where the
-   character references something the user said, or creates a moment of genuine
-   connection?
-   1=never feels personal, 5=specific surprising callback that feels real
-
-3. CLIFFHANGER: Does the conversation's final messages create an unresolved thread?
-   Something the user would want to come back to find out?
-   1=conversation ends flat, 5=irresistible unresolved moment
-
-4. TONE: Does the character sound like a real person texting? Casual, text-speak,
-   emojis? Or does it drift into formal/literary/AI-assistant prose?
-   1=clearly AI/formal, 5=indistinguishable from a real person texting
-
-5. FLEXIBILITY: When the user does something unexpected, does the character adapt
-   smoothly? Or does it ignore the input and continue a scripted path?
-   1=ignores user input, 5=seamlessly adapts to anything
-
-6. BREVITY: Are responses ≤30 words and ≤2 sentences as instructed?
-   1=regularly exceeds limits, 5=consistently tight and punchy
-
-Respond in this exact JSON format:
-{
-  "phase_progression": {"score": N, "note": "one line"},
-  "aha_moment": {"score": N, "note": "one line"},
-  "cliffhanger": {"score": N, "note": "one line"},
-  "tone": {"score": N, "note": "one line"},
-  "flexibility": {"score": N, "note": "one line"},
-  "brevity": {"score": N, "note": "one line"},
-  "overall": N,
-  "best_moment": "quote the single best character message",
-  "worst_moment": "quote the single worst character message"
-}
+You are grading one output of an AI feature against written criteria.
+Feature: {what we're building, from the doc}
+Criteria (label each bad / good / very good):
+{criteria table from the doc, with each pass condition}
+Transcript:
+{transcript}
+Return JSON only:
+{"labels": {"<criterion>": {"label": "...", "why": "one line"}},
+ "passes_bar": true|false,
+ "worst_line": "quote the weakest output line"}
 ```
 
-## Execution Flow
+### 4. Calibrate
+On the human-labeled sample, compute judge-human agreement per criterion. If agreement is below 80%, report it as the headline finding and recommend fixing the judge prompt before trusting the pass rates.
 
-### Step 1: Prepare
-
-1. Read each variant file
-2. Substitute test persona variables into the prompt template using `{{key}}` replacement
-3. Generate or load test case scripts
-
-### Step 2: Run Conversations
-
-Create a temporary Python script that:
-
-```python
-# Pseudocode — the skill generates and executes this via Bash
-
-import os, json, requests
-
-LLM_API_KEY = os.getenv("LLM_API_KEY")
-API_URL = os.getenv("LLM_API_URL", "https://api.openai.com/v1/chat/completions")
-
-def run_conversation(system_prompt, user_messages, model="gpt-4o-mini"):
-    messages = [{"role": "system", "content": system_prompt}]
-    transcript = []
-
-    for user_msg in user_messages:
-        messages.append({"role": "user", "content": user_msg})
-        response = requests.post(API_URL, headers={
-            "Authorization": f"Bearer {LLM_API_KEY}",
-            "Content-Type": "application/json"
-        }, json={
-            "model": model,
-            "messages": messages,
-            "max_tokens": 150,
-            "temperature": 0.8
-        })
-        assistant_msg = response.json()["choices"][0]["message"]["content"]
-        messages.append({"role": "assistant", "content": assistant_msg})
-        transcript.append({"user": user_msg, "assistant": assistant_msg})
-
-    return transcript
-
-# For each variant × each test case, run and save transcript
-for variant in variants:
-    for test_case in test_cases:
-        transcript = run_conversation(variant["system_prompt"], test_case["user_messages"])
-        # Save to JSON file
-```
-
-The Python script handles the API calls. The skill (Claude) reads the transcripts and produces the judge scores.
-
-### Step 3: Score
-
-For each completed conversation transcript:
-1. Feed the system prompt + full transcript to the judge prompt (above)
-2. Claude scores each criterion 1-5
-3. Collect scores for aggregation
-
-### Step 4: Aggregate and Report
-
-**Env vars needed** (set in .env):
-- `LLM_API_KEY` — for LLM generation calls
-- `LLM_API_URL` — your LLM endpoint (defaults to OpenAI-compatible endpoint)
-
-## Output Format
+### 5. Report
 
 ```markdown
-# Prompt Eval — [Name] | [Date]
+# Prompt Eval — {feature} | {date}
 
 ## Setup
-- Model: [model]
-- Test cases: [N]
-- Turns per case: [N]
-- Judge: Claude (self-eval)
+Generator: {model} via {endpoint} · Judge: {model ID, API or in-session} · Cases: N · Runs per case: R
+Dataset: {path} · Pass bar: {from doc} · Target pass rate: {from doc}
 
 ## Results
+| Variant | Pass rate | {criterion 1} very good / good / bad | {criterion 2} … | Δ vs control |
+|---------|-----------|------------------------------------|-----------------|--------------|
 
-### Per-Variant Scores
+## Judge-human agreement
+| Criterion | Agreement on N labeled cases |
 
-| Metric | Control | Variant A | Variant B | ... |
-|--------|---------|-----------|-----------|-----|
-| Phase Progression | X.X | X.X | X.X | |
-| Aha Moment | X.X | X.X | X.X | |
-| Cliffhanger | X.X | X.X | X.X | |
-| Tone | X.X | X.X | X.X | |
-| Flexibility | X.X | X.X | X.X | |
-| Brevity | X.X | X.X | X.X | |
-| **Overall** | **X.X** | **X.X** | **X.X** | |
+## Worst moments
+- {variant}: "{quote}" (case {id}, failed {criterion})
 
-### Best & Worst Moments
-
-**Variant A — Best:** "[quote]" (test case: Friendly opener)
-**Variant A — Worst:** "[quote]" (test case: Terse user)
-...
-
-### Per-Test-Case Breakdown
-
-| Test Case | Metric | Control | Variant A | Variant B |
-|-----------|--------|---------|-----------|-----------|
-[Full breakdown: each variant × each test case × each score]
-
-## Recommendation
-
-Ship Variant [X] — [rationale]
-Runner-up: [X] — [why]
-Kill: [X] — [why]
+## Call
+Ship: {variant} — {pass rate vs target}
+Runner-up: {variant} — {why}
+Kill: {variant} — {why}
+Next lever if the bar is not met: prompt / retrieval / fine-tune (from the doc)
 ```
 
----
+## Rules
+
+- The pass bar comes from the doc. Do not move it after seeing results.
+- Apply each criterion as written. If a criterion looks wrong for some inputs (e.g. a bullet minimum on a note with two facts), label it as written, flag the conflict, and show the pass rate both ways if it changes the call.
+- A variant that wins on pass rate but loses badly on one criterion is flagged, not shipped silently.
+- Report the judge's model ID. An eval whose judge is unknown is not comparable to the next one.
 
 ## TERMINATION
 
-Stop when every variant × test-case has been scored, the comparison table is filled,
-and a ship / runner-up / kill recommendation is made. One eval run per invocation —
-report the results and stop; do not iterate the prompts to "improve" the loser, and do
-not deploy the winner. Those are separate, human-owned decisions.
+Stop when every variant × case is judged, agreement is computed on the labeled sample, and the ship / runner-up / kill call is written. One eval run per invocation. Do not edit the losing prompts and do not deploy the winner; both are separate, human-owned decisions.

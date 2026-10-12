@@ -2,9 +2,18 @@
 .DS_Store
 **/.DS_Store
 
-# Editor / OS noise
+# Editor / OS noise (incl. sync-conflict copies like "file 2.md")
 *.swp
 Thumbs.db
+* [0-9].*
 
 # Node
 node_modules/
+
+# Local secrets and per-user Claude Code settings
+.env
+.env.*
+.claude/settings.local.json
+
+# Eval run artifacts (results are summarized into product/analysis/skill-evals/)
+evals/results/
