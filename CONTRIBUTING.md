@@ -130,7 +130,7 @@ Read `product/context.md` first. <Degraded path if a data source or MCP server i
 
 2. Add an eval suite: `evals/<name>/` with at least three cases (in-scope, over-produce trap, out-of-scope). Copy an existing suite; the fixture in `evals/_fixture/` is shared.
 3. Run `node check-skills.mjs --strict` (also runs the scrub check) and fix every finding.
-4. Run the suite (`claude plugin eval . --case "<name>-*" --scaffold --trust-plugin --judge-model claude-opus-5-5`) and commit the dated summary to `product/analysis/skill-evals/`. Record failures as failures.
+4. Run the suite (`claude plugin eval . --case "<name>-*" --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5`) and commit the dated summary to `product/analysis/skill-evals/`. Record failures as failures.
 5. Add the skill to `.claude/rules/skill-routing.md`, the `team-os-guide` routing table, and the README skill table under its outcome.
 6. Never put another team's names, metrics, tools, or paths in a skill. Values come from `product/context.md` at run time; the scrub check enforces the obvious cases.
 

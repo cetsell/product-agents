@@ -48,6 +48,6 @@ Every run had zero MCP servers. cadence, sprint-health, and pm-super-agent fell 
 
 ## Next
 
-1. Run `claude plugin eval . --scaffold --trust-plugin --judge-model claude-opus-5-5` once the CLI is authenticated (3 runs per case, live router for triggering) and add the result as a new dated file.
+1. Run `claude plugin eval . --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5` once the CLI is authenticated (3 runs per case, live router for triggering) and add the result as a new dated file.
 2. Re-run cadence, pm-super-agent, strategy, and eval-runner to confirm the applied fixes.
 3. Add suites for data-analyst, premortem, and check-artifacts.

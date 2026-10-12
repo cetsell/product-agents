@@ -24,10 +24,10 @@ The fixture has no MCP servers on purpose: every case also checks the skill's de
 
 ```bash
 # all suites (needs a logged-in `claude`; scaffold runs only with --scaffold)
-claude plugin eval . --scaffold --trust-plugin --judge-model claude-opus-5-5
+claude plugin eval . --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5
 
 # one skill
-claude plugin eval . --case "cadence-*" --scaffold --trust-plugin --judge-model claude-opus-5-5
+claude plugin eval . --case "cadence-*" --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5
 ```
 
 Results land in `evals/results/<timestamp>/` (git-ignored). Summarize them into `product/analysis/skill-evals/{date}-summary.md` with `/skill-eval`.

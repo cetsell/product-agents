@@ -167,7 +167,7 @@ Full manifest and what stays manual on purpose: `proactive/CLAUDE.md`.
 - [ ] Create the routines in `proactive/routines/` you want.
 - [ ] Add one file per app repo in `engineering/` (from `conventions.template.md`).
 - [ ] Delete skills your team will not use; run `node check-skills.mjs --strict` after.
-- [ ] Run `claude plugin eval . --scaffold --trust-plugin --judge-model claude-opus-5-5` and commit the summary to `product/analysis/skill-evals/`.
+- [ ] Run `claude plugin eval . --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5` and commit the summary to `product/analysis/skill-evals/`.
 
 ## Checks
 

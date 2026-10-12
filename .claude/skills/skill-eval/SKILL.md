@@ -50,7 +50,7 @@ All cases run in a workspace built by `evals/_fixture/scaffold.sh`: the repo tem
 1. Read the target skill: its role line, output shape, and TERMINATION condition are the pass conditions for Dimensions 1–3.
 2. If `evals/{skill}/` does not exist, draft the three cases above and get a quick OK on the trap.
 3. **Run.** Preferred: from the repo root,
-   `claude plugin eval . --case "{skill}-*" --scaffold --trust-plugin --judge-model claude-opus-5-5`
+   `claude plugin eval . --case "{skill}-*" --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5`
    (the default judge is Haiku; use a judge at least as strong as the model the skill runs on — `product/playbooks/model-selection.md`).
    Fallback when the CLI cannot run (not authenticated, or no `claude` binary): build each workspace with `scaffold.sh`, run each in-scope and trap case in a subagent that reads and follows the SKILL.md with no MCP tools, then judge each output in a separate subagent against the case's `llm` criteria. Test triggering by giving a fresh subagent the skill listing (name + description + when_to_use for every skill) and the case prompts, and recording which skill it picks. Label the scorecard "fallback method: subagent runs; triggering is a description-routing proxy".
 4. Score each case on the five dimensions. Quote the single worst moment.
