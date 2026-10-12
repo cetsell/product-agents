@@ -1,4 +1,4 @@
-# Team OS
+# Product Agents
 
 A shared operating layer that helps a product team get more out of AI on the outcomes that matter: the KPIs, the vision, and the pace. It gives Claude Code your team's context, 29 skills that each move a named metric or decision, and proactive runs that keep the weekly loop from idea to measured result to one week.
 
