@@ -63,7 +63,7 @@ Consequential outputs carry an **Evidence Loop** appendix — a claim-by-claim t
 
 ### Proactive layer (`proactive/`)
 
-The shift from reactive (you ask) to proactive (it runs without being asked). `proactive/runs.yml` is a scheduler-agnostic manifest of **scheduled runs** (morning brief, sprint health, weekly status, monthly self-eval) and **reactive triggers** (a new high-stakes bet auto-fires `/premortem`; any stakeholder-facing artifact passes an `/evidence-loop` gate). Every run names a steward, a decision point, and a hard stop condition. Wire it to `/schedule`, GitHub Actions, or hooks when ready — see `proactive/CLAUDE.md`.
+`proactive/runs.yml` lists every run that happens without being asked and the mechanism that executes it: GitHub Actions for the Monday freshness check, Monday artifact grade, and Friday roadmap refresh (each opens an issue or a pull request); Claude Code routines for the weekly cadence notes (prompts in `proactive/routines/`); a hook that prompts `/premortem` when the betting table changes. See `proactive/CLAUDE.md`.
 
 ## Quality
 

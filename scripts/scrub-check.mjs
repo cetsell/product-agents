@@ -59,6 +59,10 @@ try {
 const hits = [];
 for (const file of files) {
   if (file === SELF) continue;
+  if (/ \d+\.[A-Za-z0-9]+$/.test(file)) {
+    hits.push({ file, line: 0, match: file, why: "sync-conflict duplicate (e.g. 'name 2.md'); delete it" });
+    continue;
+  }
   let text;
   try {
     text = readFileSync(join(ROOT, file), "utf8");

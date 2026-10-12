@@ -158,6 +158,23 @@ if (existsSync(AGENTS_DIR)) {
   }
 }
 
+// --- proactive/runs.yml: every bound run names a real, model-invocable skill
+if (existsSync(RUNS_FILE)) {
+  const errors = [], warns = [];
+  const entries = readFileSync(RUNS_FILE, "utf8").split(/\n(?=[ \t]*-[ \t]+id:)/).slice(1);
+  for (const e of entries) {
+    const id = (e.match(/id:\s*(\S+)/) || [])[1];
+    const skill = ((e.match(/^\s*skill:\s*\/?([\w-]+)/m) || [])[1]) || "";
+    const binding = ((e.match(/^\s*binding:\s*([\w-]+)/m) || [])[1]) || "";
+    if (!binding) errors.push(`run \`${id}\` has no binding`);
+    if (!skill || skill === "none" || skill.startsWith("team-os")) continue; // no-model or agent-mode runs
+    if (!skills[skill]) errors.push(`run \`${id}\` names unknown skill \`${skill}\``);
+    else if (noModelInvoke.has(skill) && binding !== "manual")
+      errors.push(`run \`${id}\` schedules \`${skill}\`, which has disable-model-invocation (scheduled runs cannot fire it)`);
+  }
+  push("runs", "proactive/runs.yml", "manifest", errors, warns);
+}
+
 // --- deny-list (WS1 scrub) rides along so one command covers conformance
 const scrub = spawnSync(process.execPath, [join(ROOT, "scripts", "scrub-check.mjs")], { encoding: "utf8" });
 if (scrub.status !== null) {

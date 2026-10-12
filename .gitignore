@@ -2,9 +2,10 @@
 .DS_Store
 **/.DS_Store
 
-# Editor / OS noise
+# Editor / OS noise (incl. sync-conflict copies like "file 2.md")
 *.swp
 Thumbs.db
+* [0-9].*
 
 # Node
 node_modules/
