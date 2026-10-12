@@ -2,7 +2,7 @@
 // Skill and agent conformance linter — Layer 1 of skill evals.
 //
 // Skills (.claude/skills/*/SKILL.md) are scored against the quality bar in
-// docs/sources/product-skills.md: frontmatter, role line, outcome line, an
+// docs/design.md: frontmatter, role line, outcome line, an
 // explicit TERMINATION condition, a size cap, and (for producer skills) a
 // structured output shape. Frontmatter is checked against the fields Claude
 // Code documents (code.claude.com/docs/en/skills, /sub-agents); unknown keys

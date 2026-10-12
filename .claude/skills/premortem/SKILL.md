@@ -25,7 +25,7 @@ metadata:
 
 A premortem is the opposite of a postmortem. Instead of figuring out what went wrong after something fails, you imagine it already failed and figure out why before you start.
 
-The method comes from psychologist Gary Klein (published in HBR). Kahneman called it his single most valuable decision-making technique. Google, Goldman Sachs, and P&G use it before major decisions.
+The method comes from psychologist Gary Klein (published in HBR). This skill is adapted from a community Claude skill that packaged Klein's method (original author unknown; see `docs/design.md`). Kahneman called it his single most valuable decision-making technique. Google, Goldman Sachs, and P&G use it before major decisions.
 
 The core insight: when you ask people "what could go wrong?" they give cautious, hedged answers. When you say "this already failed, tell me why," their brains switch into narrative mode and generate far more specific, honest reasons. Wharton/Cornell researchers call this "prospective hindsight."
 

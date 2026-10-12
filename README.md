@@ -190,7 +190,7 @@ All three run in CI (`.github/workflows/skill-check.yml`).
 | `templates/` | Bet brief, decision record, eval-requirements doc, specs, reviews |
 | `proactive/` | Run manifest and routine prompts |
 | `evals/` | Behavioral eval suites and fixture |
-| `docs/sources/` | Design notes and source material the skills were built from |
+| `docs/` | `design.md` (why the repo is shaped this way, quality bar, sources) and `skill-backlog.md` |
 | `.claude/` | Skills, agents, rules, hooks |
 
 ## Contributing and maintenance

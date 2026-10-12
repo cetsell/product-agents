@@ -43,6 +43,20 @@ The 2026-10-12 evals (`product/analysis/skill-evals/2026-10-12/`) ran each core 
 
 `/eval-runner`'s judge is separate from the model the skill runs on: it reads `EVAL_JUDGE_MODEL` (default `claude-opus-5-5`). `claude plugin eval` defaults its judge to Haiku; pass `--judge-model claude-opus-5-5`.
 
+## Two principles behind the table
+
+**Build to swap.** Models improve faster than roadmaps. Keep model choice in frontmatter and in this table, never in a skill's body, so a better model is a one-line change followed by a re-run of that skill's eval. Do not wait for a model to get good enough before building the scaffolding around it.
+
+**Cheapest lever first.** When an AI feature's quality is short, climb this ladder in order and stop at the first rung that clears the eval bar:
+
+| Lever | Effort | What it changes | Mental model |
+|-------|--------|-----------------|--------------|
+| Prompt and context | Low | Instructions, examples, what is in the window | Clear instructions to a capable colleague |
+| Retrieval (RAG) | Medium | What the model can look up at run time | A doctor with the reference text open |
+| Fine-tuning | High | The model's defaults; usually for cost or latency, rarely for quality | Sending someone to a specialist degree |
+
+Most quality gaps close on the first rung. Reach for the third only when the eval says the first two are exhausted and the cost or latency case is written down.
+
 ## When to change a row
 
 - A skill's eval scorecard shows `bad` on "Wrote into the shape" or "Terminated" at the cheaper tier: move it up one tier and re-run its eval before keeping the change.
