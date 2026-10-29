@@ -1,7 +1,7 @@
 {
-  "name": "team-os",
+  "name": "product-agents",
   "version": "2.0.0",
-  "description": "A product team's shared operating layer for Claude Code: 29 outcome-focused skills (cadence, PRDs, sprint health, strategy, evidence loops, evals, CRO), 3 agents, and the templates they need.",
+  "description": "A product team's shared operating layer for Claude Code: 31 outcome-focused skills (cadence, PRDs, sprint health, signal triage, strategy, judge, evidence loops, evals, CRO), 3 agents, and the templates they need.",
   "license": "MIT",
   "author": {
     "name": "Chad Etsell",

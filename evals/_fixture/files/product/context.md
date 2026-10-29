@@ -1,6 +1,6 @@
 # Product Context
 
-*Fixture for team-os evals: a fictional product. Not real data.*
+*Fixture for product-agents evals: a fictional product. Not real data.*
 
 **Last updated:** 2026-10-05
 **Owner:** PM

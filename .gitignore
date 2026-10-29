@@ -17,3 +17,8 @@ node_modules/
 
 # Eval run artifacts (results are summarized into product/analysis/skill-evals/)
 evals/results/
+
+# Signals inbox (user layer): drops are local; only the contract and samples are tracked
+product/signals/*
+!product/signals/CLAUDE.md
+!product/signals/sample-*.md

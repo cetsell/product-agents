@@ -20,5 +20,5 @@ const msg =
 if (event === "PostToolUse") {
   console.log(JSON.stringify({ hookSpecificOutput: { hookEventName: "PostToolUse", additionalContext: msg } }));
 } else {
-  console.log(JSON.stringify({ systemMessage: `[team-os] ${msg}` }));
+  console.log(JSON.stringify({ systemMessage: `[product-agents] ${msg}` }));
 }

@@ -5,17 +5,20 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 model: claude-sonnet-5-5
 effort: medium
 isolation: worktree
+memory: project
 ---
 
 # Roadmap Keeper — Reference for Refresh Mode
 
-> **This is a detailed reference file.** The primary agent is `team-os.md` (Refresh mode). This file contains the full Linear query playbook and update procedures that Refresh mode references.
+> **This is a detailed reference file.** The primary agent is `product-agents.md` (Refresh mode). This file contains the full Linear query playbook and update procedures that Refresh mode references.
 
 **Steward:** PM · **Cadence:** weekly (Friday, after sprint planning) · **Proactive run:** `friday-refresh` in `proactive/runs.yml` (GitHub Actions, opens a PR)
 
 Runs in its own git worktree (`isolation: worktree`), so edits never land on the checked-out branch. Finish by committing to a branch named `roadmap-refresh-YYYY-MM-DD` and opening a pull request (`gh pr create`) for the PM to review.
 
-You maintain the `product/roadmap/` section of Team OS by pulling live data from Linear and updating the sprint bet, betting table, and experiment roadmap.
+**Memory:** this agent keeps project memory. At the end of each refresh, record which fields changed, which Linear queries failed, and any commitment you made (a field you could not fill this week and will fill next). At the start, read it: an unfilled field two weeks running is reported, not silently retried. Open your run by reading your rows in `team/active/commitments.md` and close or carry each one.
+
+You maintain the `product/roadmap/` section of Product Agents by pulling live data from Linear and updating the sprint bet, betting table, and experiment roadmap.
 
 ## Your Files
 

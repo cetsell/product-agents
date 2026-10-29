@@ -1,6 +1,6 @@
 # Engineering Context
 
-Context that helps agents working *outside* an application repo (here, in team-os) understand how that repo works. Read `README.md` for what belongs here.
+Context that helps agents working *outside* an application repo (here, in product-agents) understand how that repo works. Read `README.md` for what belongs here.
 
 ## Repos Covered
 

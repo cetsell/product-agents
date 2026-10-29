@@ -114,7 +114,7 @@ Not recommended here, because it is out of scope for this audit: new bets, re-ra
 | 6 | Welcome v2 is a confound for invited (d7) | partial | tracker-export.csv, ACM-409 Done 2026-10-08. Its content and whether it prompts invites are not in any file |
 | 7 | Invited (d7) baseline is stable at 33.0–34.0% | supported | inputs/funnel-weekly.csv, cohorts 2026-08-10 → 2026-09-28; product/context.md 34% as of 2026-10-03 |
 | 8 | 2 of 3 customer-facing ships have no metric | supported | tracker-export.csv (ACM-399 Done 2026-10-06, ACM-409 Done 2026-10-08); metrics-dictionary.md; experiment-roadmap.md |
-| 9 | "Week-1 retention +3 pts" for editor load is unverifiable from team-os | supported (that it's unverifiable) | betting-table.md, 2026-10-09; context.md, 2026-10-05; funnel-weekly.csv |
+| 9 | "Week-1 retention +3 pts" for editor load is unverifiable from product-agents | supported (that it's unverifiable) | betting-table.md, 2026-10-09; context.md, 2026-10-05; funnel-weekly.csv |
 | 10 | The invite step will be live for the 2026-10-13 cohort | assumed | tracker-export.csv shows ACM-412 In Progress at 2026-10-09; QA was planned for 2026-10-08 (meeting notes, 2026-10-05); no ship confirmation |
 | 11 | Proration pause slips the paywall bet | supported | meeting-notes.md, 2026-10-07; betting-table.md, 2026-10-09 (dependency listed, no slip noted) |
 | 12 | ACM-410 SSO is not on the roadmap | supported | tracker-export.csv, 2026-10-08; roadmap.md, 2026-09-15; betting-table.md, 2026-10-09 |

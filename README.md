@@ -1,6 +1,6 @@
 # Product Agents
 
-A shared operating layer that helps a product team get more out of AI on the outcomes that matter: the KPIs, the vision, and the pace. It gives Claude Code your team's context, 29 skills that each move a named metric or decision, and proactive runs that keep the weekly loop from idea to measured result to one week.
+A shared operating layer that helps a product team get more out of AI on the outcomes that matter: the KPIs, the vision, and the pace. It gives Claude Code your team's context, 31 skills that each move a named metric or decision, and proactive runs that keep the weekly loop from idea to measured result to one week.
 
 ## Install (60 seconds)
 
@@ -8,10 +8,10 @@ A shared operating layer that helps a product team get more out of AI on the out
 
 ```bash
 claude plugin marketplace add cetsell/product-agents
-claude plugin install team-os@product-agents
+claude plugin install product-agents@product-agents
 ```
 
-Then run `/team-os:team-os-guide setup` in your project: it copies `product/context.md`, the roadmap templates, and the output folders the skills write to, and walks you through filling in the context. Skills are namespaced (`/team-os:cadence`, `/team-os:strategy`).
+Then run `/product-agents:product-agents-guide setup` in your project: it copies `product/context.md`, the roadmap templates, and the output folders the skills write to, and walks you through filling in the context. Skills are namespaced (`/product-agents:cadence`, `/product-agents:strategy`).
 
 **As your team's repo** (everything: hooks, rules, GitHub workflows, evals):
 
@@ -26,8 +26,8 @@ Fill in `product/context.md` first; every strategy, cadence, and analysis skill 
 
 | Layer | What | Where |
 |-------|------|-------|
-| **Context** | North Star, pillars, dated baselines, teams, and which tool answers which question, in one file the skills read first; roadmap, betting table, metrics, decisions | `product/context.md`, `product/`, `team/` |
-| **Skills** | 29 skills, each opening with the outcome it moves and the evidence it leaves behind; 3 agents for navigating, refreshing, and auditing the repo | `.claude/skills/`, `.claude/agents/` |
+| **Context** | North Star, pillars, dated baselines, teams, and which tool answers which question, in one file the skills read first; roadmap, betting table, metrics, decisions, the principles those decisions compress into, and a signals inbox where alerts and support exports land as files | `product/context.md`, `product/`, `product/signals/`, `team/` |
+| **Skills** | 31 skills, each opening with the outcome it moves and the evidence it leaves behind; 3 agents for navigating, refreshing, and auditing the repo | `.claude/skills/`, `.claude/agents/` |
 | **Proactive** | Runs that fire on a schedule or a trigger and hand a human a decision as a pull request or issue | `proactive/runs.yml`, `.github/workflows/`, `.claude/settings.json` |
 
 Guardrails that make the layers safe to run fast: every consequential output carries an **Evidence Loop** appendix (`product/playbooks/evidence-loop.md`); issue-tracker writes always ask a human first; automated runs never push to the default branch.
@@ -62,9 +62,9 @@ Each skill and agent pins its model and effort in frontmatter (full IDs, so Bedr
 | Strategy, PRDs, audits, premortems, evidence loops, pricing, positioning | `claude-opus-5-5` | high |
 | LLM-as-judge (`/eval-runner`, `/skill-eval`) | `claude-opus-5-5` | high |
 
-## Skills (29), by the outcome they move
+## Skills (31), by the outcome they move
 
-Invoke with `/skill-name` (or `/team-os:skill-name` as a plugin); Claude also loads a skill when your request matches its description. Routing table: `.claude/rules/skill-routing.md`.
+Invoke with `/skill-name` (or `/product-agents:skill-name` as a plugin); Claude also loads a skill when your request matches its description. Routing table: `.claude/rules/skill-routing.md`.
 
 ### Velocity
 
@@ -72,11 +72,13 @@ Invoke with `/skill-name` (or `/team-os:skill-name` as a plugin); Claude also lo
 |-------|-------|---------------|
 | `/audit` | shrinks the lag between shipped and measured, and the blockers that recur week after week | a dated report in `product/analysis/audit/` where every finding has two sources and an owner |
 | `/cadence` | holds the idea-to-measured loop to one week by forcing an iterate-or-swing call on the bet every Friday | dated notes in `team/weekly-updates/` that the next week builds on |
+| `/judge` | the PM answers each taste or scope question once; repeats are settled from `team/decisions/principles.md` in minutes instead of waiting in chat, and only unanswered judgments reach a human | verdicts in `team/decisions/questions.md` with cited sources, and a dated batch note in `product/analysis/judge/` |
 | `/issue-creator` | tickets an engineer can start in ten minutes, each instrumented so the shipped work can be read against its hypothesis | drafted (and, on approval, created) tickets with problem, criteria, hypothesis, and analytics |
 | `/pm-super-agent` | idea to a buildable, measurable PRD in one session, scoped to the smallest version that proves the bet | a PRD in `product/specs/` with an evidence appendix and a proposed ticket list |
 | `/senior-prompt-engineer` | prompt changes ship as reviewed diffs with eval cases attached, so AI-feature iterations take hours instead of guesswork cycles | an audit, design, or debug document in `product/analysis/prompts/` plus the diff |
 | `/sprint-health` | stale tickets, blockers, and launch-gate gaps are caught while there is still time in the sprint to fix them | a dated sweep in `team/weekly-updates/` where every flag has an owner |
-| `/team-os-guide` | a new team goes from install to its first useful, measured run in one session instead of a week of reading | a filled-in `product/context.md` (setup) or a one-line routing answer |
+| `/triage` | the inbox of alerts, bugs, and requests is sorted against the current bet daily instead of piling up; every item is do now, queued under a named bet, declined with a cited reason, or handed to `/strategy` | a dated note in `team/active/` and a processed footer on every signal file in `product/signals/` it read |
+| `/product-agents-guide` | a new team goes from install to its first useful, measured run in one session instead of a week of reading | a filled-in `product/context.md` (setup) or a one-line routing answer |
 
 ### Decision quality
 
@@ -131,17 +133,17 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 
 | Server | Env vars | Used by |
 |--------|----------|---------|
-| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, issue-creator, team-os agent (Refresh) |
+| `linear` (issue tracker) | `LINEAR_MCP_URL` (defaults to Linear's hosted server; sign in via `/mcp`) | cadence, sprint-health, audit, strategy, check-artifacts, monthly-pm-self-eval, pm-super-agent, issue-creator, product-agents agent (Refresh) |
 | `bigquery` (warehouse) | `BIGQUERY_PROJECT`, optional `BIGQUERY_WRITE_MODE` (defaults to `blocked`) | data-analyst |
 | `meeting-notes` | `MEETING_NOTES_MCP_URL` (your meeting-notes tool's MCP endpoint) | cadence, sprint-health, audit |
 
-**MCP-free skills** (never call a server): evidence-loop, premortem, eval-runner, skill-eval, senior-prompt-engineer, and every marketing and CRO skill.
+**MCP-free skills** (never call a server): judge, triage, evidence-loop, premortem, eval-runner, skill-eval, senior-prompt-engineer, and every marketing and CRO skill.
 
 ## Agents (3)
 
 | Agent | Model | What it does |
 |-------|-------|--------------|
-| `team-os` | Sonnet 5.5 | Routes by intent: Navigate (read-only), Contribute (route an update to the right file), Refresh (tracker → `product/roadmap/`), Audit (freshness and drift, report only). Preloads `evidence-loop` and `check-artifacts`. |
+| `product-agents` | Sonnet 5.5 | Routes by intent: Navigate (read-only), Contribute (route an update to the right file), Refresh (tracker → `product/roadmap/`), Audit (freshness and drift, report only). Preloads `evidence-loop` and `check-artifacts`. |
 | `roadmap-keeper` | Sonnet 5.5 | Friday refresh procedure: factual fields only, in its own worktree, ends in a pull request. |
 | `freshness-auditor` | Haiku 5.5 | Monday audit procedure with project memory, so repeat offenders show up. |
 
@@ -154,6 +156,9 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 | Roadmap refresh (roadmap-keeper) | Fri | GitHub Actions + `ANTHROPIC_API_KEY`, `LINEAR_API_KEY`; opens a PR |
 | Sprint health, Monday kickoff, Wednesday pulse, Friday decide | weekly | Claude Code routines; prompts in `proactive/routines/` |
 | Premortem nudge | betting table changes | hook |
+| Questions triage (`/judge`) | new open question, or daily | Claude Code routine; prompt in `proactive/routines/questions-triage.md` |
+| Signals triage (`/triage`) | daily; exits when `product/signals/` has nothing new | Claude Code routine; prompt in `proactive/routines/signals-triage.md` |
+| Metric breach (`/data-analyst`) | a new alert file in `product/signals/` | Claude Code routine; prompt in `proactive/routines/metric-breach.md` |
 
 Full manifest and what stays manual on purpose: `proactive/CLAUDE.md`.
 
@@ -183,8 +188,8 @@ All three run in CI (`.github/workflows/skill-check.yml`).
 
 | Folder | Contents |
 |--------|----------|
-| `product/` | Context, analytics definitions, roadmap, specs index, playbooks, dated skill outputs (`analysis/`), customer insights |
-| `team/` | Roster, rituals, decisions, retros, weekly cadence notes |
+| `product/` | Context, analytics definitions, roadmap, specs index, playbooks, dated skill outputs (`analysis/`), customer insights, signals inbox (`signals/`) |
+| `team/` | Roster, rituals, decisions, retros, weekly cadence notes, short-lived working notes (`active/`) |
 | `gtm/` | Campaign tracking; copy, email, and pSEO outputs |
 | `engineering/` | One context file per app repo, for product work |
 | `templates/` | Bet brief, decision record, eval-requirements doc, specs, reviews |

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Scrub check: fails if install-specific context leaks back into the repo.
 //
-// team-os started life inside one team's install. This check keeps that team's
+// product-agents started life inside one team's install. This check keeps that team's
 // paths, metrics, tools, and people out of the generic template so a fresh clone
 // never reasons from someone else's context.
 //

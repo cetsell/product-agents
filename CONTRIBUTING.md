@@ -1,4 +1,4 @@
-# Contributing to Team OS
+# Contributing to Product Agents
 
 This repo is your team's shared operating layer. **Everyone contributes** — engineers, GTM, design, ops, leadership. You don't need to be technical. If you know something the team should know, it belongs here.
 
@@ -51,7 +51,7 @@ That's it. No code review needed — this is context, not code.
 
 ### 2. Claude Code (for agent-assisted updates)
 
-If you have Claude Code set up, open the `team-os` repo and ask:
+If you have Claude Code set up, open the `product-agents` repo and ask:
 
 ```
 "Update the decision log — we decided to use [Tool A] over [Tool B] for [feature]"
@@ -131,7 +131,7 @@ Read `product/context.md` first. <Degraded path if a data source or MCP server i
 2. Add an eval suite: `evals/<name>/` with at least three cases (in-scope, over-produce trap, out-of-scope). Copy an existing suite; the fixture in `evals/_fixture/` is shared.
 3. Run `node check-skills.mjs --strict` (also runs the scrub check) and fix every finding.
 4. Run the suite (`claude plugin eval . --case "<name>-*" --scaffold --allow-tools Write Edit --trust-plugin --judge-model claude-opus-5-5`) and commit the dated summary to `product/analysis/skill-evals/`. Record failures as failures.
-5. Add the skill to `.claude/rules/skill-routing.md`, the `team-os-guide` routing table, and the README skill table under its outcome.
+5. Add the skill to `.claude/rules/skill-routing.md`, the `product-agents-guide` routing table, and the README skill table under its outcome.
 6. Never put another team's names, metrics, tools, or paths in a skill. Values come from `product/context.md` at run time; the scrub check enforces the obvious cases.
 
 ---
@@ -158,7 +158,7 @@ Every piece of data in this repo has a shelf life:
 
 A feature is not "shipped" until:
 
-1. The relevant docs in team-os are updated (roadmap status, decision log, metrics if applicable)
+1. The relevant docs in product-agents are updated (roadmap status, decision log, metrics if applicable)
 2. If it's a bet that shipped → move it to "Shipped" in `betting-table.md`
 3. If it changed how we measure something → update `metrics-dictionary.md`
 4. If it required a decision → add to `decisions.md`

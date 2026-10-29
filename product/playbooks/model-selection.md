@@ -37,7 +37,7 @@ In Claude Code, Opus 5.5, Sonnet 5.5, and Haiku 5.5 default to `effort: medium`;
 | ab-test-setup, page-cro, signup-flow-cro, onboarding-cro, paywall-upgrade-cro, popup-cro, churn-prevention, email-sequence, referral-program, programmatic-seo, copywriting, marketing-psychology | sonnet | medium |
 | strategy, pm-super-agent, audit, premortem, evidence-loop, marketing-strategy-pmm, pricing-strategy | opus | high |
 | eval-runner, skill-eval | opus | high |
-| team-os, roadmap-keeper (agents) | sonnet | medium |
+| product-agents, roadmap-keeper (agents) | sonnet | medium |
 
 The 2026-10-12 evals (`product/analysis/skill-evals/2026-10-12/`) ran each core skill at the tier in this table: Sonnet for cadence, sprint-health, and issue-creator; Opus for pm-super-agent, strategy, audit, eval-runner, and evidence-loop. check-artifacts at Haiku has not been evaluated yet.
 

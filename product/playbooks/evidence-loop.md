@@ -49,7 +49,7 @@ Append this to any consequential artifact. Skills generate it; humans read it fi
 
 ## Rules
 
-- **No undated source.** "The roadmap says" is not a source; "`product/roadmap/current-bet.md`, 2026-05-19" is. Mirrors the team-os rule: every data point has a date.
+- **No undated source.** "The roadmap says" is not a source; "`product/roadmap/current-bet.md`, 2026-05-19" is. Mirrors the product-agents rule: every data point has a date.
 - **Unsupported is allowed — hiding it is not.** A recommendation built partly on
   assumption is fine *if the assumptions are named*. The failure mode is laundering
   an assumption into a fact through fluent prose.

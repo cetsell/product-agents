@@ -8,7 +8,7 @@ description: >
 when_to_use: >
   Use for "run evals", "eval this prompt", "compare prompts", "which variant is better",
   "test these variants", "score these outputs", "what's our pass rate", "check judge
-  agreement". Not for evaluating team-os skills (use /skill-eval).
+  agreement". Not for evaluating product-agents skills (use /skill-eval).
 argument-hint: "[path to eval-requirements doc] [variant files...]"
 allowed-tools: Read, Grep, Glob, Write, Bash
 model: claude-opus-5-5

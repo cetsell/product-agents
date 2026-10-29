@@ -24,7 +24,7 @@ First-week essentials for joining the team.
 
 - [ ] Set up development environment (see `tool-setup.md`)
 - [ ] Install Claude Code (if using AI tools)
-- [ ] Clone this repo (`team-os`) for shared context
+- [ ] Clone this repo (`product-agents`) for shared context
 
 ## Day 3-5: People
 

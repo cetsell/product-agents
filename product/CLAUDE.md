@@ -13,3 +13,4 @@ Product context. Start with `context.md`: North Star, pillars, baselines, and wh
 | `analysis/` | Dated skill outputs (strategy, audits, data, premortems, evals) | Citing a past analysis |
 | `reference/` | Industry research, pricing, PM principles | Background reading, standards, mental models |
 | `customer-insights/` | Captures from customer calls, support, and user research | Designing experiments, writing specs, monthly retros |
+| `signals/` | Inbox where alerts, support exports, and reviews land as dated files; `/triage` and the `metric-breach` run read them | Before triage, or to see what the drop contract expects (`signals/CLAUDE.md`) |

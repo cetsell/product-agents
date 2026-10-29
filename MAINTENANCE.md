@@ -1,6 +1,6 @@
 # Maintenance Playbook
 
-How Team OS stays alive. Three layers: human contributions, agent maintenance, automated checks.
+How Product Agents stays alive. Three layers: human contributions, agent maintenance, automated checks.
 
 ---
 
@@ -17,6 +17,10 @@ Everyone on the team contributes via pull requests. See [CONTRIBUTING.md](CONTRI
 | `product/roadmap/experiment-roadmap.md` | PM | — | Experiment launches/readouts |
 | `product/specs/CLAUDE.md` | PM | Design Lead | New spec created or status changes |
 | `team/decisions/decisions.md` | Whoever decided | PM | When a decision is made |
+| `team/decisions/principles.md` | PM | — | A decision recurs; Friday keeps or deletes `proposed` rows; a judge verdict is overridden |
+| `team/decisions/questions.md` | Anyone (file), `/judge` (verdicts) | PM (clears `held`) | A taste or scope question the record does not answer |
+| `product/signals/` | Your webhook or export (drops), `/triage` (footers) | PM | A source emits an alert, export, or digest; see `product/signals/CLAUDE.md` |
+| `team/active/triage-{date}.md` | `/triage` | PM (confirms Do now) | Daily, when `product/signals/` has an unprocessed file |
 | `team/roster.md` | PM | Eng Lead | Team changes |
 | `team/cadence.md` | PM | — | Ritual changes |
 | `gtm/campaign-tracker.md` | GTM Lead | GTM/Ops | Campaign status changes |
@@ -29,7 +33,7 @@ Everyone on the team contributes via pull requests. See [CONTRIBUTING.md](CONTRI
 
 ## Layer 2: Agent — One Loop, Many Modes
 
-One agent handles all Team OS tasks: `.claude/agents/team-os.md`
+One agent handles all Product Agents tasks: `.claude/agents/product-agents.md`
 
 Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-loads skills only when needed. (One core loop, skills as loadable context, scoped permissions.)
 
@@ -44,7 +48,7 @@ Instead of a fleet of narrow bots, a single agent routes by **intent** and lazy-
 
 ### How to use
 
-Open Claude Code in the `team-os` repo:
+Open Claude Code in the `product-agents` repo:
 
 ```
 # Anyone, anytime
@@ -97,6 +101,7 @@ GitHub Actions that run on a schedule to catch drift.
 | Artifact grade (Mon) | `.github/workflows/artifact-grade.yml` | `ANTHROPIC_API_KEY` secret | PR with `product/analysis/audit/artifacts-{date}.md` |
 | Roadmap refresh (Fri) | `.github/workflows/roadmap-refresh.yml` | `ANTHROPIC_API_KEY`, `LINEAR_API_KEY` secrets | PR updating `product/roadmap/` factual fields |
 | Cadence notes, sprint health | Claude Code routines (`proactive/routines/`) | a routine per run | draft PRs in `team/weekly-updates/` |
+| Signals triage, metric breach (daily) | Claude Code routines (`proactive/routines/signals-triage.md`, `metric-breach.md`) | files dropped in `product/signals/` | draft PRs with `team/active/triage-{date}.md` and `product/analysis/data/alert-*.md` |
 | Repo checks (every PR) | `.github/workflows/skill-check.yml` | nothing | scrub check, skill/agent conformance, plugin validation |
 
 Full manifest: `proactive/runs.yml`.
@@ -143,7 +148,7 @@ A feature or bet is not "done" until the relevant context is updated:
 
 | What shipped | Update required |
 |-------------|----------------|
-| A bet completed | Move to "Shipped" in `betting-table.md`, update `current-bet.md` |
+| A bet completed | Move to "Shipped" in `betting-table.md`, update `current-bet.md`; name where an agent reads its success metric without a human (saved query, alert into `product/signals/`, or dashboard export path), or `/audit` flags it as an unmeasurable ship |
 | An experiment read out | Update `experiment-roadmap.md` with results + kill/iterate decision |
 | A metric definition changed | Update `metrics-dictionary.md` |
 | A new data issue found | Add row to `data-quality-log.md` |

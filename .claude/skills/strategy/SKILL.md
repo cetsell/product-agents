@@ -35,6 +35,20 @@ Read before any analysis:
 
 Never carry another team's metrics. If a number is not in these sources or supplied by the user, it does not appear in the output.
 
+## The 100x question (Prioritization, Decision Memo, Vision Check)
+
+Models compound 2% improvements and rarely propose the reorganisation that makes a number 100x better. So before the ranked call in these three modes, write one bounded section:
+
+```markdown
+## If the constraint did not exist
+**Constraint we are optimising around:** {the thing every option on the table accepts}
+**The 100x version:** {what the product or metric looks like if it were gone; one or two lines}
+**What it would take:** {the one capability or rewrite; not a plan}
+**Why it is (not) on the table this quarter:** {one line}
+```
+
+Five lines, never more. It is never ranked above the evidence-backed call and never becomes the recommendation on its own; it exists so that choosing the incremental path is a choice the PM sees. If the user asks to pursue it, that is a new bet brief, not this run.
+
 ## Routing
 
 | Request matches | Run |
@@ -166,4 +180,4 @@ Every output ends with the Evidence Loop appendix from `product/playbooks/eviden
 
 ## TERMINATION
 
-Stop when the requested mode's artifact is written to its path and its Evidence Loop appendix is attached. One mode per invocation: a RICE request does not also get an OKR cascade; a competitive analysis does not also get a roadmap. Do not append "broader strategic context", "additional considerations", or "next steps" sections the user did not ask for. If the ranked call is made and the evidence table is filled, you are finished; do not iterate for polish.
+Stop when the requested mode's artifact is written to its path and its Evidence Loop appendix is attached (and, for Prioritization, Decision Memo, and Vision Check, the five-line 100x section is present and bounded). One mode per invocation: a RICE request does not also get an OKR cascade; a competitive analysis does not also get a roadmap. Do not append "broader strategic context", "additional considerations", or "next steps" sections the user did not ask for. If the ranked call is made and the evidence table is filled, you are finished; do not iterate for polish.

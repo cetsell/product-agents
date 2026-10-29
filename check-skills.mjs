@@ -167,7 +167,7 @@ if (existsSync(RUNS_FILE)) {
     const skill = ((e.match(/^\s*skill:\s*\/?([\w-]+)/m) || [])[1]) || "";
     const binding = ((e.match(/^\s*binding:\s*([\w-]+)/m) || [])[1]) || "";
     if (!binding) errors.push(`run \`${id}\` has no binding`);
-    if (!skill || skill === "none" || skill.startsWith("team-os")) continue; // no-model or agent-mode runs
+    if (!skill || skill === "none" || skill.startsWith("product-agents")) continue; // no-model or agent-mode runs
     if (!skills[skill]) errors.push(`run \`${id}\` names unknown skill \`${skill}\``);
     else if (noModelInvoke.has(skill) && binding !== "manual")
       errors.push(`run \`${id}\` schedules \`${skill}\`, which has disable-model-invocation (scheduled runs cannot fire it)`);

@@ -1,4 +1,4 @@
-# Team OS — instructions for any coding agent
+# Product Agents — instructions for any coding agent
 
 A product team's shared operating layer: context, skills, and proactive runs that help the team get more out of AI on the outcomes that matter (KPIs, vision, pace). Claude Code reads this file through `CLAUDE.md`; other agents read it directly. Skills are plain markdown in `.claude/skills/<name>/SKILL.md`: any agent can follow one by reading it.
 
@@ -29,6 +29,10 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 | Specs index | `product/specs/CLAUDE.md` |
 | Customer insights | `product/customer-insights/` |
 | Decisions | `team/decisions/decisions.md` |
+| Standing rules the judge applies | `team/decisions/principles.md` |
+| Open taste and scope questions, verdicts | `team/decisions/questions.md` |
+| Signals inbox (alerts, support exports, reviews) and its drop contract | `product/signals/` |
+| Today's signals sorted against the bets | `team/active/triage-{date}.md` |
 | Roster and rituals | `team/roster.md`, `team/cadence.md` |
 | Weekly cadence notes | `team/weekly-updates/` |
 | GTM campaigns and skill outputs | `gtm/` |
@@ -43,13 +47,15 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 - Consequential outputs (strategy calls, PRDs, audit findings, metrics cited to stakeholders) end with an Evidence Loop appendix (`product/playbooks/evidence-loop.md`).
 - Never invent data. If a source is unavailable, say which one and continue with what you have, or stop.
 - Never create, update, or assign issue-tracker tickets without explicit approval of the proposed list.
-- Log a decision in `team/decisions/decisions.md` when it is made, not when it ships.
+- Log a decision in `team/decisions/decisions.md` when it is made, not when it ships. A decision that will recur becomes a rule in `team/decisions/principles.md`.
+- A taste or scope question the record does not answer goes to `team/decisions/questions.md` as a row; proceed on a stated assumption rather than stopping. `/judge` decides from the record or holds the row for the PM; it never invents a rule.
 - Propose changes; the human reviews and commits. Automated runs open pull requests, never push to the default branch.
+- Coordinate through the repo, not through messages. A run that writes a file appends one line to the Trail in `product/analysis/CLAUDE.md` and reads the last ten lines first. A run that promises a follow-up writes a row in `team/active/commitments.md` and closes or carries it next time.
 - `product/roadmap/` and `product/playbooks/` are PM tools, not team-mandated process.
 
 ## Definition of done (repo edition)
 
-A bet is not shipped until: its row moves in `betting-table.md`; any decision is in `decisions.md`; changed metric definitions are in `metrics-dictionary.md`; experiment read-outs are in `experiment-roadmap.md`.
+A bet is not shipped until: its row moves in `betting-table.md`; any decision is in `decisions.md`; changed metric definitions are in `metrics-dictionary.md`; experiment read-outs are in `experiment-roadmap.md`; and its success metric is readable by an agent without a human in the loop (a saved query, an alert that lands in `product/signals/`, or a dashboard export path, named in the bet row or in `metrics-dictionary.md`). `/audit` flags shipped bets that fail the last test as unmeasurable ships.
 
 ## Checks
 

@@ -17,7 +17,7 @@ console.log(JSON.stringify({
     hookEventName: "PreToolUse",
     permissionDecision: "ask",
     permissionDecisionReason:
-      `team-os: ${tool}${title ? ` ("${String(title).slice(0, 80)}")` : ""} writes to the issue tracker. ` +
+      `product-agents: ${tool}${title ? ` ("${String(title).slice(0, 80)}")` : ""} writes to the issue tracker. ` +
       "Approve only if you already approved the proposed list (scope, count, assignment).",
   },
 }));

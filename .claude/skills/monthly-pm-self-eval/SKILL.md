@@ -23,7 +23,7 @@ metadata:
 
 ## Data collection (all before writing)
 
-1. **Decision log** — `team/decisions/decisions.md`. Count for the month: decisions logged; confirmed; invalidated (the most valuable); open past their check-by date (the red flag); things killed or stopped.
+1. **Decision log** — `team/decisions/decisions.md`. Count for the month: decisions logged; confirmed; invalidated (the most valuable); open past their check-by date (the red flag); things killed or stopped. Also `team/decisions/principles.md` **Retired** rows dated this month, and the "Killed" / "Not doing" sections of the betting table and roadmap.
 2. **Friday notes** — the last four `team/weekly-updates/*-friday.md`. Per week: did the note lead with a number; hypothesis verdicts; the iterate/swing call and whether it held up; what was killed.
 3. **Issue tracker** — completed this month, created-to-completed ratio, items in progress 2+ weeks, projects that moved vs. stalled. MCP server if connected; otherwise ask for an export or the counts, or score Speed & Focus on the notes alone and say so.
 4. **Standards** — `product/reference/lindy-pm-standard.md` (build the right thing, build it right, build it fast) and `product/playbooks/pm-toolkit.md`.
@@ -38,12 +38,14 @@ metadata:
 | **Communication clarity** | Notes lead with the number; readable in 2 minutes; "killed" and "not doing" sections populated |
 | **Speed and focus** | Concurrent bets (1 is ideal, 3+ is too many); decision-to-production cycle time; scope creep caught |
 | **Leverage** | Systems that run without the PM; feedback captured and fed back; team members' working styles known |
+| **Deletion** | Things removed this month: features, settings, rules in `.claude/rules/`, skills, guardrails, process steps, retired principles. Each with the reason it no longer earned its place. A month with nothing deleted is scored, not excused |
 
 ### Automatic caps
 
 - Fewer than 5 logged decisions this month → Decision quality ≤ 2.
 - "Killed" empty on 3 or more Fridays → Hypothesis discipline ≤ 2.
 - No specific thing stopped this month → Speed and focus ≤ 2.
+- Nothing deleted or retired this month → Deletion ≤ 2. Nothing deleted two months running → Deletion = 1.
 - After scoring, subtract 1 from every dimension (floor 1). Self-assessment runs generous.
 
 ## Output
@@ -58,10 +60,14 @@ metadata:
 | Communication clarity | | | |
 | Speed and focus | | | |
 | Leverage | | | |
+| Deletion | | | |
 | **Overall** | **x.x** | | |
 
 ## Decision log
 Logged: X · Confirmed: X · Invalidated: X · Open past due: X · Killed: X
+
+## Deleted this month
+- {thing} — {why it no longer earned its place} ("nothing" is a valid, scored answer)
 
 ## Went well (max 3, with evidence)
 ## Did not (max 3, with evidence)

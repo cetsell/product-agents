@@ -35,7 +35,7 @@ Full method: `product/playbooks/evidence-loop.md`.
 ## Inputs
 
 1. **Artifact** — the output to audit (a path, pasted text, or the artifact just produced this session).
-2. **Sources** (optional) — files/queries the artifact should be grounded in. If not given, infer from the artifact's own citations and the team-os doc index.
+2. **Sources** (optional) — files/queries the artifact should be grounded in. If not given, infer from the artifact's own citations and the product-agents doc index.
 
 ## Workflow
 

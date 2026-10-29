@@ -36,6 +36,7 @@ Never start with a thesis and hunt for support. Collect, look for the unexpected
 3. Issue tracker, 4–6 weeks segmented by week: completed, cycle time, blocked items and durations, project status. Use the MCP server if connected; otherwise ask the user for an export (CSV or pasted list) and continue with it.
 4. Meeting notes for blockers, decisions, and sentiment: MCP server if connected, pasted notes otherwise, or state that this source is missing.
 5. `product/roadmap/betting-table.md` and `experiment-roadmap.md` for hypotheses to audit against.
+6. **Measurability check (every lens):** for each bet in Completed (or Active past its gate), find where an agent could read its success metric without a human: a saved query or view in `metrics-dictionary.md` or the bet row, an alert that lands in `product/signals/`, or a dashboard export path. A bet with none is an **unmeasurable ship**; list it by name in the Summary with the metric it claimed. This is the repo's definition of done (`AGENTS.md`), so it is a finding, not a note.
 
 ## Routing
 
@@ -73,7 +74,7 @@ If unclear, ask which lens. One lens per invocation.
 ```markdown
 # Operational Intelligence — {date range}
 
-## Summary (3 sentences: health, biggest leak, recommended action)
+## Summary (3 sentences: health, biggest leak, recommended action; name any unmeasurable ship)
 ## Velocity (weekly table: completed, cycle time, delta, context)
 ## Blockers (by frequency × duration × impact)
 ## Process health (handoffs, WIP, cycle time)
@@ -94,7 +95,7 @@ Track every feature from request to customer impact. A feature that ships but ne
 
 ## Summary (3 sentences)
 ## Feature lifecycle
-| Feature | Requested | Shipped | Activated / measured | Lag (days) | Metric moved? |
+| Feature | Requested | Shipped | Activated / measured | Lag (days) | Metric moved? | Metric readable by an agent? (source, or "unmeasurable ship") |
 ## Shipped-to-activated lag (median, worst offender, why)
 ## Strategic alignment (shipped work mapped to pillars in product/context.md)
 ## Recommendations

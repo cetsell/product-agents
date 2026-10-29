@@ -9,10 +9,12 @@ Load only the skill the request needs. Most navigate-and-update tasks need no sk
 | Shipping to learn, shipped-to-activated lag, bet post-mortem, process bottlenecks | `/audit` |
 | Monday kickoff, Wednesday pulse, Thursday prep, Friday demo-and-decide, weekly update, stakeholder update, monthly recap | `/cadence` |
 | Write a ticket, split an epic into tickets | `/issue-creator` |
+| Clear the questions queue, "has this been decided", does a principle cover X | `/judge` |
 | PRD, spec, scope or break down an idea, turn notes into product work | `/pm-super-agent` |
 | Audit, design, or debug a production prompt; structured output | `/senior-prompt-engineer` |
 | Sprint sweep, what's stuck, blocker scan, launch readiness / go-no-go | `/sprint-health` |
-| What can team-os do, which skill fits, set up team-os in a project | `/team-os-guide` |
+| Triage the signals, what came in from support or analytics, is this planned, sort the inbox against the bets | `/triage` |
+| What can product-agents do, which skill fits, set up product-agents in a project | `/product-agents-guide` |
 
 ## Decision quality
 
@@ -26,7 +28,7 @@ Load only the skill the request needs. Most navigate-and-update tasks need no sk
 | Which behavioral mechanism a change relies on, as a testable hypothesis | `/marketing-psychology` |
 | Monthly PM self-evaluation (invoke explicitly) | `/monthly-pm-self-eval` |
 | What could kill this? Stress-test a plan, launch, bet, or pricing change | `/premortem` |
-| Behaviorally eval a team-os skill | `/skill-eval` |
+| Behaviorally eval a product-agents skill | `/skill-eval` |
 
 ## Vision & strategy
 
@@ -61,4 +63,6 @@ Load only the skill the request needs. Most navigate-and-update tasks need no sk
 | In-app paywall, upgrade screen, free-to-paid | `/paywall-upgrade-cro` |
 | Pricing model, tiers, value metric, willingness to pay | `/pricing-strategy` |
 
-Skill outputs go to `product/analysis/<family>/`, `team/weekly-updates/`, `product/specs/`, or `gtm/` as each skill states. Models and effort per skill: `product/playbooks/model-selection.md`.
+When a skill hits a taste or scope question the PM has not settled, it files a row in `team/decisions/questions.md` and continues on its stated assumption; `/judge` clears the queue against `team/decisions/principles.md`.
+
+Skill outputs go to `product/analysis/<family>/`, `team/weekly-updates/`, `team/active/`, `product/specs/`, or `gtm/` as each skill states. Models and effort per skill: `product/playbooks/model-selection.md`.
