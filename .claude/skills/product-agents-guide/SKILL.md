@@ -31,6 +31,7 @@ Pick one skill. Say which, why in one line, and what it will need.
 |---------|---------|-------|
 | Velocity | Monday kickoff, Wednesday pulse, Thursday prep, Friday decide, weekly update, monthly recap | `cadence` |
 | Velocity | What's stuck, blocker scan, launch readiness | `sprint-health` |
+| Velocity | What came in from support or analytics, sort the signals against the bets | `triage` |
 | Velocity | PRD, spec, scope an idea | `pm-super-agent` |
 | Velocity | One ticket, or split an epic | `issue-creator` |
 | Velocity | Shipped-to-measured lag, bet post-mortem, process bottleneck | `audit` |
@@ -59,7 +60,7 @@ The plugin ships the templates. This skill's folder is `<plugin root>/.claude/sk
 
 1. Check what exists in the current project: `product/context.md`, `product/roadmap/{roadmap,current-bet,betting-table,experiment-roadmap}.md`, `product/playbooks/{pm-toolkit,evidence-loop,model-selection}.md`, `templates/`.
 2. Copy only what is missing from the plugin root to the same paths. Never overwrite an existing file.
-3. Create the output folders the skills write to: `product/analysis/`, `product/specs/`, `team/weekly-updates/`, `team/decisions/`, `gtm/`.
+3. Create the output folders the skills write to: `product/analysis/`, `product/specs/`, `product/signals/` (copy its `CLAUDE.md`, the drop contract), `team/weekly-updates/`, `team/decisions/`, `team/active/`, `gtm/`.
 4. Fill `product/context.md` with the user: product and customer, North Star (value and date), up to three pillars, teams by role, three to five baseline metrics with dates and sources, and which tools answer which question. Ask in one grouped message; leave `{{placeholders}}` for anything they do not know yet and say which skills will mark claims `assumed` until it is filled.
 5. Point out what does not come with a plugin install: the repo's hooks (`.claude/settings.json`), rules, GitHub workflows, and evals. Teams that want those should clone or fork the repo instead.
 

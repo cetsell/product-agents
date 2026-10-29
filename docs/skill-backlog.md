@@ -23,12 +23,6 @@ Skills that would earn a place in Product Agents but are not built yet. Each ent
 - **Output:** inline comments plus a summary at the top: the claim most likely to be wrong, the missing evidence, the unstated assumption, what to cut. Writes back to the same file or to `product/analysis/reviews/`.
 - **Termination:** every section reviewed; at most ten comments; no rewriting of the author's prose.
 
-## triage
-
-- **Outcome:** velocity; the inbox of ideas, bugs, and requests gets sorted against the current bet daily instead of piling up.
-- **Pull:** new issues in the tracker since the last run, support or feedback exports, the betting table.
-- **Output:** a short list to `team/active/triage-{date}.md`: do now (serves the current bet), queue (serves a queued bet, with which one), decline (with the one-line reason), and anything that looks like a new bet.
-- **Termination:** every new item has a bucket; nothing is assigned to a person without approval.
 
 ## morning-brief
 

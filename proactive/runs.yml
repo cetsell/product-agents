@@ -53,6 +53,16 @@ scheduled:
     decides: "PM triages flagged blockers before standup"
     termination: "report written; every flag has an owner role or 'PM to assign'"
 
+  - id: signals-triage
+    when: "daily 08:00 local"
+    skill: /triage
+    binding: routine               # or desktop-task
+    executor: proactive/routines/signals-triage.md
+    pulls: ["product/signals/* without the processed footer", "product/roadmap/current-bet.md", "product/roadmap/betting-table.md", "team/decisions/principles.md"]
+    output: "draft PR adding team/active/triage-{date}.md, footers on the signal files read, and any rows filed in team/decisions/questions.md"
+    decides: "PM confirms the Do now list before anything is ticketed; New bet rows go to /strategy"
+    termination: "every item in one of four buckets with a bet or reason named; every file read carries the footer; nothing written when no unprocessed file exists"
+
   - id: monday-kickoff
     when: "Monday 09:30 local"
     skill: /cadence
@@ -142,10 +152,12 @@ reactive:
     termination: "every claim has one status row; flip-assumption and decision owner named"
 
   - id: metric-breach
-    on: "a metric in product/analytics/metrics-dictionary.md crosses its threshold"
+    on: "a new *alert* file lands in product/signals/ (checked daily; the file is the contract, no monitor ships with product-agents)"
     skill: /data-analyst
-    binding: manual                # no metric monitor ships with product-agents; wire one to a routine if you have it
-    output: product/analysis/data/alert-{metric}-{date}.md
+    binding: routine               # or desktop-task
+    executor: proactive/routines/metric-breach.md
+    pulls: ["product/signals/*alert*", "product/analytics/metrics-dictionary.md", "warehouse if connected"]
+    output: "draft PR adding product/analysis/data/alert-{metric}-{date}.md"
     decides: "PM decides whether to intervene"
     evidence: true
-    termination: "breach quantified with source and date; likely cause hypothesized"
+    termination: "each new alert quantified with source and date and a likely cause hypothesized; nothing written when no new alert exists"

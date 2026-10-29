@@ -13,6 +13,7 @@ Load only the skill the request needs. Most navigate-and-update tasks need no sk
 | PRD, spec, scope or break down an idea, turn notes into product work | `/pm-super-agent` |
 | Audit, design, or debug a production prompt; structured output | `/senior-prompt-engineer` |
 | Sprint sweep, what's stuck, blocker scan, launch readiness / go-no-go | `/sprint-health` |
+| Triage the signals, what came in from support or analytics, is this planned, sort the inbox against the bets | `/triage` |
 | What can product-agents do, which skill fits, set up product-agents in a project | `/product-agents-guide` |
 
 ## Decision quality
@@ -64,4 +65,4 @@ Load only the skill the request needs. Most navigate-and-update tasks need no sk
 
 When a skill hits a taste or scope question the PM has not settled, it files a row in `team/decisions/questions.md` and continues on its stated assumption; `/judge` clears the queue against `team/decisions/principles.md`.
 
-Skill outputs go to `product/analysis/<family>/`, `team/weekly-updates/`, `product/specs/`, or `gtm/` as each skill states. Models and effort per skill: `product/playbooks/model-selection.md`.
+Skill outputs go to `product/analysis/<family>/`, `team/weekly-updates/`, `team/active/`, `product/specs/`, or `gtm/` as each skill states. Models and effort per skill: `product/playbooks/model-selection.md`.

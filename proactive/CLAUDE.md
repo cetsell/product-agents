@@ -16,13 +16,14 @@ The GitHub workflows skip cleanly with a notice when their secrets are missing. 
 
 ## What you set up once (routines)
 
-`sprint-health`, `monday-kickoff`, `midweek-pulse`, and `friday-decide` bind to Claude Code routines, which are created in the product rather than from repo files. `routines/` holds the exact prompt for each and the steps (`/schedule`, or a desktop scheduled task for a machine you keep awake).
+`sprint-health`, `monday-kickoff`, `midweek-pulse`, `friday-decide`, `questions-triage`, `signals-triage`, and `metric-breach` bind to Claude Code routines, which are created in the product rather than from repo files. `routines/` holds the exact prompt for each and the steps (`/schedule`, or a desktop scheduled task for a machine you keep awake).
+
+`signals-triage` and `metric-breach` read `product/signals/`, where your webhook or export drops alert, support, and review files (`product/signals/CLAUDE.md`). Both exit at once when nothing new is there, so daily costs nothing on a quiet day. No monitor ships with the repo; the alert file is the contract.
 
 ## Manual on purpose
 
 - `monthly-pm-self-eval`: the skill has `disable-model-invocation: true` (a self-evaluation should not fire on its own), which also means scheduled runs cannot invoke it. The PM runs it by name on the first working day.
 - `skill-health`: needs an authenticated `claude plugin eval` (see `evals/README.md`).
-- `metric-breach`: product-agents ships no metric monitor. If you have one, point it at a routine that runs `/data-analyst`.
 
 ## Principles every run obeys
 

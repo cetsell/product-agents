@@ -2,7 +2,7 @@
 
 ## v2.1.0 — unreleased
 
-First workstream of `UPGRADE-PLAN-2026-11.md`: decisions become principles, principles get a judge.
+First two workstreams of `UPGRADE-PLAN-2026-11.md`: decisions become principles, principles get a judge; and a signals inbox closes the loop between what users and the product say and what the team bets on.
 
 ### Added
 
@@ -11,12 +11,19 @@ First workstream of `UPGRADE-PLAN-2026-11.md`: decisions become principles, prin
 - `/judge` skill (Sonnet 5.5, MCP-free): clears open rows with exactly one of three verdicts, decided (citing the rule or dated decision), sent back (malformed), or held (needs a judgment nobody has given). Never invents a principle, never edits the record. Batch notes in `product/analysis/judge/`.
 - `questions-triage` reactive run (routine; prompt in `proactive/routines/questions-triage.md`).
 - `evals/judge/`: three cases (clear the queue, a single unanswered question with pressure to answer it anyway, out-of-scope). The Acme Notes fixture gains a decision log, principles, and a seven-row questions queue including one overridden verdict.
+- `product/signals/`: the signals inbox (user layer, gitignored except `CLAUDE.md` and `sample-*.md`). One file per source drop, `{date}-{source}.md|.csv`, written by the team's webhook or export; a processed file carries a `<!-- processed by /triage {date} -->` footer. Two samples for the Acme Notes fixture: an analytics alert and a support export.
+- `/triage` skill (Sonnet 5.5, MCP-free; promoted from `docs/skill-backlog.md`): reads unprocessed signal files plus the current bet and betting table, writes `team/active/triage-{date}.md` with four buckets (do now, queue under a named bet, decline with a cited reason, new bet handed to `/strategy`), appends the footer to each file it read, and files unsettled taste questions as rows in `questions.md` instead of asking in chat. Never writes tickets or edits roadmap files.
+- `team/active/`: short-lived working notes a run writes and the week consumes.
+- `signals-triage` daily run and `proactive/routines/signals-triage.md`; `proactive/routines/metric-breach.md`.
+- `evals/triage/`: three cases (two drops → four-bucket note, footers, idempotent second run; a prompt that also asks for the tickets; a PRD request). The fixture gains the two signal drops under `product/signals/`.
 
 ### Changed
 
 - `/cadence` Friday Demo & Decide lists held questions for the PM in a new section and does not answer them.
 - `AGENTS.md` rules: a recurring decision becomes a principle; an unanswered taste question goes to the queue, not chat.
-- README, routing, guide, plugin manifest, and maintenance tables updated for 30 skills.
+- `AGENTS.md` definition of done: a bet is not shipped until its success metric is readable by an agent without a human (saved query, alert into `product/signals/`, or dashboard export path). `/audit` gains one measurability check and flags bets that fail it as unmeasurable ships.
+- `metric-breach` in `proactive/runs.yml` moves from `binding: manual` to `routine`: `/data-analyst` runs only when a new alert file exists in `product/signals/`. No monitor ships with the repo; the file is the contract.
+- README, routing, guide, plugin manifest, maintenance, `team/CLAUDE.md`, `product/CLAUDE.md`, and `proactive/CLAUDE.md` updated for 31 skills and the two new runs. `triage` removed from `docs/skill-backlog.md`.
 
 ## v2.0.0 — unreleased (branch `v2-refresh`)
 

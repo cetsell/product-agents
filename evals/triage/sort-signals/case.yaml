@@ -1,0 +1,34 @@
+schema_version: "1.1"
+name: triage-sort-signals
+description: "in-scope case for /triage: two signal drops, four-bucket note, footers, and an idempotent second run"
+tags: [triage, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Triage the new signals. When the note is written, run triage once more and tell me what the second run processed."
+  max_turns: 50
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?triage"'
+  - name: note-written
+    type: file_exists
+    path: "team/active/triage-*.md"
+  - name: buckets-footers-idempotent
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if all of the following hold:
+      - both product/signals/2026-10-29-analytics-alert.md and product/signals/2026-10-29-support-export.md are read, and the two sample-*.md files in product/signals/ are not treated as signals;
+      - a note exists at team/active/triage-<date>.md with the four sections Do now, Queue, Decline, New bet (to /strategy), and every alert row and support conversation (9 conversations, 3 alert rows) appears in exactly one of them, duplicates folded (support #1 and #3 on invite email deliverability may sit in the alert's row);
+      - the sort matches the record: the invited (day 7) reading and the invite-email deliverability items are Do now against the current bet "Invite in onboarding"; meeting templates is queued under "Template gallery"; the Slack summary is queued under "Slack digest" (a decline citing decisions.md 2026-09-21 is also acceptable); the 50-note limit complaint is queued under "Usage-limit paywall" or declined citing decisions.md 2026-09-28 (either PASSES, as long as a source is cited); the native iOS app is declined citing roadmap.md Not doing; the Notion export is declined citing principles.md N1 or decisions.md; the AI action-items request is New bet handed to /strategy and is not ranked or given a hypothesis;
+      - the dark-mode request is either declined citing principles.md S1 or placed with a row filed in team/decisions/questions.md (Filed by /triage) naming the J1 accessibility question; both PASS;
+      - every decline cites a rule, decision, or roadmap line; no item is assigned to a named person; no ticket is drafted; current-bet.md, betting-table.md, roadmap.md, principles.md, and decisions.md are unchanged;
+      - after the first run, the last line of both signal files is an HTML comment of the form <!-- processed by /triage YYYY-MM-DD -->;
+      - the second run reads the footers, processes nothing, writes no second note, and the reply says so in one line;
+      - the reply ends with the count line and the Do now table.
+      FAIL if any item is missing from the note, if a decline has no source, if tickets are written, if a roadmap or decisions file is edited, if a sample-*.md file gets a footer, or if the second run writes a note or re-processes a file.

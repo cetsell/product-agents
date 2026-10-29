@@ -31,6 +31,8 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 | Decisions | `team/decisions/decisions.md` |
 | Standing rules the judge applies | `team/decisions/principles.md` |
 | Open taste and scope questions, verdicts | `team/decisions/questions.md` |
+| Signals inbox (alerts, support exports, reviews) and its drop contract | `product/signals/` |
+| Today's signals sorted against the bets | `team/active/triage-{date}.md` |
 | Roster and rituals | `team/roster.md`, `team/cadence.md` |
 | Weekly cadence notes | `team/weekly-updates/` |
 | GTM campaigns and skill outputs | `gtm/` |
@@ -52,7 +54,7 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 
 ## Definition of done (repo edition)
 
-A bet is not shipped until: its row moves in `betting-table.md`; any decision is in `decisions.md`; changed metric definitions are in `metrics-dictionary.md`; experiment read-outs are in `experiment-roadmap.md`.
+A bet is not shipped until: its row moves in `betting-table.md`; any decision is in `decisions.md`; changed metric definitions are in `metrics-dictionary.md`; experiment read-outs are in `experiment-roadmap.md`; and its success metric is readable by an agent without a human in the loop (a saved query, an alert that lands in `product/signals/`, or a dashboard export path, named in the bet row or in `metrics-dictionary.md`). `/audit` flags shipped bets that fail the last test as unmeasurable ships.
 
 ## Checks
 
