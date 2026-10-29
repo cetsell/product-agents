@@ -86,7 +86,7 @@ scheduled:
     skill: /cadence
     binding: routine               # or desktop-task
     executor: proactive/routines/friday-decide.md
-    pulls: ["issue tracker closed this week", "meeting notes", "this week's notes"]
+    pulls: ["issue tracker closed this week", "meeting notes", "this week's notes", "held rows in team/decisions/questions.md"]
     output: "draft PR adding team/weekly-updates/{date}-friday.md and {date}-update.md"
     evidence: true
     termination: "Friday note with iterate/swing call and evidence loop; update drafted; nothing sent"
@@ -111,6 +111,17 @@ scheduled:
     termination: "every dimension scored with evidence; one behavior named"
 
 reactive:
+  - id: questions-triage
+    on: "team/decisions/questions.md gains an open row (or daily, whichever the routine supports)"
+    skill: /judge
+    binding: routine               # or desktop-task
+    executor: proactive/routines/questions-triage.md
+    pulls: ["team/decisions/principles.md", "team/decisions/decisions.md", "team/decisions/questions.md"]
+    output: "draft PR updating questions.md verdicts and adding product/analysis/judge/verdicts-{date}.md"
+    decides: "PM clears the held rows in the Friday note; overrides go to principles.md as corrections"
+    evidence: true
+    termination: "every open row has one of decided / sent back / held with a cited source; no principle invented"
+
   - id: premortem-high-stakes
     on: "product/roadmap/betting-table.md changes (new high-stakes bet, pricing change, launch plan)"
     skill: /premortem

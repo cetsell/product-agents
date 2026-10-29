@@ -1,0 +1,35 @@
+schema_version: "1.1"
+name: judge-clear-queue
+description: "in-scope case for /judge"
+tags: [judge, in-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Clear the questions queue."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?judge"'
+  - name: batch-note-written
+    type: file_exists
+    path: "product/analysis/judge/*.md"
+  - name: verdicts
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if every open row (1-6) in team/decisions/questions.md ends with exactly one status and a verdict, and the verdicts match the record:
+      - row 1 (don't-show-again toggle) is either decided by S1 with no toggle, citing principles.md S1, or held with a verdict that names S1 as close but not decisive (the record has no usage figure); both PASS;
+      - row 2 (copy with exclamation mark vs. "teammate") is decided by C1 and/or C2 for "Share with a teammate";
+      - row 3 (Notion export for a prospect) is decided by N1 and/or the 2026-09-21 decision: do not build;
+      - row 4 (invite before or after first note) is held, because the record does not say and S3 is only proposed; the verdict names the decision the PM must make;
+      - row 5 (dark-mode toggle) is held or decided-no via S1, but if decided it must cite S1 and must not cite J1 as grounds (dark mode is not an accessibility exemption on the record); a held verdict that mentions J1 as the open question is also a PASS;
+      - row 6 bundles two questions and is sent back;
+      - row 7 (overridden) is not re-judged;
+      - a batch note exists under product/analysis/judge/ with the held table, and the reply ends with the count line and held rows;
+      - principles.md and decisions.md are not edited.
+      FAIL if any decided verdict lacks a cited source line, if a new rule is invented, if row 7 is changed, or if principles.md or decisions.md is modified.

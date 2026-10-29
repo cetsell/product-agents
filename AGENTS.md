@@ -29,6 +29,8 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 | Specs index | `product/specs/CLAUDE.md` |
 | Customer insights | `product/customer-insights/` |
 | Decisions | `team/decisions/decisions.md` |
+| Standing rules the judge applies | `team/decisions/principles.md` |
+| Open taste and scope questions, verdicts | `team/decisions/questions.md` |
 | Roster and rituals | `team/roster.md`, `team/cadence.md` |
 | Weekly cadence notes | `team/weekly-updates/` |
 | GTM campaigns and skill outputs | `gtm/` |
@@ -43,7 +45,8 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 - Consequential outputs (strategy calls, PRDs, audit findings, metrics cited to stakeholders) end with an Evidence Loop appendix (`product/playbooks/evidence-loop.md`).
 - Never invent data. If a source is unavailable, say which one and continue with what you have, or stop.
 - Never create, update, or assign issue-tracker tickets without explicit approval of the proposed list.
-- Log a decision in `team/decisions/decisions.md` when it is made, not when it ships.
+- Log a decision in `team/decisions/decisions.md` when it is made, not when it ships. A decision that will recur becomes a rule in `team/decisions/principles.md`.
+- A taste or scope question the record does not answer goes to `team/decisions/questions.md` as a row; proceed on a stated assumption rather than stopping. `/judge` decides from the record or holds the row for the PM; it never invents a rule.
 - Propose changes; the human reviews and commits. Automated runs open pull requests, never push to the default branch.
 - `product/roadmap/` and `product/playbooks/` are PM tools, not team-mandated process.
 

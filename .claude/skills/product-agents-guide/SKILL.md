@@ -38,6 +38,7 @@ Pick one skill. Say which, why in one line, and what it will need.
 | Decision quality | A number from the warehouse | `data-analyst` |
 | Decision quality | Are our plans current? | `check-artifacts` |
 | Decision quality | How do we know? Pressure-test claims | `evidence-loop` |
+| Velocity | Has this been decided? Clear the questions queue against the principles | `judge` |
 | Decision quality | What could kill this plan? | `premortem` |
 | Decision quality | Design or read out an A/B test | `ab-test-setup` |
 | Decision quality | Score AI-feature prompt variants | `eval-runner` |

@@ -1,0 +1,20 @@
+schema_version: "1.1"
+name: judge-prd-out-of-scope
+description: "out-of-scope case for /judge"
+tags: [judge, out-of-scope]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Pressure-test the claims in inputs/strategy-memo.md before it goes to leadership."
+  max_turns: 40
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: did-not-fire
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?judge"'
+    min: 0
+    max: 0
+    arm: both

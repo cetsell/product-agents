@@ -1,6 +1,6 @@
 # evals/
 
-Behavioral eval suites for the eight skills a new team touches first: `cadence`, `pm-super-agent`, `issue-creator`, `sprint-health`, `strategy`, `audit`, `eval-runner`, `evidence-loop`. Scored results live in `product/analysis/skill-evals/`, one dated file per run.
+Behavioral eval suites for the nine skills a new team touches first: `cadence`, `pm-super-agent`, `issue-creator`, `sprint-health`, `strategy`, `audit`, `eval-runner`, `evidence-loop`, `judge`. Scored results live in `product/analysis/skill-evals/`, one dated file per run.
 
 ## Layout
 
@@ -9,7 +9,7 @@ evals/
   _fixture/
     scaffold.sh        # builds a workspace: repo template + the fixture below
     files/             # "Acme Notes", a fictional product: filled context, roadmap,
-                       # a prior Friday note, and exports in inputs/ (tracker CSV,
+                       # a prior Friday note, a decision log with principles and an open questions queue, and exports in inputs/ (tracker CSV,
                        # meeting notes, weekly funnel, a strategy memo, an eval set)
   <skill>/<case>/
     case.yaml          # prompt + graders, `claude plugin eval` format

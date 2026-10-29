@@ -1,6 +1,6 @@
 # Product Agents
 
-A shared operating layer that helps a product team get more out of AI on the outcomes that matter: the KPIs, the vision, and the pace. It gives Claude Code your team's context, 29 skills that each move a named metric or decision, and proactive runs that keep the weekly loop from idea to measured result to one week.
+A shared operating layer that helps a product team get more out of AI on the outcomes that matter: the KPIs, the vision, and the pace. It gives Claude Code your team's context, 30 skills that each move a named metric or decision, and proactive runs that keep the weekly loop from idea to measured result to one week.
 
 ## Install (60 seconds)
 
@@ -26,8 +26,8 @@ Fill in `product/context.md` first; every strategy, cadence, and analysis skill 
 
 | Layer | What | Where |
 |-------|------|-------|
-| **Context** | North Star, pillars, dated baselines, teams, and which tool answers which question, in one file the skills read first; roadmap, betting table, metrics, decisions | `product/context.md`, `product/`, `team/` |
-| **Skills** | 29 skills, each opening with the outcome it moves and the evidence it leaves behind; 3 agents for navigating, refreshing, and auditing the repo | `.claude/skills/`, `.claude/agents/` |
+| **Context** | North Star, pillars, dated baselines, teams, and which tool answers which question, in one file the skills read first; roadmap, betting table, metrics, decisions, and the principles those decisions compress into | `product/context.md`, `product/`, `team/` |
+| **Skills** | 30 skills, each opening with the outcome it moves and the evidence it leaves behind; 3 agents for navigating, refreshing, and auditing the repo | `.claude/skills/`, `.claude/agents/` |
 | **Proactive** | Runs that fire on a schedule or a trigger and hand a human a decision as a pull request or issue | `proactive/runs.yml`, `.github/workflows/`, `.claude/settings.json` |
 
 Guardrails that make the layers safe to run fast: every consequential output carries an **Evidence Loop** appendix (`product/playbooks/evidence-loop.md`); issue-tracker writes always ask a human first; automated runs never push to the default branch.
@@ -62,7 +62,7 @@ Each skill and agent pins its model and effort in frontmatter (full IDs, so Bedr
 | Strategy, PRDs, audits, premortems, evidence loops, pricing, positioning | `claude-opus-5-5` | high |
 | LLM-as-judge (`/eval-runner`, `/skill-eval`) | `claude-opus-5-5` | high |
 
-## Skills (29), by the outcome they move
+## Skills (30), by the outcome they move
 
 Invoke with `/skill-name` (or `/product-agents:skill-name` as a plugin); Claude also loads a skill when your request matches its description. Routing table: `.claude/rules/skill-routing.md`.
 
@@ -72,6 +72,7 @@ Invoke with `/skill-name` (or `/product-agents:skill-name` as a plugin); Claude 
 |-------|-------|---------------|
 | `/audit` | shrinks the lag between shipped and measured, and the blockers that recur week after week | a dated report in `product/analysis/audit/` where every finding has two sources and an owner |
 | `/cadence` | holds the idea-to-measured loop to one week by forcing an iterate-or-swing call on the bet every Friday | dated notes in `team/weekly-updates/` that the next week builds on |
+| `/judge` | the PM answers each taste or scope question once; repeats are settled from `team/decisions/principles.md` in minutes instead of waiting in chat, and only unanswered judgments reach a human | verdicts in `team/decisions/questions.md` with cited sources, and a dated batch note in `product/analysis/judge/` |
 | `/issue-creator` | tickets an engineer can start in ten minutes, each instrumented so the shipped work can be read against its hypothesis | drafted (and, on approval, created) tickets with problem, criteria, hypothesis, and analytics |
 | `/pm-super-agent` | idea to a buildable, measurable PRD in one session, scoped to the smallest version that proves the bet | a PRD in `product/specs/` with an evidence appendix and a proposed ticket list |
 | `/senior-prompt-engineer` | prompt changes ship as reviewed diffs with eval cases attached, so AI-feature iterations take hours instead of guesswork cycles | an audit, design, or debug document in `product/analysis/prompts/` plus the diff |
@@ -135,7 +136,7 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 | `bigquery` (warehouse) | `BIGQUERY_PROJECT`, optional `BIGQUERY_WRITE_MODE` (defaults to `blocked`) | data-analyst |
 | `meeting-notes` | `MEETING_NOTES_MCP_URL` (your meeting-notes tool's MCP endpoint) | cadence, sprint-health, audit |
 
-**MCP-free skills** (never call a server): evidence-loop, premortem, eval-runner, skill-eval, senior-prompt-engineer, and every marketing and CRO skill.
+**MCP-free skills** (never call a server): judge, evidence-loop, premortem, eval-runner, skill-eval, senior-prompt-engineer, and every marketing and CRO skill.
 
 ## Agents (3)
 
@@ -154,6 +155,7 @@ Every skill runs with zero MCP servers connected. Servers make the data step aut
 | Roadmap refresh (roadmap-keeper) | Fri | GitHub Actions + `ANTHROPIC_API_KEY`, `LINEAR_API_KEY`; opens a PR |
 | Sprint health, Monday kickoff, Wednesday pulse, Friday decide | weekly | Claude Code routines; prompts in `proactive/routines/` |
 | Premortem nudge | betting table changes | hook |
+| Questions triage (`/judge`) | new open question, or daily | Claude Code routine; prompt in `proactive/routines/questions-triage.md` |
 
 Full manifest and what stays manual on purpose: `proactive/CLAUDE.md`.
 

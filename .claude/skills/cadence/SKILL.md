@@ -125,6 +125,7 @@ Team message (paste-ready, 4 lines max):
 3. **Shipping to learn:** hypotheses validated and invalidated this week.
 4. **Decision:** ITERATE (what is left, by when) or SWING (next bet, ICE reasoning).
 5. **Artifacts current?** roadmap / betting table / baselines: Y or N each.
+6. **Held questions:** list rows with status `held` in `team/decisions/questions.md` (and the latest `product/analysis/judge/verdicts-*.md` if present). These are the only questions waiting on the PM; the note asks for each answer. Do not answer them yourself.
 
 **Deliverable** (`team/weekly-updates/{YYYY-MM-DD}-friday.md`):
 
@@ -143,6 +144,10 @@ Team message (paste-ready, 4 lines max):
 
 ## Next week's priority
 {one line}
+
+## Held for the PM
+| # | Question | Decision needed |
+{rows from questions.md with status held; "none" if the queue is clear}
 
 ## Stakeholder summary (2–3 sentences)
 

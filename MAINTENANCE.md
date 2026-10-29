@@ -17,6 +17,8 @@ Everyone on the team contributes via pull requests. See [CONTRIBUTING.md](CONTRI
 | `product/roadmap/experiment-roadmap.md` | PM | — | Experiment launches/readouts |
 | `product/specs/CLAUDE.md` | PM | Design Lead | New spec created or status changes |
 | `team/decisions/decisions.md` | Whoever decided | PM | When a decision is made |
+| `team/decisions/principles.md` | PM | — | A decision recurs; Friday keeps or deletes `proposed` rows; a judge verdict is overridden |
+| `team/decisions/questions.md` | Anyone (file), `/judge` (verdicts) | PM (clears `held`) | A taste or scope question the record does not answer |
 | `team/roster.md` | PM | Eng Lead | Team changes |
 | `team/cadence.md` | PM | — | Ritual changes |
 | `gtm/campaign-tracker.md` | GTM Lead | GTM/Ops | Campaign status changes |

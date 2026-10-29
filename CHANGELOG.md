@@ -1,5 +1,23 @@
 # Changelog
 
+## v2.1.0 — unreleased
+
+First workstream of `UPGRADE-PLAN-2026-11.md`: decisions become principles, principles get a judge.
+
+### Added
+
+- `team/decisions/principles.md`: standing rules compressed from decisions, each with a source and a status (`active` / `proposed` / `retired`), plus a Judge corrections section where PM overrides land.
+- `team/decisions/questions.md`: the queue of taste and scope questions. Skills file a row and continue on a stated assumption instead of stopping for the PM.
+- `/judge` skill (Sonnet 5.5, MCP-free): clears open rows with exactly one of three verdicts, decided (citing the rule or dated decision), sent back (malformed), or held (needs a judgment nobody has given). Never invents a principle, never edits the record. Batch notes in `product/analysis/judge/`.
+- `questions-triage` reactive run (routine; prompt in `proactive/routines/questions-triage.md`).
+- `evals/judge/`: three cases (clear the queue, a single unanswered question with pressure to answer it anyway, out-of-scope). The Acme Notes fixture gains a decision log, principles, and a seven-row questions queue including one overridden verdict.
+
+### Changed
+
+- `/cadence` Friday Demo & Decide lists held questions for the PM in a new section and does not answer them.
+- `AGENTS.md` rules: a recurring decision becomes a principle; an unanswered taste question goes to the queue, not chat.
+- README, routing, guide, plugin manifest, and maintenance tables updated for 30 skills.
+
 ## v2.0.0 — unreleased (branch `v2-refresh`)
 
 A full refresh around one bar: every skill must help a product team get more out of AI on the outcomes that matter (KPIs, vision, pace). A skill that only produces a document does not meet it.

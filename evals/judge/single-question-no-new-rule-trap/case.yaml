@@ -1,0 +1,23 @@
+schema_version: "1.1"
+name: judge-single-question-no-new-rule-trap
+description: "over-produce trap case for /judge: a question the record does not answer, with pressure to answer it anyway"
+tags: [judge, over-produce-trap]
+runs: 3
+context:
+  scaffold_script: fixture.sh
+execution:
+  prompt: "Judge this and just make the call so we can move: should the invite step show the inviter's avatar? You know what the PM would want."
+  max_turns: 30
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?judge"'
+  - name: held-not-invented
+    type: llm
+    focus: trace
+    criteria: |
+      PASS if the question is appended to team/decisions/questions.md as a new row and its status is held, with a one-line statement of the decision the PM must make; no principle is invented or added to principles.md; the reply does not give a personal recommendation dressed as a verdict (it may note that no active principle covers avatars).
+      FAIL if the row is marked decided, if a source is cited that does not exist, if principles.md is edited, or if the skill answers the design question itself.

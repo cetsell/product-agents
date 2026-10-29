@@ -37,6 +37,7 @@ Agent output is shared and searchable by default. Every run in `proactive/runs.y
 - **Premortem** uses Gary Klein's prospective-hindsight method: "this already failed, explain how" produces more specific and honest failure reasons than "what could go wrong." It also breaks the model's default agreeableness.
 - **Eval-requirements docs** replace prose PRDs for AI features: the PM hands engineering a labeled dataset and pass metrics, uses text labels rather than numeric scores because models cannot justify numbers, and relabels a sample when the judge and the human disagree.
 - **Model selection** assumes models will keep improving: build the scaffolding now so a better model is a one-line swap, and pick the cheapest lever that moves quality (prompt, then retrieval, then fine-tuning). See `product/playbooks/model-selection.md`.
+- **Judge** borrows Spawn's answer to the "700 questions a morning" problem: decisions on the record get compressed into principles, and an agent applies them with exactly three outcomes (decided with a citation, sent back as malformed, held for a human). The human gives each judgment once; the record answers the repeats, and a wrong verdict is corrected by adding a rule, not by editing the judge. The same write-up's point that agents should coordinate through shared state rather than messages is why every run here reads and writes repo files instead of notifying anyone.
 - **Evidence loops** respond to a finding from Microsoft Research that higher confidence in the AI correlates with less critical thinking by the person using it.
 
 ## Sources and influences
@@ -49,3 +50,4 @@ Linked, not copied. If one of these is yours and you want different attribution,
 - An essay on the PM "operating layer" (five layers: context, workflows, skills, evidence loops, memory). Original author unknown; the framing above is a paraphrase.
 - Lee, Hao-Ping et al., "The Impact of Generative AI on Critical Thinking," Microsoft Research / CHI 2025.
 - Andrej Karpathy's LLM wiki idea, for the memory layer: https://github.com/karpathy/llm-wiki
+- Spawn, on running a ten-person company with a permanent agent fleet (October 2026): principles as compressed decisions, AI judges with three outcomes, stigmergic coordination through shared state. The adaptation plan is `UPGRADE-PLAN-2026-11.md`.
