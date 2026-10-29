@@ -33,6 +33,7 @@ metadata:
 2. **Meeting notes** for decisions, blockers, escalations, and commitments with no ticket. MCP server if connected; pasted notes otherwise; or record "meeting notes: not available".
 3. **Last two sprint-health and Friday notes** in `team/weekly-updates/`: recurring blockers (same item two weeks running = systemic), commitments not closed.
 4. **Repo files:** `product/context.md` (teams, baselines), `product/roadmap/current-bet.md`, `betting-table.md`.
+5. **Agent commitments:** `team/active/commitments.md`. Rows `open` past due or `carried` twice are reported in section E alongside human commitments; the owner is the agent or run named in the row, the steward from `team/roster.md` decides.
 
 ---
 
@@ -99,6 +100,7 @@ Coverage gaps: pillars in product/context.md with no active initiative.
 | Decision only the PM can make | Context | Deadline | Cost of delay |
 | Item waiting on a call | Blocker | Waiting on | Impact H/M/L |
 | Commitment made in a meeting | Made by (role) | When | Has a ticket? |
+| Agent commitment overdue or carried twice | By (agent / run) | Due | Steward to decide: drop or do |
 ```
 
 ## F. Action items

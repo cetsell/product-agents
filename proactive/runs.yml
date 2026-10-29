@@ -48,7 +48,7 @@ scheduled:
     skill: /sprint-health
     binding: routine               # or desktop-task
     executor: proactive/routines/sprint-health.md
-    pulls: ["issue tracker", "meeting notes"]
+    pulls: ["issue tracker", "meeting notes", "team/active/commitments.md"]
     output: "draft PR adding team/weekly-updates/{date}-sprint-health.md"
     decides: "PM triages flagged blockers before standup"
     termination: "report written; every flag has an owner role or 'PM to assign'"
@@ -97,7 +97,7 @@ scheduled:
     binding: routine               # or desktop-task
     executor: proactive/routines/friday-decide.md
     pulls: ["issue tracker closed this week", "meeting notes", "this week's notes", "held rows in team/decisions/questions.md"]
-    output: "draft PR adding team/weekly-updates/{date}-friday.md and {date}-update.md"
+    output: "draft PR adding team/weekly-updates/{date}-friday.md and {date}-update.md, plus proposed rows in team/decisions/principles.md"
     evidence: true
     termination: "Friday note with iterate/swing call and evidence loop; update drafted; nothing sent"
 

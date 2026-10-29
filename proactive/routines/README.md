@@ -21,3 +21,4 @@ Claude Desktop → Code → Routines → New routine → Local, same prompt and 
 - Writes to a dated path in the repo, on a branch named `claude/<run-id>-<date>`, and opens a draft pull request. Never pushes to the default branch.
 - Sends nothing (no email, no chat post, no tracker writes).
 - Stops at the skill's TERMINATION condition.
+- Reads the last ten lines of the Trail in `product/analysis/CLAUDE.md` first and appends one line for what it wrote; reads its own rows in `team/active/commitments.md` and closes or carries them.

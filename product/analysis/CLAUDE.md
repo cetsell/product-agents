@@ -14,3 +14,15 @@ Where skills write their outputs. One subfolder per skill family, created on fir
 | `skill-evals/` | `/skill-eval` | Dated behavioral eval results for the skill library |
 
 Treat files here as dated snapshots. Cite them with their date; re-run the skill rather than editing an old analysis.
+
+## Trail
+
+Append-only. Every run or skill that writes a file into this repo adds **one line** here, newest last, and reads the last ten lines before it reads anything else. This is how runs learn what happened since they last ran without anyone sending a message: the trail is the pheromone, not a notification.
+
+Format: `{YYYY-MM-DD} {run or skill} wrote {path}: {one-line result}`
+
+```
+2026-10-29 (example) /judge wrote product/analysis/judge/verdicts-2026-10-29.md: 2 decided, 1 sent back, 3 held
+```
+
+Keep the last 200 lines; older lines can be deleted, git has them.

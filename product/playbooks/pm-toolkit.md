@@ -70,6 +70,24 @@ Write the launch announcement before building anything significant. If the custo
 
 "Not now, because [current bet] moves [metric] and this does not. Revisit when [condition]." Log it in the roadmap's "Not doing" list.
 
+## The two jobs: taste and entropy
+
+When agents do most of the drafting, building, and triage, the PM's job narrows to two things the models will not do on their own.
+
+**Taste** is saying no to things that work. A toggle that tests fine but makes the product feel like a settings panel. A feature a prospect wants that cheapens the default experience. A copy variant that wins the A/B and reads like a coupon. Each no becomes a row in `team/decisions/principles.md`, so the next agent that asks gets the answer from the record and the PM says it once.
+
+**Entropy** is asking for the version the models would not propose. They compound 2% improvements indefinitely and almost never say "this should be ten times smaller" or "the constraint everyone accepts should not exist." The PM asks: what is the one-second version, the zero-step version, the version with no settings at all? Most answers are not on the table this quarter. The question is on the table every quarter (`/strategy` writes it down as the 100x section).
+
+Three worked examples:
+
+| Situation | Incremental answer | Taste or entropy answer |
+|-----------|-------------------|-------------------------|
+| Three teams ask for a dark-mode toggle; it is a day of work | Ship the toggle | Taste: no new setting under 10% usage; pick the default that matches the OS and move on. Principle, not a ticket. |
+| Onboarding converts 34%; the team proposes a fourth step that tests +2 points | Add the step | Entropy: what is the zero-step version, where the first note is the onboarding? That is a bet brief, not a tweak. |
+| A 40-seat prospect wants an export format before signing | Build it for the deal | Taste: no integrations for one prospect before they pay. Say no, log it, and revisit if three paying teams ask. |
+
+**Deleting** is the third job and the least glamorous. Every rule, setting, guardrail, and process step was added because something at the time needed it. The monthly self-eval scores what was removed, because nobody deletes without a scheduled reason to.
+
 ## Pre-ship quality bar
 
 - [ ] Success criteria met (from the bet brief)

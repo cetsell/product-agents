@@ -55,6 +55,8 @@ Acceptance: drop two sample signal files, run `/triage`, get a four-bucket note 
 
 ### WS3 — Tiered gates: fix forward on facts, PR on judgment
 
+> **Dropped 2026-10-29.** Not pursued: letting automated runs commit to the default branch is an install-specific risk posture, not something a generic operating layer should decide for every team. The existing rule (automated runs open PRs) stays. A team that wants fix-forward on factual fields can adopt the table below in its own fork.
+
 "Automated runs never push to the default branch" is the right rule for decisions and the wrong rule for the Friday roadmap refresh, which updates dates and statuses copied from the tracker. The PM is reviewing a diff of facts they did not produce and cannot check without opening Linear. Spawn's split is the better one: dumb gates for the irreversible, check-after for the rest.
 
 | Tier | What | Lands how | Safety net |
@@ -113,12 +115,11 @@ Everything skips when there is nothing to do. Order of magnitude: tens of dollar
 
 ## Sequencing
 
-WS1 and WS2 are independent and give the biggest change in how the team works; do them first, in either order. WS3 depends on nothing but is the one that changes a stated principle (automated runs never push to main), so it gets its own PR and a decision row in `decisions.md`. WS4–WS7 are small edits to existing files and can ride along.
+WS1 and WS2 are independent and give the biggest change in how the team works; do them first, in either order. WS3 was dropped (see its note). WS4–WS7 are small edits to existing files and can ride along.
 
 ## Definition of done
 
 - A fresh clone runs `/judge`, `/triage`, and the Friday taste extraction with zero MCP servers and produces output at the stated paths.
-- `runs.yml` entries all carry a `tier`; `check-skills.mjs --strict` enforces the fact-tier allowlist.
 - `decisions.md` holds the tiered-gates decision with a check-by date and a revert-rate threshold.
 - `docs/design.md` credits the Spawn write-up under sources and adds one paragraph: principles as the compression of decisions, and the world as the message bus.
 - `v2.1.0` tagged; `CHANGELOG.md` lists the four new files and two promoted skills.

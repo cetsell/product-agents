@@ -6,6 +6,7 @@ Short-lived working notes that a run writes and the week consumes: triage notes 
 
 | Pattern | Written by | What it is | When to read |
 |---------|-----------|------------|--------------|
+| `commitments.md` | any agent or run; `/sprint-health` reads it | Ledger of what an agent said it would do and has not closed; carried twice is a finding | Monday sweep; before asking "did the refresh ever fill that field?" |
 | `triage-{YYYY-MM-DD}.md` | `/triage` (`signals-triage` run) | The day's signals sorted into do now / queue / decline / new bet against the betting table | Before standup, before writing a ticket, before answering a support request about "is this planned" |
 
 Notes older than 30 days can be deleted; the betting table and `questions.md` carry anything that mattered.

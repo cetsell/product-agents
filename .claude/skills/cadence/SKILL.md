@@ -10,7 +10,7 @@ when_to_use: >
   demo", "week in review", "weekly update", "team update email", "stakeholder update",
   "exec update", "monthly recap", "investor update", or a day-of-week plus report
   keyword ("monday report", "friday summary").
-allowed-tools: Read, Grep, Glob, Write
+allowed-tools: Read, Grep, Glob, Write, Edit
 model: claude-sonnet-5-5
 effort: medium
 metadata:
@@ -126,6 +126,7 @@ Team message (paste-ready, 4 lines max):
 4. **Decision:** ITERATE (what is left, by when) or SWING (next bet, ICE reasoning).
 5. **Artifacts current?** roadmap / betting table / baselines: Y or N each.
 6. **Held questions:** list rows with status `held` in `team/decisions/questions.md` (and the latest `product/analysis/judge/verdicts-*.md` if present). These are the only questions waiting on the PM; the note asks for each answer. Do not answer them yourself.
+7. **Taste calls → proposed principles:** scan this week's Friday note draft, meeting notes, and PR review comments for the PM saying no to something that worked, picking a default, or ruling something out ("no toggles for this", "never two CTAs", "not for one prospect"). Append each as a row in the matching section of `team/decisions/principles.md` with status `proposed`, the rule phrased as "we do / we never", the *Applies when* condition, and the dated source. Max five per week; skip anything already covered by an `active` or `proposed` row. The PM keeps or deletes them in the same PR. Never write `active`.
 
 **Deliverable** (`team/weekly-updates/{YYYY-MM-DD}-friday.md`):
 
@@ -148,6 +149,10 @@ Team message (paste-ready, 4 lines max):
 ## Held for the PM
 | # | Question | Decision needed |
 {rows from questions.md with status held; "none" if the queue is clear}
+
+## Proposed principles (keep or delete in this PR)
+| # | Rule | Source |
+{rows appended to principles.md this week as proposed; "none"}
 
 ## Stakeholder summary (2–3 sentences)
 
@@ -241,4 +246,4 @@ A highlight shipped to production, moved a metric, or closed a prior lowlight. A
 
 ## TERMINATION
 
-Stop when the **single requested mode's** deliverable is written to its path and passes its checks. One mode per invocation: a Monday kickoff does not also produce the Friday report; a weekly update does not also produce the monthly recap. Every metric cited carries its source and date; never invent a number that is not in the collected data. If a source was unavailable, say which one in the output and stop. Do not post to the issue tracker or send email; drafting is the job, sending is the PM's call.
+Stop when the **single requested mode's** deliverable is written to its path and passes its checks. One mode per invocation: a Monday kickoff does not also produce the Friday report; a weekly update does not also produce the monthly recap. Every metric cited carries its source and date; never invent a number that is not in the collected data. If a source was unavailable, say which one in the output and stop. Do not post to the issue tracker or send email; drafting is the job, sending is the PM's call. The only file outside the output directories you may touch is `team/decisions/principles.md`, and only to append `proposed` rows in Friday mode.

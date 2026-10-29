@@ -17,9 +17,18 @@ First two workstreams of `UPGRADE-PLAN-2026-11.md`: decisions become principles,
 - `signals-triage` daily run and `proactive/routines/signals-triage.md`; `proactive/routines/metric-breach.md`.
 - `evals/triage/`: three cases (two drops → four-bucket note, footers, idempotent second run; a prompt that also asks for the tickets; a PRD request). The fixture gains the two signal drops under `product/signals/`.
 
+- `team/active/commitments.md`: ledger of what an agent or run promised and has not closed; `/sprint-health` reports rows overdue or carried twice.
+- Trail in `product/analysis/CLAUDE.md`: append-only, one line per run output; runs read the last ten lines before anything else (coordination through the repo, not messages).
+- Agents table in `team/roster.md`: what each agent and scheduled run owns, its memory, its steward.
+- `product/playbooks/pm-toolkit.md`: "The two jobs: taste and entropy" with three worked examples, and deleting as the third job.
+
 ### Changed
 
-- `/cadence` Friday Demo & Decide lists held questions for the PM in a new section and does not answer them.
+- `/cadence` Friday Demo & Decide lists held questions for the PM in a new section and does not answer them, and appends this week's taste calls to `principles.md` as `proposed` rows (max five) for the PM to keep or delete in the same PR.
+- `/strategy` Prioritization, Decision Memo, and Vision Check carry a bounded five-line "If the constraint did not exist" section before the ranked call; never ranked above the evidence-backed call.
+- `/monthly-pm-self-eval` gains a Deletion dimension with caps (nothing deleted → ≤ 2; two months running → 1).
+- `product-agents` and `roadmap-keeper` agents keep project memory, like `freshness-auditor` already did; all three open by reading their commitments.
+- WS3 (tiered gates) of the plan dropped: automated runs keep opening PRs.
 - `AGENTS.md` rules: a recurring decision becomes a principle; an unanswered taste question goes to the queue, not chat.
 - `AGENTS.md` definition of done: a bet is not shipped until its success metric is readable by an agent without a human (saved query, alert into `product/signals/`, or dashboard export path). `/audit` gains one measurability check and flags bets that fail it as unmeasurable ships.
 - `metric-breach` in `proactive/runs.yml` moves from `binding: manual` to `routine`: `/data-analyst` runs only when a new alert file exists in `product/signals/`. No monitor ships with the repo; the file is the contract.

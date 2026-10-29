@@ -5,6 +5,7 @@ tools: Read, Write, Edit, Bash, Grep, Glob
 model: claude-sonnet-5-5
 effort: medium
 permissionMode: acceptEdits
+memory: project
 skills:
   - evidence-loop
   - check-artifacts
@@ -26,6 +27,8 @@ Classify the request, then follow the appropriate mode:
 | "What's stale?" / "Run freshness check" / "Audit consistency" | **Audit** | No (report only) | Steward (PM, Monday) |
 
 If unclear, default to **Navigate** (read-only, safe).
+
+**Memory:** this agent keeps project memory. After Contribute or Refresh, record which files you changed and for which request; before any mode, read it so a repeat request ("log the decision about X again") is recognised as a repeat.
 
 **Permissions:** this agent runs with `permissionMode: acceptEdits` so Contribute and Refresh can edit files without a prompt per edit. Navigate and Audit are read-only **by instruction, not enforcement**: in those modes, do not call Write or Edit. Bash commands still prompt. `evidence-loop` and `check-artifacts` are preloaded, so Audit mode and any stakeholder-facing summary can apply them without a separate load.
 

@@ -50,6 +50,7 @@ A product team's shared operating layer: context, skills, and proactive runs tha
 - Log a decision in `team/decisions/decisions.md` when it is made, not when it ships. A decision that will recur becomes a rule in `team/decisions/principles.md`.
 - A taste or scope question the record does not answer goes to `team/decisions/questions.md` as a row; proceed on a stated assumption rather than stopping. `/judge` decides from the record or holds the row for the PM; it never invents a rule.
 - Propose changes; the human reviews and commits. Automated runs open pull requests, never push to the default branch.
+- Coordinate through the repo, not through messages. A run that writes a file appends one line to the Trail in `product/analysis/CLAUDE.md` and reads the last ten lines first. A run that promises a follow-up writes a row in `team/active/commitments.md` and closes or carries it next time.
 - `product/roadmap/` and `product/playbooks/` are PM tools, not team-mandated process.
 
 ## Definition of done (repo edition)
